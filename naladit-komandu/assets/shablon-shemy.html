@@ -13,6 +13,7 @@
   --amber:#D19A12; --amber-ink:#8A6410; --amber-dim:#F6EBD4;
   --red:#A83228; --red-dim:#F7DFDC;
   --violet:#7245A0; --violet-dim:#EBE2F5;
+  --deemph:#6E6858; --deemph-fill:#E6E1D5;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;font-size:16px;line-height:1.6;font-weight:400;padding-inline:20px;padding-block:28px 64px;-webkit-font-smoothing:antialiased}
@@ -46,13 +47,13 @@ header .sub{color:var(--muted2);margin-top:10px;max-width:60ch}
 .bead{width:11px;height:11px;position:relative;z-index:2;background:var(--muted)}
 .node.rabotaet .bead{background:var(--green)}
 .node.sobrano .bead{background:var(--amber)}
-.node.granica .bead{background:var(--violet);border-radius:50%}
-.node.net .bead{background:var(--bg);border:2px dashed var(--muted)}
+.node.granica .bead{background:var(--deemph);border-radius:50%}
+.node.net .bead{background:var(--bg);border:2px solid var(--red)}
 .card{background:var(--card);border:1px solid var(--line);padding:14px 16px;display:flex;flex-direction:column;gap:8px}
 .node.rabotaet .card{border-left:3px solid var(--green)}
 .node.sobrano .card{border-left:3px solid var(--amber)}
 .node.net .card{background:transparent;border-style:dashed;border-color:var(--line2)}
-.node.granica .card{background:var(--violet-dim);border-color:transparent}
+.node.granica .card{background:var(--deemph-fill);border-color:transparent}
 .hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 11px}
 .num{font-size:11.5px;font-weight:600;letter-spacing:.08em;color:var(--muted)}
 .nm{font-weight:600;font-size:17px}
@@ -62,8 +63,8 @@ header .sub{color:var(--muted2);margin-top:10px;max-width:60ch}
 .state{align-self:flex-start;font-size:12.5px;font-weight:600;padding:4px 11px}
 .state.rabotaet{background:var(--green-dim);color:var(--green)}
 .state.sobrano{background:var(--amber-dim);color:var(--amber-ink)}
-.state.net{background:var(--card2);color:var(--muted2)}
-.state.granica{background:transparent;color:var(--violet);padding-left:0}
+.state.net{background:var(--red-dim);color:var(--red)}
+.state.granica{background:var(--card2);color:var(--deemph)}
 .nav{margin-left:2px;border-left:2px solid var(--line);padding-left:14px;display:flex;flex-direction:column;gap:6px}
 .nav .r{font-size:14px;display:flex;flex-wrap:wrap;gap:3px 9px;align-items:baseline}
 .nav .r b{font-weight:600}
@@ -106,9 +107,10 @@ footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;color:
     <div class="legend">
       <span><i class="sq" style="background:var(--green)"></i>навык есть и работает</span>
       <span><i class="sq" style="background:var(--amber)"></i>навык есть, ни разу не гонял</span>
-      <span><i class="sq" style="border:2px dashed var(--muted);background:var(--bg)"></i>навыка нет, делаешь сам</span>
-      <span><i class="sq" style="background:var(--violet);border-radius:50%"></i>граница, решает человек</span>
+      <span><i class="sq" style="border:2px solid var(--red);background:var(--bg)"></i>навыка нет, делаешь сам</span>
+      <span><i class="sq" style="background:var(--deemph);border-radius:50%"></i>граница, решает человек</span>
     </div>
+    <p class="lead" id="granicy" hidden></p>
     <div id="tree"></div>
   </section>
 
@@ -156,11 +158,18 @@ footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;color:
   sh.forEach(function(s){ if(c[s.sostoyanie]!==undefined) c[s.sostoyanie]++; });
   var razryvov = (d.vrezki||[]).length;
   document.getElementById('stats').innerHTML =
-    tile('Закрыто ролями', c.rabotaet + c.sobrano, 'из ' + sh.length + ' шагов') +
+    tile('Охват', (c.rabotaet + c.sobrano) + ' / ' + (sh.length - c.granica), skl(sh.length - c.granica,'шаг отдан','шага отдано','шагов отдано') + ' ролям') +
     tile('Работает', c.rabotaet, skl(c.rabotaet,'шаг','шага','шагов')) +
     tile('Собрано, не гонял', c.sobrano, skl(c.sobrano,'шаг','шага','шагов')) +
     tile('Ты в середине', razryvov, skl(razryvov,'место','места','мест'));
   function tile(k,v,i){ return '<div><span>'+esc(k)+'</span><b>'+v+'</b><i>'+esc(i)+'</i></div>'; }
+
+  if(c.granica){
+    var g = document.getElementById('granicy');
+    g.textContent = 'Ещё ' + c.granica + ' ' + skl(c.granica,'шаг','шага','шагов') + ' из ' + sh.length +
+      ' это границы: там решает человек, и так задумано. В знаменатель охвата они не входят, но и спрятать их нельзя, они помечены серым ниже.';
+    g.hidden = false;
+  }
 
   var byAfter = {};
   (d.perehody||[]).forEach(function(p){ (byAfter[p.posle]=byAfter[p.posle]||{}).p = p; });
