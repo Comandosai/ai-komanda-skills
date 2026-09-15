@@ -1,0 +1,272 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Дашборд команды</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,700;1,800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F5F1E8; --card:#FFFFFF; --card2:#EDE8DC; --line:#DDD5C6; --line2:#CFC5B2;
+  --text:#221E28; --muted:#837D8C; --muted2:#55505C;
+  --plum:#5C2B51; --plum-wash:#EFE2EC; --lime:#C8FF00;
+  --good:#256B3E; --good-wash:#DEEEE4;
+  --warn:#D19A12; --warn-ink:#8A6410; --warn-wash:#F6EBD4;
+  --crit:#A83228; --crit-wash:#F7DFDC;
+  --deemph:#6E6858; --deemph-wash:#E6E1D5;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;font-size:16px;line-height:1.6;padding-inline:20px;padding-block:28px 64px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:32px;min-width:0}
+h1,h2{font-family:"Barlow Condensed",Arial,sans-serif;font-style:italic;font-weight:800;text-transform:uppercase;margin:0;letter-spacing:.01em}
+code{font-family:"JetBrains Mono",monospace;font-size:12.5px;overflow-wrap:anywhere}
+.top{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--good);animation:p 2s infinite;flex:none}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.2}}
+@media (prefers-reduced-motion:reduce){.pulse{animation:none}}
+header{border-bottom:2px solid var(--plum);padding-bottom:20px}
+header h1{font-size:46px;line-height:.98;margin-top:12px;color:var(--plum)}
+.chain{margin-top:12px;display:flex;flex-wrap:wrap;gap:4px 8px;font-size:14px;color:var(--muted2)}
+.chain i{font-style:normal;color:var(--line2)}
+.stamp{margin-top:18px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--good);padding:11px 15px;display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center}
+.stamp b{font-weight:600;font-size:15px;display:inline-flex;align-items:center;gap:8px}
+.stamp span{font-size:13.5px;color:var(--muted2)}
+.stamp .tick{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);margin-left:auto;white-space:nowrap}
+.now{margin-top:10px;background:var(--plum-wash);padding:11px 15px;font-size:14.5px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.now b{color:var(--plum);font-weight:600}
+.sec{display:flex;flex-direction:column;gap:16px;min-width:0}
+.sec>h2{font-size:26px;color:var(--plum)}
+.sec>p.lead{margin:0;color:var(--muted2);max-width:70ch;font-size:14.5px}
+.scroll{overflow-x:auto;max-width:100%}
+
+.hero{background:var(--card);border:1px solid var(--line);padding:22px 24px;display:flex;flex-direction:column;gap:16px}
+.hero .lb{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.hero .row{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px}
+.hero .big{font-family:"Barlow Condensed",Arial,sans-serif;font-style:italic;font-weight:800;font-size:64px;line-height:.9;color:var(--plum)}
+.hero .of{font-size:16px;color:var(--muted2)}
+.hero .dl{font-size:14px;font-weight:600;color:var(--good)}
+.hero .dl.flat{color:var(--muted2)}
+.meter{height:12px;background:var(--good-wash);border:1px solid var(--line)}
+.meter>i{display:block;height:100%;background:var(--good);border-radius:0 4px 4px 0}
+.hero .second{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding-top:14px;border-top:1px solid var(--line)}
+.hero .second b{font-family:"Barlow Condensed",Arial,sans-serif;font-style:italic;font-weight:800;font-size:30px;line-height:1;color:var(--muted2)}
+.hero .second span{font-size:14.5px;color:var(--muted2)}
+.hero .note{font-size:13.5px;color:var(--muted2);background:var(--card2);padding:10px 13px}
+
+.mx{border-collapse:separate;border-spacing:2px;font-size:14px}
+.mx th{font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:0 3px 6px;text-align:center;vertical-align:bottom;min-width:92px;white-space:nowrap;line-height:1.25}
+.mx th.rowh{text-align:left;padding-left:0;width:auto;min-width:150px;white-space:nowrap}
+.mx td.rowh{background:transparent;font-size:14px;padding:0 12px 0 0;white-space:nowrap}
+.mx td.rowh b{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--muted2);margin-right:7px}
+.cl{width:92px;height:52px;text-align:center;vertical-align:middle;border:1px solid transparent;padding:2px}
+.cl .g{font-size:15px;line-height:1.1;display:block}
+.cl .t{font-size:10.5px;line-height:1.2;display:block;margin-top:1px}
+.cl.proshlo{background:var(--good-wash);color:var(--good)}
+.cl.kasanie{background:var(--good-wash);color:var(--good);border-color:var(--plum);border-style:dashed}
+.cl.peredelka{background:var(--warn-wash);color:var(--warn-ink)}
+.cl.idet{background:var(--plum-wash);color:var(--plum);border-color:var(--plum)}
+.cl.idet .g{display:inline-flex;align-items:center;gap:5px}
+.cl.vstalo{background:var(--crit-wash);color:var(--crit);border-color:var(--crit)}
+.cl.granica{background:var(--deemph-wash);color:var(--deemph)}
+.cl.net{background:transparent;border:1px dashed var(--line2);color:var(--line2)}
+.legend{display:flex;flex-wrap:wrap;gap:9px 18px;font-size:13.5px;color:var(--muted2)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{font-style:normal;font-size:12px;width:30px;height:20px;display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent}
+
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--card);border:1px solid var(--line)}
+.tbl th{text-align:left;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl td.num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .hot{color:var(--crit);font-weight:600}
+.tbl .warm{color:var(--warn-ink);font-weight:600}
+.tbl .zero{color:var(--line2)}
+
+.quad{display:grid;grid-template-columns:110px minmax(0,1fr) minmax(0,1fr);gap:2px}
+@media(max-width:700px){.quad{grid-template-columns:minmax(0,1fr)}.quad .axl,.quad .axb{display:none}}
+.quad .axl{display:flex;align-items:center;justify-content:flex-end;text-align:right;padding-right:10px;font-size:12px;color:var(--muted);line-height:1.3}
+.quad .axb{font-size:12px;color:var(--muted);text-align:center;padding-top:6px}
+.qc{background:var(--card);border:1px solid var(--line);padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.qc h4{margin:0;font-size:15px;font-weight:600}
+.qc p{margin:0;font-size:13.5px;color:var(--muted2)}
+.qc.here{background:var(--lime);border-color:transparent}
+.qc.here p{color:#3A3A28}
+.qc .badge{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--plum);align-self:flex-start;background:var(--card);padding:2px 8px}
+.qbase{background:var(--card);border:1px solid var(--line);padding:12px 15px;font-size:13.5px;color:var(--muted2)}
+.qbase b{color:var(--text);font-weight:600}
+
+.dim{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px dashed var(--line2)}
+@media(max-width:700px){.dim{grid-template-columns:minmax(0,1fr)}}
+.dim>div{background:var(--card2);padding:14px 16px;opacity:.75}
+.dim span{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.dim b{font-family:"Barlow Condensed",Arial,sans-serif;font-style:italic;font-weight:800;font-size:26px;line-height:1;display:block;margin-top:5px;color:var(--muted)}
+.dim i{font-style:normal;font-size:12.5px;color:var(--muted2);display:block;margin-top:4px}
+
+.next{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line)}
+.next>div{background:var(--card);padding:14px 16px;display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start}
+.next b{font-family:"Barlow Condensed",Arial,sans-serif;font-style:italic;font-weight:800;font-size:26px;line-height:1;color:var(--plum)}
+details.tv summary{cursor:pointer;color:var(--plum);font-weight:600;font-size:13.5px}
+details.tv table{margin-top:10px}
+.empty{background:var(--card);border:1px dashed var(--line2);padding:20px;color:var(--muted2);text-align:center}
+footer{border-top:1px solid var(--line);padding-top:16px;font-size:13px;color:var(--muted)}
+</style></head><body>
+<div class="wrap" id="root"></div>
+
+<script type="application/json" id="dannye">
+{"kompaniya":"","zhivoy":false,"obnovleno":"","ohvat_teksta":"","bez_zhurnala":0,
+ "shagi":[],"granicy":[],"seychas":[],"dela":[],"poshagam":[],
+ "priemka":{"prinyato":0,"popravil":0,"otklonil":0},
+ "kasaniy_vsego":0,"doshlo_do_kontsa":0,"skvoznyh_bylo":null,"bylo_data":"",
+ "malo_dannyh":[],"dalshe":[]}
+</script>
+
+<script>
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function skl(n,a,b,c){var m=n%100; if(m>=11&&m<=14) return c; m=n%10; return m===1?a:(m>=2&&m<=4?b:c);}
+var CL={
+  proshlo:{g:"✓",t:"прошло"}, kasanie:{g:"✓",t:"твои руки"},
+  peredelka:{g:"×2",t:"переделка"}, idet:{g:"●",t:"идёт сейчас"},
+  vstalo:{g:"✕",t:"встало"}, granica:{g:"◇",t:"ты"}, net:{g:"·",t:""}
+};
+var root=document.getElementById("root"), D=null;
+try{ D=JSON.parse(document.getElementById("dannye").textContent); }catch(e){ D=null; }
+
+if(!D||!D.dela||!D.dela.length){
+  root.innerHTML='<div class="empty">Данные не подставлены.<br>Скажи агенту: открой дашборд.</div>';
+}else{
+  var shagi=D.shagi||[], dela=D.dela||[], pos=D.poshagam||[], pr=D.priemka||{}, h=[];
+  var vsego=dela.length;
+  var skvoznyh=dela.filter(function(d){
+    var k=d.kletki||[]; var last=k[k.length-1];
+    return (last==="proshlo"||last==="granica") && !k.some(function(c){return c==="kasanie";});
+  }).length;
+  var doshlo = D.doshlo_do_kontsa!=null ? D.doshlo_do_kontsa : skvoznyh;
+  var pct = vsego?Math.round(skvoznyh/vsego*100):0;
+  var kasNaDelo = vsego ? ((D.kasaniy_vsego||0)/vsego) : 0;
+  var prVsego = (pr.prinyato||0)+(pr.popravil||0)+(pr.otklonil||0);
+  var dolyaPrin = prVsego ? (pr.prinyato||0)/prVsego : 0;
+
+  /* ШАПКА */
+  var live = D.zhivoy===true;
+  h.push('<header>'
+   +'<div class="top"><span class="pulse"></span>COMANDOS AI &middot; дашборд команды</div>'
+   +'<h1>'+esc(D.kompaniya)+'</h1>'
+   +'<div class="chain">'+shagi.map(function(s,i){return (i?'<i>&rarr;</i>':'')+'<span>'+esc(s)+'</span>';}).join('')+'</div>'
+   +'<div class="stamp"><b><span class="pulse"></span><span id="ago">обновлено только что</span></b>'
+   +'<span>'+(live
+      ? 'Роли пересобирают эту страницу сами, после каждого шага.'
+      : 'Это снимок. Обновить: скажи агенту «открой дашборд».')+'</span>'
+   +(live?'<span class="tick" id="tick"></span>':'')+'</div>'
+   +((D.seychas||[]).length
+      ? '<div class="now"><b>Сейчас в работе:</b>'+D.seychas.map(function(x){
+          return '<span>дело '+esc(x.delo)+', '+esc(x.nazvanie)+', шаг «'+esc(x.shag)+'», ведёт '+esc(x.kto)+', уже '+esc(x.skolko)+'</span>';
+        }).join(' ')+'</div>'
+      : '<div class="now"><b>Сейчас в работе:</b><span>ничего не идёт, все дела либо закрыты, либо стоят</span></div>')
+   +'</header>');
+
+  /* ОХВАТ */
+  var d0=D.skvoznyh_bylo;
+  var delta = (d0!=null)
+    ? (skvoznyh-d0>0 ? '<span class="dl">▲ +'+(skvoznyh-d0)+' к '+esc(D.bylo_data)+'</span>'
+      : skvoznyh-d0<0 ? '<span class="dl" style="color:#A83228">▼ '+(skvoznyh-d0)+' к '+esc(D.bylo_data)+'</span>'
+      : '<span class="dl flat">без изменений к '+esc(D.bylo_data)+'</span>') : '';
+  h.push('<section class="sec"><h2>Дошло или нет</h2>'
+   +'<p class="lead">Дело считается сквозным, только если ты не касался его ни разу. Одно твоё касание, и оно уже не сквозное, сколько бы шагов ни отработало само.</p>'
+   +'<div class="hero">'
+     +'<div class="lb">Сквозных без рук</div>'
+     +'<div class="row"><span class="big">'+skvoznyh+' / '+vsego+'</span><span class="of">'+pct+' процентов дел</span>'+delta+'</div>'
+     +'<div class="meter"><i style="width:'+pct+'%"></i></div>'
+     +'<div class="second"><b>'+doshlo+' / '+vsego+'</b><span>дошло до конца, считая те, что ты дотолкал руками</span></div>'
+     +'<div class="note">'+esc(D.ohvat_teksta||'')
+       +(D.bez_zhurnala ? ' Ещё '+D.bez_zhurnala+' '+skl(D.bez_zhurnala,'дело','дела','дел')+' без журнала, их не считаю.' : '')
+       +' Разница между двумя числами выше и есть цена твоих рук.</div>'
+   +'</div></section>');
+
+  /* МАТРИЦА */
+  var mx='<table class="mx"><tr><th class="rowh">Дело</th>'
+   + shagi.map(function(s,i){return '<th'+((D.granicy||[]).indexOf(i)>=0?' style="color:#6E6858"':'')+'>'+esc(s)+'</th>';}).join('')+'</tr>'
+   + dela.map(function(d){
+       return '<tr><td class="rowh"><b>'+esc(d.nomer)+'</b>'+esc(d.nazvanie)+'</td>'
+        + (d.kletki||[]).map(function(c){var m=CL[c]||CL.net;
+            var g = (c==='idet') ? '<span class="pulse"></span>'+m.g : m.g;
+            return '<td class="cl '+esc(c)+'"><span class="g">'+g+'</span>'+(m.t?'<span class="t">'+m.t+'</span>':'')+'</td>';
+          }).join('')+'</tr>';
+     }).join('')+'</table>';
+  h.push('<section class="sec"><h2>Путь дел по шагам</h2>'
+   +'<p class="lead">Строка это дело, столбец шаг процесса. Читается слева направо: где дело прошло само, где ты его трогал, где шаг делали дважды, где оно идёт прямо сейчас и где встало насовсем.</p>'
+   +'<div class="scroll">'+mx+'</div>'
+   +'<div class="legend">'
+     +'<span><i style="background:#DEEEE4;color:#256B3E">✓</i>прошло само</span>'
+     +'<span><i style="background:#DEEEE4;color:#256B3E;border:1px dashed #5C2B51">✓</i>прошло, но ты касался</span>'
+     +'<span><i style="background:#F6EBD4;color:#8A6410">×2</i>шаг делали дважды</span>'
+     +'<span><i style="background:#EFE2EC;color:#5C2B51;border:1px solid #5C2B51">●</i>идёт сейчас</span>'
+     +'<span><i style="background:#F7DFDC;color:#A83228;border:1px solid #A83228">✕</i>здесь встало</span>'
+     +'<span><i style="background:#E6E1D5;color:#6E6858">◇</i>граница, тут ты по замыслу</span>'
+     +'<span><i style="border:1px dashed #CFC5B2;color:#CFC5B2">·</i>не дошло</span>'
+   +'</div>'
+   +'<details class="tv"><summary>Показать таблицей</summary><div class="scroll"><table class="tbl">'
+     +'<tr><th>Дело</th>'+shagi.map(function(s){return '<th>'+esc(s)+'</th>';}).join('')+'</tr>'
+     +dela.map(function(d){return '<tr><td>'+esc(d.nomer)+' '+esc(d.nazvanie)+'</td>'
+        +(d.kletki||[]).map(function(c){return '<td>'+((CL[c]||CL.net).t||'не дошло')+'</td>';}).join('')+'</tr>';}).join('')
+   +'</table></div></details>'
+   +'</section>');
+
+  /* ПО ШАГАМ */
+  function n(v,cls){ return '<td class="num '+(v?cls:'zero')+'">'+v+'</td>'; }
+  h.push('<section class="sec"><h2>По шагам</h2>'
+   +'<p class="lead">Где именно рвётся и по какой причине. Отказ по инструменту лечится повтором, отказ по данным не лечится повтором никогда: чинить надо предыдущий шаг.</p>'
+   +'<div class="scroll"><table class="tbl">'
+   +'<tr><th>Шаг</th><th>Встало</th><th>Переделок</th><th>Отказ: данные</th><th>Отказ: инструмент</th><th>Твоих касаний</th></tr>'
+   + pos.map(function(r){return '<tr><td>'+esc(r.shag)+'</td>'+n(r.obryvov,'hot')+n(r.peredelok,'warm')+n(r.dannye,'hot')+n(r.instrument,'warm')+n(r.kasaniy,'hot')+'</tr>';}).join('')
+   +'</table></div></section>');
+
+  /* КВАДРАТ */
+  var maloKas = vsego ? (skvoznyh/vsego)>=0.5 : false;
+  var prinim  = dolyaPrin >= 0.5;
+  function qc(t,p,a){return '<div class="qc'+(a?' here':'')+'">'+(a?'<span class="badge">ты здесь</span>':'')+'<h4>'+t+'</h4><p>'+p+'</p></div>';}
+  h.push('<section class="sec"><h2>Что чинить</h2>'
+   +'<p class="lead">Скрещиваем две вещи: часто ли ты лезешь руками и годится ли результат. В каждом углу чинится разное, и почти всегда не то, куда тянет рука.</p>'
+   +'<div class="quad">'
+     +'<div class="axl">результат<br>принимаешь<br>как есть</div>'
+     + qc('Работает','Не трогай. Самая частая ошибка недели: улучшать то, что уже едет.', maloKas&&prinim)
+     + qc('Навык хороший, связка плохая','Чинить стыки, а не промт. Дело привозит нужное, но само не доезжает.', !maloKas&&prinim)
+     +'<div class="axl">результат<br>приходится<br>править</div>'
+     + qc('Связка хорошая, навык плохой','Чинить промт навыка и проверяющего. Доезжает само, но привозит не то.', maloKas&&!prinim)
+     + qc('Шаг не готов к автоматизации','Вернуть человеку и честно пометить границей, либо разбить на два шага попроще.', !maloKas&&!prinim)
+     +'<div></div><div class="axb">мало твоих рук</div><div class="axb">много твоих рук</div>'
+   +'</div>'
+   +'<div class="qbase">Считаю так. По рукам: <b>'+skvoznyh+' из '+vsego+'</b> дел прошли без тебя, это '+pct
+     +' процентов, и «мало рук» начинается с половины. По результату: <b>'+Math.round(dolyaPrin*100)
+     +'</b> процентов принято как есть (принято '+(pr.prinyato||0)+', поправил '+(pr.popravil||0)+', отклонил '+(pr.otklonil||0)
+     +'), порог тоже половина. В среднем ты касался '+kasNaDelo.toFixed(1)+' раза на дело. Пороги показаны, чтобы ты мог со мной спорить.</div>'
+   +'</section>');
+
+  if((D.malo_dannyh||[]).length){
+    h.push('<section class="sec"><h2>Пока не считаю</h2>'
+     +'<p class="lead">Эти числа формально посчитались бы, но на такой выборке в них больше шума, чем смысла. Покажу, когда данных хватит.</p>'
+     +'<div class="dim">'+D.malo_dannyh.map(function(x){return '<div><span>'+esc(x.imya)+'</span><b>&mdash;</b><i>'+esc(x.pochemu)+'</i></div>';}).join('')
+     +'</div></section>');
+  }
+
+  h.push('<section class="sec"><h2>Что дальше</h2><div class="next">'
+   +(D.dalshe||[]).map(function(t,i){return '<div><b>'+(i+1)+'</b><div>'+esc(t)+'</div></div>';}).join('')
+   +'</div></section>');
+
+  h.push('<footer>Собрано по журналу событий: шесть колонок, семь разрешённых слов в столбце «исход». Ничего не додумано. Чего в журнале нет, того нет и здесь.</footer>');
+  root.innerHTML=h.join('');
+
+  /* Живой режим: считаем возраст и перезагружаемся, когда вкладка видна */
+  if(live){
+    var t0 = D.obnovleno ? new Date(D.obnovleno).getTime() : Date.now();
+    var left = 60;
+    setInterval(function(){
+      var m = Math.floor((Date.now()-t0)/60000);
+      document.getElementById("ago").textContent =
+        m<1 ? "обновлено только что" : "обновлено "+m+" "+skl(m,"минуту","минуты","минут")+" назад";
+      left--;
+      var tk=document.getElementById("tick");
+      if(tk) tk.textContent = document.hidden ? "вкладка не активна" : "перечитаю через "+Math.max(left,0)+" с";
+      if(left<=0){ left=60; if(!document.hidden) location.reload(); }
+    }, 1000);
+  }
+}
+</script>
+</body></html>
