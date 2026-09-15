@@ -112,10 +112,10 @@ naladit-komandu/
   SKILL.md
   assets/
     shablon-shemy.html           шаблон схемы процесса
-chatgpt/           плоский пакет для ChatGPT: шесть инструкций, два шаблона и инструкции проекта
+chatgpt/           плоский пакет для ChatGPT: семь инструкций, три шаблона и инструкции проекта
 ```
 
-Папка `chatgpt/` нужна средам без папок навыков. В проект загружаются сразу девять файлов: шесть инструкций, `shablon-proverki.txt`, `shablon-pasporta.txt` и `INSTRUKCII-PROEKTA.txt`. Основной маршрут для всех один: промт 1.
+Папка `chatgpt/` нужна средам без папок навыков. В проект загружаются сразу одиннадцать файлов: семь инструкций, `shablon-proverki.txt`, `shablon-pasporta.txt`, `shablon-shemy.html` и `INSTRUKCII-PROEKTA.txt`. Основной маршрут для всех один: промт 1.
 
 ## Обезличивание данных
 

@@ -1,0 +1,214 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Схема процесса</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,700;1,800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F5F1E8; --card:#FFFFFF; --card2:#EDE8DC; --line:#DDD5C6; --line2:#CFC5B2;
+  --text:#221E28; --muted:#837D8C; --muted2:#55505C;
+  --plum:#5C2B51; --plum-dim:#EFE2EC;
+  --lime:#C8FF00;
+  --green:#256B3E; --green-dim:#DEEEE4;
+  --amber:#D19A12; --amber-ink:#8A6410; --amber-dim:#F6EBD4;
+  --red:#A83228; --red-dim:#F7DFDC;
+  --violet:#7245A0; --violet-dim:#EBE2F5;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;font-size:16px;line-height:1.6;font-weight:400;padding-inline:20px;padding-block:28px 64px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:30px}
+h1,h2{font-family:"Barlow Condensed",Arial,sans-serif;font-style:italic;font-weight:800;text-transform:uppercase;margin:0;letter-spacing:.01em}
+.top{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--plum);animation:p 2s infinite}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.pulse{animation:none}}
+header{border-bottom:2px solid var(--plum);padding-bottom:20px}
+header h1{font-size:46px;line-height:.98;margin-top:12px;color:var(--plum)}
+header .sub{color:var(--muted2);margin-top:10px;max-width:60ch}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tag{font-size:12px;letter-spacing:.05em;text-transform:uppercase;padding:4px 11px;border:1px solid var(--line2);color:var(--muted2);background:var(--card)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(max-width:620px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stats>div{background:var(--card);padding:16px 18px}
+.stats span{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.stats b{font-family:"Barlow Condensed",Arial,sans-serif;font-style:italic;font-weight:800;font-size:34px;line-height:1;display:block;margin-top:6px;color:var(--plum);font-variant-numeric:tabular-nums}
+.stats i{font-style:normal;font-size:13px;color:var(--muted2);display:block;margin-top:3px}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sec>h2{font-size:26px;color:var(--plum)}
+.sec>p.lead{margin:0;color:var(--muted2);max-width:66ch}
+.legend{display:flex;flex-wrap:wrap;gap:9px 20px;font-size:13.5px;color:var(--muted2)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.sq{width:11px;height:11px;flex:none}
+.node{display:grid;grid-template-columns:24px 1fr;gap:0 14px}
+.rail{position:relative;display:flex;justify-content:center;padding-top:18px}
+.rail::before{content:"";position:absolute;top:0;bottom:-8px;left:calc(50% - 1px);width:2px;background:var(--line2)}
+.node:last-child .rail::before{bottom:auto;height:18px}
+.bead{width:11px;height:11px;position:relative;z-index:2;background:var(--muted)}
+.node.rabotaet .bead{background:var(--green)}
+.node.sobrano .bead{background:var(--amber)}
+.node.granica .bead{background:var(--violet);border-radius:50%}
+.node.net .bead{background:var(--bg);border:2px dashed var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.node.rabotaet .card{border-left:3px solid var(--green)}
+.node.sobrano .card{border-left:3px solid var(--amber)}
+.node.net .card{background:transparent;border-style:dashed;border-color:var(--line2)}
+.node.granica .card{background:var(--violet-dim);border-color:transparent}
+.hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 11px}
+.num{font-size:11.5px;font-weight:600;letter-spacing:.08em;color:var(--muted)}
+.nm{font-weight:600;font-size:17px}
+.kind{font-size:10.5px;font-weight:700;letter-spacing:.09em;padding:3px 8px;border:1px solid var(--line2);color:var(--muted2);background:var(--card2)}
+.kind.rol{border-color:transparent;background:var(--lime);color:#221E28}
+.desc{color:var(--muted2);font-size:14.5px}
+.state{align-self:flex-start;font-size:12.5px;font-weight:600;padding:4px 11px}
+.state.rabotaet{background:var(--green-dim);color:var(--green)}
+.state.sobrano{background:var(--amber-dim);color:var(--amber-ink)}
+.state.net{background:var(--card2);color:var(--muted2)}
+.state.granica{background:transparent;color:var(--violet);padding-left:0}
+.nav{margin-left:2px;border-left:2px solid var(--line);padding-left:14px;display:flex;flex-direction:column;gap:6px}
+.nav .r{font-size:14px;display:flex;flex-wrap:wrap;gap:3px 9px;align-items:baseline}
+.nav .r b{font-weight:600}
+.nav .r code{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--muted2);overflow-wrap:anywhere}
+.warn{color:var(--amber-ink);font-size:13.5px}
+.lnk{padding:7px 0 7px 24px;position:relative;min-height:36px;display:flex;flex-wrap:wrap;align-items:center;gap:9px}
+.lnk::before{content:"";position:absolute;left:10px;top:0;bottom:0;width:2px;background:var(--line2)}
+.lnk.br::before{background:repeating-linear-gradient(to bottom,var(--red) 0 5px,transparent 5px 10px)}
+.lnk .t{font-size:13px;color:var(--muted)}
+.lnk.br .t{color:var(--red);font-weight:600}
+.lnk code{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:var(--card2);padding:3px 9px;color:var(--muted2);overflow-wrap:anywhere}
+.lnk.br code{background:var(--red-dim);color:var(--red)}
+.wedge{margin:4px 0 4px 24px;background:var(--red-dim);border-left:3px solid var(--red);padding:13px 15px;display:flex;flex-direction:column;gap:6px}
+.wedge .h{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--red)}
+.wedge .t{font-weight:600;font-size:16px}
+.wedge .d{color:var(--muted2);font-size:14.5px}
+.wedge .v{font-weight:600;font-size:14.5px}
+.q{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--plum);padding:16px 18px;display:flex;flex-direction:column;gap:7px}
+.q .qn{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--plum)}
+.q .qt{font-weight:600;font-size:17px}
+.q .qd{color:var(--muted2);font-size:14.5px}
+.q .opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:5px}
+.q .opts span{font-size:13px;padding:6px 13px;border:1px solid var(--line2);color:var(--muted2);background:var(--card2)}
+footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 20px}
+</style></head><body>
+
+<div class="wrap">
+  <header>
+    <div class="top"><i class="pulse"></i><span id="eyebrow"></span></div>
+    <h1>Схема процесса</h1>
+    <div class="sub">Так я увидел твой процесс сверху донизу. Проверь и скажи, где я ошибся.</div>
+    <div class="tags" id="tags"></div>
+  </header>
+
+  <div class="stats" id="stats"></div>
+
+  <section class="sec">
+    <h2>Путь задачи сверху вниз</h2>
+    <p class="lead">Каждый блок это шаг твоей карты процесса. Пометки НАВЫК, СКРИПТ и ГРАНИЦА взяты из неё же. Между шагами написано, каким файлом работа переходит дальше.</p>
+    <div class="legend">
+      <span><i class="sq" style="background:var(--green)"></i>навык есть и работает</span>
+      <span><i class="sq" style="background:var(--amber)"></i>навык есть, ни разу не гонял</span>
+      <span><i class="sq" style="border:2px dashed var(--muted);background:var(--bg)"></i>навыка нет, делаешь сам</span>
+      <span><i class="sq" style="background:var(--violet);border-radius:50%"></i>граница, решает человек</span>
+    </div>
+    <div id="tree"></div>
+  </section>
+
+  <section class="sec" id="qsec" hidden>
+    <h2>Вопросы к тебе</h2>
+    <p class="lead">Я вижу, что у тебя лежит на диске, но не знаю, зачем ты так сделал. Ответь в чате, и я пойму, что чинить, а что оставить.</p>
+    <div id="qs" style="display:flex;flex-direction:column;gap:12px"></div>
+  </section>
+
+  <footer>
+    <span>Собрано навыком <b>naladit-komandu</b> из карты процесса, паспортов, навыков, дел и журнала</span>
+    <span>Ничего не меняю, пока не ответишь</span>
+  </footer>
+</div>
+
+<script type="application/json" id="dannye">
+{"process":"","shagi":[],"perehody":[],"vrezki":[],"voprosy":[]}
+</script>
+<script>
+(function(){
+  var d = null;
+  try { d = JSON.parse(document.getElementById('dannye').textContent); } catch(e){}
+  if(!d || !(d.shagi||[]).length){
+    document.getElementById('tree').innerHTML =
+      '<div class="card">Данные схемы не подставлены. Запусти навык naladit-komandu ещё раз.</div>';
+    return;
+  }
+  var esc = function(s){ return String(s==null?'':s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); };
+  document.getElementById('eyebrow').textContent =
+    [d.kompaniya, d.process].filter(Boolean).join(' · ');
+  document.title = 'Схема процесса' + (d.process ? ' · ' + d.process : '');
+
+  var sh = d.shagi || [];
+  function skl(n,a,b,c){ var m=n%100; if(m>=11&&m<=14) return c; m=n%10;
+    return m===1?a:(m>=2&&m<=4?b:c); }
+  var tags = [sh.length + ' ' + skl(sh.length,'шаг','шага','шагов')];
+  var roli = {}; sh.forEach(function(s){ if(s.rol) roli[s.rol]=1; });
+  var nr = Object.keys(roli).length; if(nr) tags.push(nr + (nr===1?' роль':' роли'));
+  var nn = 0; sh.forEach(function(s){ nn += (s.navyki||[]).length; });
+  if(nn) tags.push(nn + ' ' + skl(nn,'навык','навыка','навыков'));
+  if(d.sobrano) tags.push('собрано ' + d.sobrano);
+  document.getElementById('tags').innerHTML = tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
+
+  var c = {rabotaet:0, sobrano:0, net:0, granica:0};
+  sh.forEach(function(s){ if(c[s.sostoyanie]!==undefined) c[s.sostoyanie]++; });
+  var razryvov = (d.vrezki||[]).length;
+  document.getElementById('stats').innerHTML =
+    tile('Закрыто ролями', c.rabotaet + c.sobrano, 'из ' + sh.length + ' шагов') +
+    tile('Работает', c.rabotaet, skl(c.rabotaet,'шаг','шага','шагов')) +
+    tile('Собрано, не гонял', c.sobrano, skl(c.sobrano,'шаг','шага','шагов')) +
+    tile('Ты в середине', razryvov, skl(razryvov,'место','места','мест'));
+  function tile(k,v,i){ return '<div><span>'+esc(k)+'</span><b>'+v+'</b><i>'+esc(i)+'</i></div>'; }
+
+  var byAfter = {};
+  (d.perehody||[]).forEach(function(p){ (byAfter[p.posle]=byAfter[p.posle]||{}).p = p; });
+  (d.vrezki||[]).forEach(function(v){ (byAfter[v.posle]=byAfter[v.posle]||{}).v = v; });
+
+  var html = '';
+  sh.forEach(function(s, i){
+    var st = s.sostoyanie || 'net';
+    html += '<div class="node '+esc(st)+'"><div class="rail"><span class="bead"></span></div><div class="card">';
+    html += '<div class="hd"><span class="num">ШАГ '+esc(s.n)+'</span><span class="nm">'+esc(s.nazvanie)+'</span>';
+    if(s.pometka) html += '<span class="kind">'+esc(s.pometka)+'</span>';
+    if(s.rol) html += '<span class="kind rol">РОЛЬ: '+esc(s.rol).toUpperCase()+'</span>';
+    html += '</div>';
+    if(s.opisanie) html += '<div class="desc">'+esc(s.opisanie)+'</div>';
+    if(s.podpis) html += '<span class="state '+esc(st)+'">'+esc(s.podpis)+'</span>';
+    if((s.navyki||[]).length){
+      html += '<div class="nav">';
+      s.navyki.forEach(function(n){
+        html += '<div class="r"><b>'+esc(n.imya)+'</b><code>берёт '+esc(n.vhod)+' → кладёт '+esc(n.vyhod)+'</code></div>';
+      });
+      if(s.zamechanie) html += '<div class="r warn">'+esc(s.zamechanie)+'</div>';
+      html += '</div>';
+    } else if(s.zamechanie){
+      html += '<div class="warn">'+esc(s.zamechanie)+'</div>';
+    }
+    html += '</div></div>';
+
+    var a = byAfter[s.n];
+    if(a && a.p){
+      html += '<div class="lnk'+(a.p.razryv?' br':'')+'"><span class="t">'+esc(a.p.podpis||'дальше идёт')+'</span><code>'+esc(a.p.fayl)+'</code></div>';
+    }
+    if(a && a.v){
+      html += '<div class="wedge"><div class="h">Здесь в середине ты</div><div class="t">'+esc(a.v.zagolovok)+'</div><div class="d">'+esc(a.v.tekst)+'</div>'+(a.v.vyvod?'<div class="v">'+esc(a.v.vyvod)+'</div>':'')+'</div>';
+    }
+  });
+  document.getElementById('tree').innerHTML = html;
+
+  var qs = d.voprosy || [];
+  if(qs.length){
+    document.getElementById('qsec').hidden = false;
+    document.getElementById('qs').innerHTML = qs.map(function(q,i){
+      var o = (q.varianty||[]).map(function(v){return '<span>'+esc(v)+'</span>';}).join('');
+      return '<div class="q"><div class="qn">Вопрос '+(i+1)+' из '+qs.length+(q.tema?' · '+esc(q.tema):'')+'</div>'+
+             '<div class="qt">'+esc(q.vopros)+'</div>'+
+             (q.pochemu?'<div class="qd">'+esc(q.pochemu)+'</div>':'')+
+             (o?'<div class="opts">'+o+'</div>':'')+'</div>';
+    }).join('');
+  }
+})();
+</script>
+</body></html>
