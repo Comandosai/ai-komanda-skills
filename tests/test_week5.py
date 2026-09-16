@@ -1,6 +1,7 @@
 """Synthetic contract tests, NOT live Claude/Gemini/Codex agent evaluations."""
 import importlib.util
 import json
+import re
 from pathlib import Path
 import tempfile
 import unittest
@@ -48,6 +49,24 @@ class DashboardTests(unittest.TestCase):
         self.assertFalse(data['comparison']['comparable'])
         self.assertEqual(data['cases_without_journal'], ['01'])
 
+    def test_fixed_names_in_attempt_folders_preserve_first_series(self):
+        legacy = self.root/'dela'/'01'/'02-result.xlsx'
+        legacy.parent.mkdir(parents=True)
+        legacy.write_bytes(b'legacy-result')
+        for series, aid in [('baseline', 'first'), ('repeat', 'second')]:
+            a = self.attempt(aid, series=series)
+            folder = self.root/'dela'/'01'/aid
+            result, check = folder/'02-result.xlsx', folder/'03-check.md'
+            result.write_bytes(series.encode())
+            check.write_text('accepted '+series)
+            a.update(result=str(result.relative_to(self.root)), check=str(check.relative_to(self.root)))
+            self.success(aid)
+        data = self.result()
+        self.assertEqual(legacy.read_bytes(), b'legacy-result')
+        self.assertEqual((legacy.parent/'first'/'02-result.xlsx').read_bytes(), b'baseline')
+        self.assertTrue(all(a['complete'] for a in data['attempts']))
+        self.assertTrue(data['comparison']['comparable'])
+
     def test_success_requires_all_steps_and_check(self):
         a=self.attempt(); self.success()
         self.assertTrue(self.result()['attempts'][0]['no_hands'])
@@ -58,10 +77,83 @@ class DashboardTests(unittest.TestCase):
         self.attempt(); self.event(step='Выход'); self.event(step='Выход',outcome='принято')
         self.assertFalse(self.result()['attempts'][0]['complete'])
 
+    def test_prose_under_table_does_not_invalidate_complete(self):
+        self.attempt(); self.success()
+        self.lines.extend(['', '## Пояснение', 'Журнал заполняет роль после задачи.'])
+        data = self.result()
+        self.assertTrue(data['attempts'][0]['complete'])
+        self.assertTrue(data['attempts'][0]['no_hands'])
+        self.assertTrue(any('не таблица' in w for w in data['warnings']))
+
+    def test_malformed_table_row_explains_uncertainty(self):
+        self.attempt(); self.success()
+        self.lines.append('дата | 01 | потерянное событие')
+        a = self.result()['attempts'][0]
+        self.assertTrue(a['uncertain'])
+        self.assertFalse(a['complete'])
+        self.assertTrue(any('6 колонок' in p for p in a['problems']))
+
+    def test_unassigned_case_event_explains_uncertainty(self):
+        self.attempt(); self.success()
+        self.lines.append('дата | 01 | Вход | я | готово | нет номера попытки')
+        self.assertTrue(any('без известной попытки' in p for p in self.result()['attempts'][0]['problems']))
+
     def test_manual_handoff_not_hidden(self):
         self.attempt(); self.success(); self.event(step='Вход→Выход',actor='я')
         a=self.result()['attempts'][0]
         self.assertTrue(a['complete']); self.assertFalse(a['no_hands']); self.assertEqual(a['touches'],1)
+
+    def test_one_two_three_roles_preserve_attempt_and_count_handoffs(self):
+        for count in (1, 2, 3):
+            with self.subTest(roles=count):
+                self.cfg['steps'] = ['Шаг '+str(i) for i in range(count)]
+                self.cfg['attempts'] = []; self.lines = []
+                aid = 'roles'+str(count)
+                self.attempt(aid)
+                for i, step in enumerate(self.cfg['steps']):
+                    if i:
+                        self.event(aid, step=self.cfg['steps'][i-1]+'→'+step, actor='я')
+                    self.event(aid, step=step)
+                self.event(aid, step=step, outcome='принято', actor='Проверяющий')
+                a = self.result()['attempts'][0]
+                self.assertEqual(a['id'], aid)
+                self.assertTrue(a['complete'])
+                self.assertEqual(a['touches'], count-1)
+                self.assertEqual(a['no_hands'], count == 1)
+
+    def test_three_roles_missing_middle_step_is_not_complete(self):
+        self.cfg['steps'] = ['Первая', 'Вторая', 'Третья']
+        self.attempt()
+        self.event(step='Первая')
+        self.event(step='Третья')
+        self.event(step='Третья', outcome='принято', actor='Проверяющий')
+        self.assertFalse(self.result()['attempts'][0]['complete'])
+
+    def test_five_attempt_folders_survive_repeat_for_each_team_size(self):
+        for count in (1, 2, 3):
+            with self.subTest(roles=count):
+                self.cfg['steps'] = ['Шаг '+str(i) for i in range(count)]
+                self.cfg['attempts'] = []; self.lines = []
+                preserved = {}
+                for series in ('baseline', 'repeat'):
+                    for n in range(5):
+                        case = str(n)
+                        aid = f'{series}-{count}-{n}'
+                        a = self.attempt(aid, case, series)
+                        path = self.root/a['result']
+                        path.write_text(aid)
+                        if series == 'baseline': preserved[path] = path.read_bytes()
+                        for i, step in enumerate(self.cfg['steps']):
+                            if i:
+                                self.event(aid, step=self.cfg['steps'][i-1]+'→'+step, actor='я', case=case)
+                            self.event(aid, step=step, case=case)
+                        self.event(aid, step=step, outcome='принято', actor='Проверяющий', case=case)
+                data = self.result()
+                for path, contents in preserved.items(): self.assertEqual(path.read_bytes(), contents)
+                self.assertEqual(data['series']['baseline']['complete'], 5)
+                self.assertEqual(data['series']['repeat']['complete'], 5)
+                self.assertTrue(data['comparison']['comparable'])
+                self.assertEqual(data['comparison']['delta'], 0)
 
     def test_rework_and_touch_coexist(self):
         self.attempt(); self.event(); self.event(actor='я'); self.event(step='Выход'); self.event(step='Выход',outcome='принято')
@@ -172,6 +264,28 @@ class DashboardTests(unittest.TestCase):
 
 
 class PackageTests(unittest.TestCase):
+    def test_guide_uses_actual_dashboard_headings(self):
+        guide = (ROOT/'guide/GUIDE-N5.html').read_text()
+        template = (ROOT/'pokazat-dela/assets/shablon-dashboarda.html').read_text()
+        headings = re.findall(r'<h2>([^<]+)</h2>', template)
+        self.assertEqual(len(headings), 6)
+        for heading in headings: self.assertIn(heading, guide)
+        self.assertNotIn('«что чинить»', guide.lower())
+        self.assertNotIn('Пока не считаю', guide)
+
+    def test_participant_prompts_hide_internal_series_fields(self):
+        prompts = json.loads((ROOT/'guide/prompts.json').read_text())
+        for key, prompt in prompts.items():
+            for technical in ('baseline', 'repeat', 'trial', 'run=', 'идентификатор', 'контрольные суммы', 'зарегистрируй'):
+                self.assertNotIn(technical, prompt, key)
+
+    def test_week5_deliverables_have_no_long_dashes(self):
+        for path in [ROOT/'README.md', *list((ROOT/'guide').glob('*')),
+                     ROOT/'naladit-komandu/SKILL.md', ROOT/'pokazat-dela/references/dannye.md']:
+            text = path.read_text()
+            self.assertNotIn(chr(0x2013), text, str(path))
+            self.assertNotIn(chr(0x2014), text, str(path))
+
     def test_seven_guide_prompts(self):
         prompts=json.loads((ROOT/'guide/prompts.json').read_text())
         self.assertEqual(set(prompts),{'p'+str(i) for i in range(1,8)})

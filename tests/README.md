@@ -12,12 +12,33 @@ node scripts/sync-week5-chat.mjs
 git diff --check
 ```
 
-Python: 21 тест, включая 6 подслучаев форм процессов. Проверены нулевой экран,
+Python: 31 тест, включая подслучаи для одной, двух и трёх ролей. Проверены нулевой экран,
 обязательные шаги и проверка, ручная передача, одновременное касание и переделка,
 остановки по данным/инструменту, устаревшая приёмка после перезапуска или отказа,
 перезапуск предыдущего шага, неизвестные касания/авторы, дубли, старые строки без
 меток, две сопоставимые пятёрки, изменившиеся входы, повторное использование старого
 результата, экранирование HTML и разделителя, уникальные снимки, выход пути за проект.
+
+## Исправления после ревизии 820a4d5
+
+Добавлены 10 тестов:
+
+- test_fixed_names_in_attempt_folders_preserve_first_series
+- test_prose_under_table_does_not_invalidate_complete
+- test_malformed_table_row_explains_uncertainty
+- test_unassigned_case_event_explains_uncertainty
+- test_one_two_three_roles_preserve_attempt_and_count_handoffs
+- test_three_roles_missing_middle_step_is_not_complete
+- test_five_attempt_folders_survive_repeat_for_each_team_size
+- test_guide_uses_actual_dashboard_headings
+- test_participant_prompts_hide_internal_series_fields
+- test_week5_deliverables_have_no_long_dashes
+
+Проверка папок моделирует согласованную раскладку результатов, а не исполнение
+ревизии языковой моделью. Проверены сохранность старого файла, сохранность первой
+пятёрки после повтора и подсчёт ручных переходов для команд разного размера.
+Формулы complete/no_hands, сравнение по входам/участку, атомарная запись и защита
+путей не изменены. Изменена только причина неопределённости при разборе журнала.
 
 Node: исполнение кода HTML на минимальной модели DOM, нулевой/заполненный экран,
 экранирование, соответствие семи текстов кнопкам копирования, точное совпадение

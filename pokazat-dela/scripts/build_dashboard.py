@@ -79,9 +79,13 @@ def aggregate(root, config, content):
         events = [r for r in rows if r['run'] == a['id']]
         problems = []
         cells = []
-        # Unparseable lines could hide a touch/failure, so all outcomes are uncertain.
-        uncertain = any('не учтена' in w and 'дубль' not in w for w in warnings)
-        uncertain |= any(r['case'] == a['case'] for r in unassigned)
+        # Only malformed table rows can hide an event. Prose is a warning, not an event.
+        malformed = [w for w in warnings if 'ожидалось 6 колонок' in w]
+        problems.extend('Неопределённость: ' + w for w in malformed)
+        uncertain = bool(malformed)
+        if any(r['case'] == a['case'] for r in unassigned):
+            uncertain = True
+            problems.append('Неопределённость: есть события этого дела без известной попытки')
         valid = []
         for r in events:
             parts = r['step'].split('→')
