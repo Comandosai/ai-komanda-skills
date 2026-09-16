@@ -108,165 +108,32 @@ details.tv table{margin-top:10px}
 .empty{background:var(--card);border:1px dashed var(--line2);padding:20px;color:var(--muted2);text-align:center}
 footer{border-top:1px solid var(--line);padding-top:16px;font-size:13px;color:var(--muted)}
 </style></head><body>
-<div class="wrap" id="root"></div>
-
-<script type="application/json" id="dannye">
-{"kompaniya":"","zhivoy":false,"obnovleno":"","ohvat_teksta":"","bez_zhurnala":0,
- "shagi":[],"granicy":[],"seychas":[],"dela":[],"poshagam":[],
- "priemka":{"prinyato":0,"popravil":0,"otklonil":0},
- "kasaniy_vsego":0,"doshlo_do_kontsa":0,"skvoznyh_bylo":null,"bylo_data":"",
- "malo_dannyh":[],"dalshe":[]}
-</script>
-
+<main class="wrap" id="root"></main>
+<script type="application/json" id="dannye">null</script>
 <script>
-function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
-function skl(n,a,b,c){var m=n%100; if(m>=11&&m<=14) return c; m=n%10; return m===1?a:(m>=2&&m<=4?b:c);}
-var CL={
-  proshlo:{g:"✓",t:"прошло"}, kasanie:{g:"✓",t:"твои руки"},
-  peredelka:{g:"×2",t:"переделка"}, idet:{g:"●",t:"идёт сейчас"},
-  vstalo:{g:"✕",t:"встало"}, granica:{g:"◇",t:"ты"}, net:{g:"·",t:""}
-};
-var root=document.getElementById("root"), D=null;
-try{ D=JSON.parse(document.getElementById("dannye").textContent); }catch(e){ D=null; }
-
-if(!D||!D.dela||!D.dela.length){
-  root.innerHTML='<div class="empty">Данные не подставлены.<br>Скажи агенту: открой дашборд.</div>';
-}else{
-  var shagi=D.shagi||[], dela=D.dela||[], pos=D.poshagam||[], pr=D.priemka||{}, h=[];
-  var vsego=dela.length;
-  var skvoznyh=dela.filter(function(d){
-    var k=d.kletki||[]; var last=k[k.length-1];
-    return (last==="proshlo"||last==="granica") && !k.some(function(c){return c==="kasanie";});
-  }).length;
-  var doshlo = D.doshlo_do_kontsa!=null ? D.doshlo_do_kontsa : skvoznyh;
-  var pct = vsego?Math.round(skvoznyh/vsego*100):0;
-  var kasNaDelo = vsego ? ((D.kasaniy_vsego||0)/vsego) : 0;
-  var prVsego = (pr.prinyato||0)+(pr.popravil||0)+(pr.otklonil||0);
-  var dolyaPrin = prVsego ? (pr.prinyato||0)/prVsego : 0;
-
-  /* ШАПКА */
-  var live = D.zhivoy===true;
-  h.push('<header>'
-   +'<div class="top"><span class="pulse"></span>COMANDOS AI &middot; дашборд команды</div>'
-   +'<h1>'+esc(D.kompaniya)+'</h1>'
-   +'<div class="chain">'+shagi.map(function(s,i){return (i?'<i>&rarr;</i>':'')+'<span>'+esc(s)+'</span>';}).join('')+'</div>'
-   +'<div class="stamp"><b><span class="pulse"></span><span id="ago">обновлено только что</span></b>'
-   +'<span>'+(live
-      ? 'Роли пересобирают эту страницу сами, после каждого шага.'
-      : 'Это снимок. Обновить: скажи агенту «открой дашборд».')+'</span>'
-   +(live?'<span class="tick" id="tick"></span>':'')+'</div>'
-   +((D.seychas||[]).length
-      ? '<div class="now"><b>Сейчас в работе:</b>'+D.seychas.map(function(x){
-          return '<span>дело '+esc(x.delo)+', '+esc(x.nazvanie)+', шаг «'+esc(x.shag)+'», ведёт '+esc(x.kto)+', уже '+esc(x.skolko)+'</span>';
-        }).join(' ')+'</div>'
-      : '<div class="now"><b>Сейчас в работе:</b><span>ничего не идёт, все дела либо закрыты, либо стоят</span></div>')
-   +'</header>');
-
-  /* ОХВАТ */
-  var d0=D.skvoznyh_bylo;
-  var delta = (d0!=null)
-    ? (skvoznyh-d0>0 ? '<span class="dl">▲ +'+(skvoznyh-d0)+' к '+esc(D.bylo_data)+'</span>'
-      : skvoznyh-d0<0 ? '<span class="dl" style="color:#A83228">▼ '+(skvoznyh-d0)+' к '+esc(D.bylo_data)+'</span>'
-      : '<span class="dl flat">без изменений к '+esc(D.bylo_data)+'</span>') : '';
-  h.push('<section class="sec"><h2>Дошло или нет</h2>'
-   +'<p class="lead">Дело считается сквозным, только если ты не касался его ни разу. Одно твоё касание, и оно уже не сквозное, сколько бы шагов ни отработало само.</p>'
-   +'<div class="hero">'
-     +'<div class="lb">Сквозных без рук</div>'
-     +'<div class="row"><span class="big">'+skvoznyh+' / '+vsego+'</span><span class="of">'+pct+' процентов дел</span>'+delta+'</div>'
-     +'<div class="meter"><i style="width:'+pct+'%"></i></div>'
-     +'<div class="second"><b>'+doshlo+' / '+vsego+'</b><span>дошло до конца, считая те, что ты дотолкал руками</span></div>'
-     +'<div class="note">'+esc(D.ohvat_teksta||'')
-       +(D.bez_zhurnala ? ' Ещё '+D.bez_zhurnala+' '+skl(D.bez_zhurnala,'дело','дела','дел')+' без журнала, их не считаю.' : '')
-       +' Разница между двумя числами выше и есть цена твоих рук.</div>'
-   +'</div></section>');
-
-  /* МАТРИЦА */
-  var mx='<table class="mx"><tr><th class="rowh">Дело</th>'
-   + shagi.map(function(s,i){return '<th'+((D.granicy||[]).indexOf(i)>=0?' style="color:#6E6858"':'')+'>'+esc(s)+'</th>';}).join('')+'</tr>'
-   + dela.map(function(d){
-       return '<tr><td class="rowh"><b>'+esc(d.nomer)+'</b>'+esc(d.nazvanie)+'</td>'
-        + (d.kletki||[]).map(function(c){var m=CL[c]||CL.net;
-            var g = (c==='idet') ? '<span class="pulse"></span>'+m.g : m.g;
-            return '<td class="cl '+esc(c)+'"><span class="g">'+g+'</span>'+(m.t?'<span class="t">'+m.t+'</span>':'')+'</td>';
-          }).join('')+'</tr>';
-     }).join('')+'</table>';
-  h.push('<section class="sec"><h2>Путь дел по шагам</h2>'
-   +'<p class="lead">Строка это дело, столбец шаг процесса. Читается слева направо: где дело прошло само, где ты его трогал, где шаг делали дважды, где оно идёт прямо сейчас и где встало насовсем.</p>'
-   +'<div class="scroll">'+mx+'</div>'
-   +'<div class="legend">'
-     +'<span><i style="background:#DEEEE4;color:#256B3E">✓</i>прошло само</span>'
-     +'<span><i style="background:#DEEEE4;color:#256B3E;border:1px dashed #5C2B51">✓</i>прошло, но ты касался</span>'
-     +'<span><i style="background:#F6EBD4;color:#8A6410">×2</i>шаг делали дважды</span>'
-     +'<span><i style="background:#EFE2EC;color:#5C2B51;border:1px solid #5C2B51">●</i>идёт сейчас</span>'
-     +'<span><i style="background:#F7DFDC;color:#A83228;border:1px solid #A83228">✕</i>здесь встало</span>'
-     +'<span><i style="background:#E6E1D5;color:#6E6858">◇</i>граница, тут ты по замыслу</span>'
-     +'<span><i style="border:1px dashed #CFC5B2;color:#CFC5B2">·</i>не дошло</span>'
-   +'</div>'
-   +'<details class="tv"><summary>Показать таблицей</summary><div class="scroll"><table class="tbl">'
-     +'<tr><th>Дело</th>'+shagi.map(function(s){return '<th>'+esc(s)+'</th>';}).join('')+'</tr>'
-     +dela.map(function(d){return '<tr><td>'+esc(d.nomer)+' '+esc(d.nazvanie)+'</td>'
-        +(d.kletki||[]).map(function(c){return '<td>'+((CL[c]||CL.net).t||'не дошло')+'</td>';}).join('')+'</tr>';}).join('')
-   +'</table></div></details>'
-   +'</section>');
-
-  /* ПО ШАГАМ */
-  function n(v,cls){ return '<td class="num '+(v?cls:'zero')+'">'+v+'</td>'; }
-  h.push('<section class="sec"><h2>По шагам</h2>'
-   +'<p class="lead">Где именно рвётся и по какой причине. Отказ по инструменту лечится повтором, отказ по данным не лечится повтором никогда: чинить надо предыдущий шаг.</p>'
-   +'<div class="scroll"><table class="tbl">'
-   +'<tr><th>Шаг</th><th>Встало</th><th>Переделок</th><th>Отказ: данные</th><th>Отказ: инструмент</th><th>Твоих касаний</th></tr>'
-   + pos.map(function(r){return '<tr><td>'+esc(r.shag)+'</td>'+n(r.obryvov,'hot')+n(r.peredelok,'warm')+n(r.dannye,'hot')+n(r.instrument,'warm')+n(r.kasaniy,'hot')+'</tr>';}).join('')
-   +'</table></div></section>');
-
-  /* КВАДРАТ */
-  var maloKas = vsego ? (skvoznyh/vsego)>=0.5 : false;
-  var prinim  = dolyaPrin >= 0.5;
-  function qc(t,p,a){return '<div class="qc'+(a?' here':'')+'">'+(a?'<span class="badge">ты здесь</span>':'')+'<h4>'+t+'</h4><p>'+p+'</p></div>';}
-  h.push('<section class="sec"><h2>Что чинить</h2>'
-   +'<p class="lead">Скрещиваем две вещи: часто ли ты лезешь руками и годится ли результат. В каждом углу чинится разное, и почти всегда не то, куда тянет рука.</p>'
-   +'<div class="quad">'
-     +'<div class="axl">результат<br>принимаешь<br>как есть</div>'
-     + qc('Работает','Не трогай. Самая частая ошибка недели: улучшать то, что уже едет.', maloKas&&prinim)
-     + qc('Навык хороший, связка плохая','Чинить стыки, а не промт. Дело привозит нужное, но само не доезжает.', !maloKas&&prinim)
-     +'<div class="axl">результат<br>приходится<br>править</div>'
-     + qc('Связка хорошая, навык плохой','Чинить промт навыка и проверяющего. Доезжает само, но привозит не то.', maloKas&&!prinim)
-     + qc('Шаг не готов к автоматизации','Вернуть человеку и честно пометить границей, либо разбить на два шага попроще.', !maloKas&&!prinim)
-     +'<div></div><div class="axb">мало твоих рук</div><div class="axb">много твоих рук</div>'
-   +'</div>'
-   +'<div class="qbase">Считаю так. По рукам: <b>'+skvoznyh+' из '+vsego+'</b> дел прошли без тебя, это '+pct
-     +' процентов, и «мало рук» начинается с половины. По результату: <b>'+Math.round(dolyaPrin*100)
-     +'</b> процентов принято как есть (принято '+(pr.prinyato||0)+', поправил '+(pr.popravil||0)+', отклонил '+(pr.otklonil||0)
-     +'), порог тоже половина. В среднем ты касался '+kasNaDelo.toFixed(1)+' раза на дело. Пороги показаны, чтобы ты мог со мной спорить.</div>'
-   +'</section>');
-
-  if((D.malo_dannyh||[]).length){
-    h.push('<section class="sec"><h2>Пока не считаю</h2>'
-     +'<p class="lead">Эти числа формально посчитались бы, но на такой выборке в них больше шума, чем смысла. Покажу, когда данных хватит.</p>'
-     +'<div class="dim">'+D.malo_dannyh.map(function(x){return '<div><span>'+esc(x.imya)+'</span><b>&mdash;</b><i>'+esc(x.pochemu)+'</i></div>';}).join('')
-     +'</div></section>');
-  }
-
-  h.push('<section class="sec"><h2>Что дальше</h2><div class="next">'
-   +(D.dalshe||[]).map(function(t,i){return '<div><b>'+(i+1)+'</b><div>'+esc(t)+'</div></div>';}).join('')
-   +'</div></section>');
-
-  h.push('<footer>Собрано по журналу событий: шесть колонок, семь разрешённых слов в столбце «исход». Ничего не додумано. Чего в журнале нет, того нет и здесь.</footer>');
-  root.innerHTML=h.join('');
-
-  /* Живой режим: считаем возраст и перезагружаемся, когда вкладка видна */
-  if(live){
-    var t0 = D.obnovleno ? new Date(D.obnovleno).getTime() : Date.now();
-    var left = 60;
-    setInterval(function(){
-      var m = Math.floor((Date.now()-t0)/60000);
-      document.getElementById("ago").textContent =
-        m<1 ? "обновлено только что" : "обновлено "+m+" "+skl(m,"минуту","минуты","минут")+" назад";
-      left--;
-      var tk=document.getElementById("tick");
-      if(tk) tk.textContent = document.hidden ? "вкладка не активна" : "перечитаю через "+Math.max(left,0)+" с";
-      if(left<=0){ left=60; if(!document.hidden) location.reload(); }
-    }, 1000);
-  }
+'use strict';
+const D=JSON.parse(document.getElementById('dannye').textContent);
+const root=document.getElementById('root');
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+if(!D){root.innerHTML='<header><h1>Дашборд команды</h1><p>Данные пока не загружены. Здесь нет учебных результатов.</p></header>';}
+else {
+ const A=D.attempts||[], total=A.length, done=A.filter(a=>a.complete).length, free=A.filter(a=>a.no_hands).length;
+ const labels={trial:'Пробные',baseline:'Первая серия',repeat:'Повтор',other:'Другие'};
+ const state={net:'нет событий',idet:'в работе',vstalo:'остановка',proshlo:'готово'};
+ const list=xs=>xs.length?'<ul>'+xs.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<p>Нет.</p>';
+ let h='<header><div class="top">AI КОМАНДА · факты по журналу</div><h1>'+esc(D.title)+'</h1><div class="chain">'+D.steps.map(esc).join(' → ')+'</div><div class="stamp"><b>'+(D.live?'Обновление после шагов':'Снимок')+'</b><span>'+esc(D.updated)+'</span></div><p>'+esc(D.mode)+' · источник: '+esc(D.source)+'</p></header>';
+ h+='<section class="sec"><h2>Дошло или нет</h2><div class="hero"><div class="lb">Подтверждённо без рук внутри выбранного участка</div><div class="row"><b class="big">'+free+'</b><span class="of">из '+total+' зарегистрированных попыток</span></div><div class="second"><b>'+done+'</b><span>дошло до конца, включая работу с человеком</span></div><div class="note">Дела и попытки не одно и то же. При неизвестном учёте касаний успех без рук не подтверждён. Первичный запуск и просмотр результата после участка не считаются касанием.</div></div></section>';
+ h+='<section class="sec"><h2>Две серии на тех же входах</h2><div class="scroll"><table class="mx"><thead><tr><th>Серия</th><th>Зарегистрировано</th><th>Наблюдение закончено</th><th>Дошло</th><th>Без рук</th></tr></thead><tbody>';
+ for(const [key,s] of Object.entries(D.series||{})) h+='<tr><td>'+esc(labels[key]||key)+'</td><td>'+s.total+'</td><td>'+s.observed+'</td><td>'+s.complete+'</td><td>'+s.no_hands+'</td></tr>';
+ h+='</tbody></table></div><p>'+(D.comparison?.comparable?'Изменение числа без рук: '+(D.comparison.delta>0?'+':'')+D.comparison.delta+'. Это наблюдение на этой выборке, не доказательство надёжности.':'Сравнение пока недоступно: нужны одинаковые дела, входы и участок, законченные наблюдения и известные касания в обеих сериях.')+'</p></section>';
+ h+='<section class="sec"><h2>Путь дел по шагам</h2><div class="scroll"><table class="mx"><thead><tr><th class="rowh">Дело / попытка</th>'+D.steps.map(s=>'<th>'+esc(s)+'</th>').join('')+'<th>Касания</th><th>Итог</th></tr></thead><tbody>';
+ for(const a of A){h+='<tr><td class="rowh"><b>'+esc(a.case)+'</b>'+esc(a.id)+(a.synthetic===true?' · учебное':'')+'</td>';for(const c of a.cells){h+='<td class="cl '+(Object.hasOwn(state,c.state)?c.state:'net')+'"><span class="g">'+esc(state[c.state]||'неизвестно')+'</span><span class="t">'+(c.touches?'руки: '+c.touches+' ':'')+(c.reworks?'переделки: '+c.reworks:'')+'</span></td>';}h+='<td>'+a.touches+(a.touches_known?'':' + неизвестно')+'</td><td>'+(a.uncertain?'неопределённо':a.no_hands?'без рук':a.complete?'дошло':a.observed?'остановилось':'не закончено')+'</td></tr>';}
+ h+='</tbody></table></div>'+(!A.length?'<p>Пока нет зарегистрированных попыток. Это нулевой снимок, не замер «было».</p>':'')+'</section>';
+ h+='<section class="sec"><h2>Отказы и приёмка</h2><p>По данным: '+A.reduce((s,a)=>s+a.data_errors,0)+'. По инструментам: '+A.reduce((s,a)=>s+a.tool_errors,0)+'.</p><p>Последняя приёмка: принято '+A.filter(a=>a.acceptance==='принято').length+', поправил '+A.filter(a=>a.acceptance==='поправил').length+', отклонил '+A.filter(a=>a.acceptance==='отклонил').length+'. Нет записи '+A.filter(a=>!a.acceptance).length+'.</p><p>Файл и запись не доказывают качество содержания. Критерии проверяет роль или человек.</p></section>';
+ h+='<section class="sec"><h2>Что пока неизвестно</h2>'+list([...(D.warnings||[]),...A.flatMap(a=>a.problems.map(p=>a.id+': '+p)),...A.filter(a=>!a.touches_known).map(a=>a.id+': учёт ручных действий не подтверждён'),...(D.cases_without_journal||[]).map(c=>'Дело '+c+': нет журнала')])+'</section>';
+ h+='<section class="sec"><h2>Что дальше</h2><p>Разбери с механиком одно место по конкретным строкам журнала. Сохрани первую серию, внеси согласованное исправление и повтори те же входы в новых попытках.</p><p>Ручное согласование может быть нужной границей. Отказ может быть правильной остановкой. По цвету клетки причину не назначаем.</p></section>';
+ root.innerHTML=h;
+ if(D.live) setTimeout(()=>location.reload(),60000);
 }
 </script>
 </body></html>

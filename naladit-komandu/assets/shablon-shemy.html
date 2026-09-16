@@ -106,8 +106,8 @@ footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;color:
     <p class="lead">Каждый блок это шаг твоей карты процесса. Пометки НАВЫК, СКРИПТ и ГРАНИЦА взяты из неё же. Между шагами написано, каким файлом работа переходит дальше.</p>
     <div class="legend">
       <span><i class="sq" style="background:var(--green)"></i>навык есть и работает</span>
-      <span><i class="sq" style="background:var(--amber)"></i>навык есть, ни разу не гонял</span>
-      <span><i class="sq" style="border:2px solid var(--red);background:var(--bg)"></i>навыка нет, делаешь сам</span>
+      <span><i class="sq" style="background:var(--amber)"></i>инструкция есть, успех не подтверждён</span>
+      <span><i class="sq" style="border:2px solid var(--red);background:var(--bg)"></i>инструкции нет, уточняем исполнение</span>
       <span><i class="sq" style="background:var(--deemph);border-radius:50%"></i>граница, решает человек</span>
     </div>
     <p class="lead" id="granicy" hidden></p>
@@ -160,7 +160,7 @@ footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;color:
   document.getElementById('stats').innerHTML =
     tile('Охват', (c.rabotaet + c.sobrano) + ' / ' + (sh.length - c.granica), skl(sh.length - c.granica,'шаг отдан','шага отдано','шагов отдано') + ' ролям') +
     tile('Работает', c.rabotaet, skl(c.rabotaet,'шаг','шага','шагов')) +
-    tile('Собрано, не гонял', c.sobrano, skl(c.sobrano,'шаг','шага','шагов')) +
+    tile('Успех не подтверждён', c.sobrano, skl(c.sobrano,'шаг','шага','шагов')) +
     tile('Ты в середине', razryvov, skl(razryvov,'место','места','мест'));
   function tile(k,v,i){ return '<div><span>'+esc(k)+'</span><b>'+v+'</b><i>'+esc(i)+'</i></div>'; }
 
@@ -177,7 +177,7 @@ footer{border-top:1px solid var(--line);padding-top:14px;font-size:12.5px;color:
 
   var html = '';
   sh.forEach(function(s, i){
-    var st = s.sostoyanie || 'net';
+    var st = ['rabotaet','sobrano','net','granica'].indexOf(s.sostoyanie)>=0 ? s.sostoyanie : 'net';
     html += '<div class="node '+esc(st)+'"><div class="rail"><span class="bead"></span></div><div class="card">';
     html += '<div class="hd"><span class="num">ШАГ '+esc(s.n)+'</span><span class="nm">'+esc(s.nazvanie)+'</span>';
     if(s.pometka) html += '<span class="kind">'+esc(s.pometka)+'</span>';
