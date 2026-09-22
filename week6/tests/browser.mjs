@@ -16,8 +16,8 @@ const errors=[];page.on('pageerror',e=>errors.push(e.message));
 for(const width of [1440,390]){
  await page.setViewportSize({width,height:1000});
  await page.goto('file://'+path.join(root,'GUIDE-N6.html'));
- assert.equal(await page.locator('section').count(),11);
- assert.equal(await page.locator('.prompt button').count(),13);
+ assert.equal(await page.locator('section').count(),10);
+ assert.equal(await page.locator('.prompt button').count(),12);
  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  await page.screenshot({path:path.join(shots,`guide-${width}.png`)});
  await page.locator('#trial').scrollIntoViewIfNeeded();
@@ -30,7 +30,7 @@ for(const width of [1440,390]){
  await page.screenshot({path:path.join(shots,`vps-${width}.png`)});
  await page.goto('file://'+path.join(root,'assets/shablon-hakatona.html'));
  await page.locator('#mode').click();
- for(let i=0;i<8;i++){
+ for(let i=0;i<9;i++){
   assert.equal(await page.locator('.slide.active').count(),1);
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   await page.screenshot({path:path.join(shots,`deck-${width}-${i}.png`),fullPage:true});
@@ -41,4 +41,4 @@ for(const width of [1440,390]){
  await page.keyboard.press('Escape');assert.ok(await page.locator('body').evaluate(e=>!e.classList.contains('blackout')));
 }
 assert.deepEqual(errors,[]);
-await browser.close();console.log('PASS Chromium offline, desktop/mobile, copy, 8 slides, controls. Screenshots: '+shots);
+await browser.close();console.log('PASS Chromium offline, desktop/mobile, copy, 9 slides, controls. Screenshots: '+shots);

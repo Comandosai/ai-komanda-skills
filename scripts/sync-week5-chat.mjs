@@ -16,10 +16,11 @@ const header=`ПЛОСКАЯ ВЕРСИЯ ДЛЯ ЧАТА БЕЗ ОБЩЕЙ ПА
 
 `;
 const deps={
- 'mehanik':[],
+ 'svyazat-komandu':['references/nastrojka.md','references/zapusk.md','references/uchet.md'],
+ 'mehanik':['references/nedelya-6.md'],
  'naladit-komandu':['references/platformy.md'],
  'pokazat-dela':['references/dannye.md'],
- 'otchet':['references/nedelya-3.md','references/nedelya-5.md']
+ 'otchet':['references/nedelya-3.md','references/nedelya-5.md','references/nedelya-6.md']
 };
 for(const [name,refs] of Object.entries(deps)){
  let text=header+body(read(name+'/SKILL.md'))+'\n';

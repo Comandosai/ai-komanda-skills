@@ -4,7 +4,7 @@
 a{color:var(--lime);text-underline-offset:4px}a:hover{color:#e1ff78}button{font:inherit;cursor:pointer;background:var(--lime);color:#10120a;border:0;border-radius:6px;padding:10px 18px}button:focus-visible,a:focus-visible{outline:3px solid #fff;outline-offset:4px}
 header{border-bottom:1px solid var(--line);padding:16px max(20px,calc((100vw - 1000px)/2));font-weight:bold;letter-spacing:.08em}
 main{max-width:1000px;margin:auto;padding:48px 24px 100px}h1{font-size:clamp(38px,7vw,76px);line-height:1.04;letter-spacing:-.04em;margin:14px 0 24px;max-width:850px}h2{font-size:clamp(26px,4vw,40px);line-height:1.2;letter-spacing:-.02em}h3{font-size:21px;margin-top:28px}p{max-width:850px}.eyebrow{color:var(--lime);font-size:13px;letter-spacing:.12em;text-transform:uppercase}.intro{font-size:22px;color:var(--muted)}nav{display:flex;flex-wrap:wrap;gap:9px;margin:32px 0}nav a{padding:8px 12px;border:1px solid var(--line);border-radius:5px;text-decoration:none;font-size:14px}
-section{border-top:1px solid var(--line);margin-top:46px;padding-top:24px;scroll-margin-top:24px}.chat{color:var(--lime);font-weight:bold}li{padding:5px 0}ol{padding-left:26px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#090b0c;border:1px solid var(--line);padding:20px;border-radius:8px;font:15px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}code{overflow-wrap:anywhere;font-size:.92em}.prompt{margin:25px 0}.prompt button{font-size:14px}.result{border-left:4px solid var(--lime);padding:4px 0 4px 20px;margin:28px 0}.note{color:var(--muted);font-size:15px}.links{display:flex;flex-wrap:wrap;gap:18px;margin:20px 0}.status{background:#252518;border:1px solid #646334;border-radius:8px;padding:16px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}img{max-width:100%}.table-wrap{overflow-x:auto}footer{margin-top:50px;color:var(--muted);font-size:14px}blockquote{border-left:3px solid var(--lime);margin-left:0;padding-left:18px}
+section{border-top:1px solid var(--line);margin-top:46px;padding-top:24px;scroll-margin-top:24px}.chat{color:var(--lime);font-weight:bold}.meta{display:inline-block;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:14px}.files{background:#121415;border:1px solid var(--line);border-radius:8px;padding:14px 20px}.files h3{margin:0 0 6px;font-size:16px}.files ul{margin:0}li{padding:5px 0}ol{padding-left:26px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#090b0c;border:1px solid var(--line);padding:20px;border-radius:8px;font:15px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}code{overflow-wrap:anywhere;font-size:.92em}.prompt{margin:25px 0}.prompt button{font-size:14px}.result{border-left:4px solid var(--lime);padding:4px 0 4px 20px;margin:28px 0}.note{color:var(--muted);font-size:15px}.links{display:flex;flex-wrap:wrap;gap:18px;margin:20px 0}.status{background:#252518;border:1px solid #646334;border-radius:8px;padding:16px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}img{max-width:100%}.table-wrap{overflow-x:auto}footer{margin-top:50px;color:var(--muted);font-size:14px}blockquote{border-left:3px solid var(--lime);margin-left:0;padding-left:18px}
 @media(max-width:520px){main{padding:28px 18px 70px}body{font-size:16px}pre{padding:14px;font-size:14px}h1{font-size:42px}}
 @media print{body{background:white;color:black;font-size:11pt}header,nav,button{display:none}main{max-width:none;padding:0}section{break-inside:auto}pre,.status{background:#f5f5f5;color:black}a,.chat,.eyebrow,.note{color:#333}h1{font-size:32pt}h2{font-size:22pt}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -19,7 +19,7 @@ section{border-top:1px solid var(--line);margin-top:46px;padding-top:24px;scroll
 <li>Сервер оплачивается отдельно от модели и сервисов. Подписка на чат не означает автоматически API-доступ или право безлимитной серверной работы.</li>
 <li>Если проект требует Windows Excel, локального принтера, закрытой сетевой папки или корпоративного сертификата, остановитесь и согласуйте архитектуру. Linux VPS не переносит эти возможности сам.</li>
 <li>Для 1С на компьютере с запретом установки ИИ используйте разрешённую выгрузку или интеграцию через администратора. Не обходите запрет.</li>
-<li>Подготовьте чистый комплект команды без ключей и персональных данных для первой проверки. Убедитесь, что диспетчер уже проверен локально.</li>
+<li>Убедитесь, что диспетчер уже проверен локально. Затем создайте отдельную экспортную копию через <code>week6/scripts/export_team.py</code>. Никогда не зачищайте и не загружайте на сервер исходную рабочую папку.</li>
 <li>Запишите владельца сервера, ответственного за оплату, резервные копии и обновления.</li>
 </ul>
 <h2>1. Два окна терминала</h2>
@@ -71,6 +71,9 @@ chmod 600 /home/team/.hermes/.env</pre>
 hermes config set cron.max_parallel_jobs 1</pre>
 <p>30 итераций является стартовым учебным ограничением, не гарантией завершения и не денежным лимитом. Проверяйте счёт провайдера. Если лимит оборвал дело, результат не становится готовым. Не повышайте лимит бесконечно вместо исправления цикла.</p>
 <h2>4. Переносим подготовленный комплект</h2>
+<p>На своём компьютере сначала создайте экспорт и проверьте его. Команда выполняется из папки материалов недели, а путь заменяется на реальную рабочую команду:</p>
+<pre>python3 week6/scripts/export_team.py /ПУТЬ/К/РАБОЧЕЙ-КОМАНДЕ</pre>
+<p>Откройте созданные <code>README-PEREDACHA.md</code>, <code>MANIFEST.json</code> и ZIP. Исходная папка должна остаться на месте с рабочей историей и секретами; изменять разрешено только экспортную копию.</p>
 <p>На сервере:</p>
 <pre>mkdir -p /home/team/projects/ai-komanda</pre>
 <p>На своём компьютере, только после проверки экспортной папки на секреты:</p>
@@ -104,10 +107,11 @@ loginctl show-user team -p Linger</pre>
 <p>В новом терминале <code>team</code> проверьте синтаксис установленной версии:</p>
 <pre>hermes cron create --help
 hermes cron list</pre>
-<p>Создаём сначала приостановленную задачу. Это проверка подключения проекта, не повторная обработка бизнес-дела:</p>
-<pre>hermes cron create &quot;every 1h&quot; &quot;Прочитай agenty/dispetcher.md в текущем проекте. Только проверь наличие указанных входов и инструкций. Не выполняй дело, не меняй файлы команды и не отправляй сообщения наружу. Верни краткий статус и перечень недостающего.&quot; --workdir /home/team/projects/ai-komanda --name week6-canary --paused
-hermes cron list</pre>
-<p>Скопируйте точный ID задачи из списка:</p>
+<p>У установленной и проверенной локально версии Hermes 0.20.0 у <code>cron create</code> нет флага <code>--paused</code>. Поэтому создаём задачу с далёким безопасным расписанием и сразу ставим её на паузу. Это проверка подключения проекта, не повторная обработка бизнес-дела:</p>
+<pre>hermes cron create &quot;0 0 1 1 *&quot; &quot;Прочитай agenty/dispetcher.md в текущем проекте. Только проверь наличие указанных входов и инструкций. Не выполняй дело, не меняй файлы команды и не отправляй сообщения наружу. Верни краткий статус и перечень недостающего.&quot; --workdir /home/team/projects/ai-komanda --name week6-canary
+hermes cron list
+hermes cron pause JOB_ID</pre>
+<p>Скопируйте точный ID из списка, подставьте его в команду паузы и убедитесь, что задача остановлена. Затем выполните ровно один ручной запуск:</p>
 <pre>hermes cron run JOB_ID
 hermes cron list</pre>
 <p><code>JOB_ID</code> заменяется реальным ID. Ручной запуск может обходить паузу и зависит от версии по синхронности: подтвердите завершение в статусе, а не по возврату команды. Выходы задач: <code>/home/team/.hermes/cron/output/&lt;job_id&gt;/</code>. Читайте только соответствующий файл, проверьте его перед отправкой наставнику.</p>
@@ -119,6 +123,10 @@ hermes cron list</pre>
 <pre>hermes cron resume JOB_ID
 hermes cron list</pre>
 <p>Не используйте в расписании «продолжи как выше»: каждый запуск получает свежий контекст. Не создавайте отдельные временные cron-задачи на каждую роль: один диспетчер обязан дождаться проверенного выхода предыдущей.</p>
+<h3>Регулярный механик на VPS</h3>
+<p>Механик уже должен быть вручную проверен на исходном компьютере. На сервере после приёмочного дела настройте его отдельной командой, не смешивая с запуском бизнес-дел:</p>
+<blockquote>В этом VPS-проекте настрой регулярный разбор журнала навыком <code>mehanik</code> недели 6. Используй абсолютный <code>--workdir /home/team/projects/ai-komanda</code>, согласуй периодичность и часовой пояс, запускай только чтение журнала и сохранение рекомендаций. Никаких автоматических правок команды. Сначала ручной запуск, затем создай задачу с безопасным далёким расписанием, сразу поставь на паузу и покажи ID, модель, инструменты, стоимость, выход, логи и команды pause/resume. Включай только после моего подтверждения.</blockquote>
+<p>Не держите одновременно механика на рабочем компьютере и VPS, если это не осознанное решение: два разбора одного журнала дадут дубли. На локальном компьютере расписание работает только пока машина включена, не спит и исполнитель доступен. На VPS проверяются gateway, lingering, место на диске, расходы, логи и восстановление после перезагрузки.</p>
 <h2>8. Доказательство автономности</h2>
 <p>1. Оставьте один безопасный новый вход.</p>
 <p>2. Запишите ожидаемое время и номер дела.</p>

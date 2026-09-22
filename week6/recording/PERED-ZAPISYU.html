@@ -4,7 +4,7 @@
 a{color:var(--lime);text-underline-offset:4px}a:hover{color:#e1ff78}button{font:inherit;cursor:pointer;background:var(--lime);color:#10120a;border:0;border-radius:6px;padding:10px 18px}button:focus-visible,a:focus-visible{outline:3px solid #fff;outline-offset:4px}
 header{border-bottom:1px solid var(--line);padding:16px max(20px,calc((100vw - 1000px)/2));font-weight:bold;letter-spacing:.08em}
 main{max-width:1000px;margin:auto;padding:48px 24px 100px}h1{font-size:clamp(38px,7vw,76px);line-height:1.04;letter-spacing:-.04em;margin:14px 0 24px;max-width:850px}h2{font-size:clamp(26px,4vw,40px);line-height:1.2;letter-spacing:-.02em}h3{font-size:21px;margin-top:28px}p{max-width:850px}.eyebrow{color:var(--lime);font-size:13px;letter-spacing:.12em;text-transform:uppercase}.intro{font-size:22px;color:var(--muted)}nav{display:flex;flex-wrap:wrap;gap:9px;margin:32px 0}nav a{padding:8px 12px;border:1px solid var(--line);border-radius:5px;text-decoration:none;font-size:14px}
-section{border-top:1px solid var(--line);margin-top:46px;padding-top:24px;scroll-margin-top:24px}.chat{color:var(--lime);font-weight:bold}li{padding:5px 0}ol{padding-left:26px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#090b0c;border:1px solid var(--line);padding:20px;border-radius:8px;font:15px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}code{overflow-wrap:anywhere;font-size:.92em}.prompt{margin:25px 0}.prompt button{font-size:14px}.result{border-left:4px solid var(--lime);padding:4px 0 4px 20px;margin:28px 0}.note{color:var(--muted);font-size:15px}.links{display:flex;flex-wrap:wrap;gap:18px;margin:20px 0}.status{background:#252518;border:1px solid #646334;border-radius:8px;padding:16px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}img{max-width:100%}.table-wrap{overflow-x:auto}footer{margin-top:50px;color:var(--muted);font-size:14px}blockquote{border-left:3px solid var(--lime);margin-left:0;padding-left:18px}
+section{border-top:1px solid var(--line);margin-top:46px;padding-top:24px;scroll-margin-top:24px}.chat{color:var(--lime);font-weight:bold}.meta{display:inline-block;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:14px}.files{background:#121415;border:1px solid var(--line);border-radius:8px;padding:14px 20px}.files h3{margin:0 0 6px;font-size:16px}.files ul{margin:0}li{padding:5px 0}ol{padding-left:26px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#090b0c;border:1px solid var(--line);padding:20px;border-radius:8px;font:15px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}code{overflow-wrap:anywhere;font-size:.92em}.prompt{margin:25px 0}.prompt button{font-size:14px}.result{border-left:4px solid var(--lime);padding:4px 0 4px 20px;margin:28px 0}.note{color:var(--muted);font-size:15px}.links{display:flex;flex-wrap:wrap;gap:18px;margin:20px 0}.status{background:#252518;border:1px solid #646334;border-radius:8px;padding:16px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}img{max-width:100%}.table-wrap{overflow-x:auto}footer{margin-top:50px;color:var(--muted);font-size:14px}blockquote{border-left:3px solid var(--lime);margin-left:0;padding-left:18px}
 @media(max-width:520px){main{padding:28px 18px 70px}body{font-size:16px}pre{padding:14px;font-size:14px}h1{font-size:42px}}
 @media print{body{background:white;color:black;font-size:11pt}header,nav,button{display:none}main{max-width:none;padding:0}section{break-inside:auto}pre,.status{background:#f5f5f5;color:black}a,.chat,.eyebrow,.note{color:#333}h1{font-size:32pt}h2{font-size:22pt}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -14,11 +14,38 @@ section{border-top:1px solid var(--line);margin-top:46px;padding-top:24px;scroll
 <li>Открыть гайд, проверить масштаб и читаемость, кнопки копирования.</li>
 <li>Распаковать комплект в отдельную учебную папку.</li>
 <li>Пройти настройку связки на live-project; не подменять её simulator.py.</li>
+<li>Проверить установку материалов в отдельную папку: существующие навыки не</li>
+</ul>
+<p>  заменены, при совпадении имён есть резервная копия и сравнение.</p>
+<ul>
 <li>Подготовить три разных безопасных входа и один неполный.</li>
+<li>Проверить хотя бы один финальный вход через реальное подключение или триггер,</li>
+</ul>
+<p>  а не через ручную команду, которая его имитирует.</p>
+<ul>
 <li>Сделать снимок папки перед каждым видео. Ключи в снимки не входят.</li>
 <li>Зафиксировать модель, среду, дату и версию файлов. Провести репетицию с хронометражем.</li>
-<li>Открыть будущую HTML-защиту без сети; шаблон с квадратными скобками не сдавать.</li>
+<li>Перед упаковкой зафиксировать путь источника. Создать полную копию и очищать</li>
 </ul>
+<p>  только её. После ZIP распаковать комплект в третье место и проверить без источника.</p>
+<ul>
+<li>Одним запуском навыка получить <code>OTCHET-N6.md</code> и <code>PREZENTACIYA-HAKATON.html</code>.</li>
+</ul>
+<p>  Открыть HTML без сети; шаблон с квадратными скобками не сдавать.</p>
+<h2>Матрица репетиции участника</h2>
+<p>До записи пройти не только счастливый путь:</p>
+<ul>
+<li>одна роль без диспетчера;</li>
+<li>две-три роли с уже существующим диспетчером;</li>
+<li>общая папка в Codex, Claude Code/Cowork, Gemini или Antigravity;</li>
+<li>обычный чат без доступа к папке;</li>
+<li>закрытая машина или 1С, откуда разрешена только ручная выгрузка;</li>
+<li>API, Telegram или наблюдаемая папка как одна реальная передача;</li>
+<li>локальное расписание с предупреждением о включённом компьютере;</li>
+<li>VPS или Hermes с ручной приёмкой до расписания.</li>
+</ul>
+<p>Если конкретная среда или модель не проверена живьём, в реестре доказательств</p>
+<p>пишем «не проверено», а не переносим вывод из другой программы по аналогии.</p>
 <h2>До съёмки VPS/Hermes нужен живой стенд</h2>
 <p>В этой поставке сервер не куплен и не настроен. Нужен выделенный учебный VPS</p>
 <p>либо явно разрешённая тестовая машина, выбранный доступный провайдер модели,</p>
@@ -28,6 +55,9 @@ section{border-top:1px solid var(--line);margin-top:46px;padding-top:24px;scroll
 <p>ручной запрос, роль и проверку, крон с рабочей папкой, фактический запуск после</p>
 <p>выхода из SSH, паузу, повтор, согласованную перезагрузку. Сохранить подтверждения</p>
 <p>без ключей. Только после этого говорить на видео «проверено на этом стенде».</p>
+<p>Для Hermes отдельно проверить точный путь его рабочего пространства, чтение</p>
+<p>инструкции и навыков из переданной папки, собственные доступы, журнал, остановку</p>
+<p>и отсутствие второго активного триггера на тех же входах.</p>
 <h2>Таблица доказательств для заполнения ведущим</h2>
 <p>Для каждого видео: дата; среда/версия; вход; путь результата; путь проверки;</p>
 <p>что выполнено живьём; что является учебной симуляцией; что осталось непроверенным.</p>
@@ -37,7 +67,9 @@ section{border-top:1px solid var(--line);margin-top:46px;padding-top:24px;scroll
 <li>Любой процесс переносится на Linux без адаптации.</li>
 <li>Подписка на чат оплачивает API и сервер.</li>
 <li>Три дела гарантируют надёжность.</li>
+<li>Копирование папки переносит авторизацию, Windows-программы и сетевые диски.</li>
 <li>Сторож и механик могут менять правила без владельца.</li>
+<li>Напоминание владельцу является фоновым запуском команды.</li>
 <li>Документация или симулятор заменяет серверный прогон.</li>
 <li>Весь дополнительный VPS/виджет/несколько API помещается в основной лимит практики.</li>
 </ul>

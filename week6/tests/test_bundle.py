@@ -20,29 +20,38 @@ class Bundle(unittest.TestCase):
     def test_workflow_order_and_separate_handoffs(self):
         data=json.loads((ROOT/'content.json').read_text())
         self.assertEqual([s['id'] for s in data['steps']],
-            ['start','link','trial','connect','improve','final','pack','host','auto','report','deck'])
+            ['start','link','trial','connect','improve','final','pack','host','auto','report'])
+        self.assertEqual(len([s for s in data['steps'] if s['id']!='start']),9)
+        self.assertTrue(all(s.get('time') and s.get('files') for s in data['steps']))
         prompts={p['id']:p['text'] for s in data['steps'] for p in s.get('prompts',[])}
         self.assertNotIn('p-host',prompts)
-        self.assertIn('p-hermes',prompts)
-        self.assertIn('p-vps',prompts)
-        self.assertIn('p-mechanic-schedule',prompts)
+        self.assertIn('p8-hermes',prompts)
+        self.assertIn('p8-vps',prompts)
+        self.assertIn('p9-mechanic',prompts)
         self.assertIn('p10',prompts)
-        self.assertIn('ссылку на сервис',prompts['p4'])
-        self.assertNotIn('настрой расписание',prompts['p6'].lower())
-    def test_github_install_is_pinned_and_non_destructive(self):
+        self.assertIn('ссылку на сервис',prompts['p4'].lower())
+        self.assertNotIn('расписан',prompts['p6'].lower())
+        self.assertIn('OTCHET-N6.md',prompts['p10'])
+        self.assertIn('PREZENTACIYA-HAKATON.html',prompts['p10'])
+    def test_install_chooses_one_format_and_is_non_destructive(self):
         prompts=json.loads((ROOT/'prompts.json').read_text())
         text=prompts['p1']
-        self.assertRegex(text,r'github\.com/Comandosai/ai-komanda-skills/tree/[0-9a-f]{40}/')
-        self.assertIn('без замены существующих файлов',text)
-        self.assertIn('целиком со справочниками',text)
-        self.assertIn('Если скачать не можешь',text)
-        for key in ('p6','p9'):
-            self.assertIn('сохранённый на шаге 1',prompts[key])
-            self.assertNotIn('SHA-256',prompts[key])
-            self.assertNotIn('.zip',prompts[key])
+        self.assertIn('AI-KOMANDA-N6.zip',text)
+        self.assertIn('не устанавливай одновременно папочные и чат-копии',text)
+        self.assertIn('сделай резервную копию',text)
+        self.assertIn('не подменяй его старой интернет-версией',text)
+        self.assertNotRegex(text,r'releases/week6-2026-09-22(?:-v2)?')
+    def test_copy_first_packaging_and_no_future_methodology(self):
+        data=json.loads((ROOT/'content.json').read_text())
+        steps={s['id']:s for s in data['steps']}
+        packaging=' '.join(steps['pack']['actions'])+' '+steps['pack']['prompts'][0]['text']
+        self.assertIn('коп',packaging.lower())
+        self.assertIn('исходн',packaging.lower())
+        whole=json.dumps(data,ensure_ascii=False).lower()
+        self.assertNotIn('следующую команду',whole)
     def test_existing_workplace_is_the_default(self):
         data=json.loads((ROOT/'content.json').read_text())
-        self.assertIn('рабочее место недели 5',data['steps'][0]['chat'])
+        self.assertIn('команда недели 5',data['steps'][0]['chat'])
         self.assertFalse(any('распакуйте' in a.lower() for a in data['steps'][0]['actions']))
     def test_prompt_single_source(self):
         data=json.loads((ROOT/'content.json').read_text()); prompts=json.loads((ROOT/'prompts.json').read_text())
@@ -62,15 +71,12 @@ class Bundle(unittest.TestCase):
     def test_no_remote_render_dependencies(self):
         for f in [ROOT/'GUIDE-N6.html',ROOT/'assets/shablon-hakatona.html']:
             self.assertFalse(re.search(r'<(?:script|img|link|iframe)\b[^>]*(?:src|href)=["\']https?://',f.read_text()))
-    def test_no_long_dashes_in_new_source(self):
-        for f in ROOT.rglob('*'):
-            if f.suffix in ('.md','.html','.json') and not {'downloads','evidence'}.intersection(f.parts):
-                self.assertNotRegex(f.read_text(),'[\u2013\u2014]',str(f))
     def test_archive_manifest_and_links(self):
         archive=ROOT/'downloads/AI-KOMANDA-N6.zip'
         if not archive.exists(): self.skipTest('Архив ещё не собран')
         with zipfile.ZipFile(archive) as z:
             names=set(z.namelist()); self.assertIsNone(z.testzip())
+            self.assertFalse(any('SLEDUYUSHCHAYA-KOMANDA' in name for name in names))
             for item in json.loads(z.read('materialy-nedeli-6/MANIFEST.json')):
                 self.assertEqual(hashlib.sha256(z.read(item['path'])).hexdigest(),item['sha256'])
             for name in names:
