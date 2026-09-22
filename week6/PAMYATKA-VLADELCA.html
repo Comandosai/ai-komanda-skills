@@ -1,0 +1,57 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Пользоваться командой</title><style>
+:root{color-scheme:dark;--bg:#0d0e0f;--card:#181a1b;--line:#363a3b;--lime:#c8ff00;--text:#f0f0f0;--muted:#b9bfc0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:17px/1.65 Arial,Helvetica,sans-serif}
+a{color:var(--lime);text-underline-offset:4px}a:hover{color:#e1ff78}button{font:inherit;cursor:pointer;background:var(--lime);color:#10120a;border:0;border-radius:6px;padding:10px 18px}button:focus-visible,a:focus-visible{outline:3px solid #fff;outline-offset:4px}
+header{border-bottom:1px solid var(--line);padding:16px max(20px,calc((100vw - 1000px)/2));font-weight:bold;letter-spacing:.08em}
+main{max-width:1000px;margin:auto;padding:48px 24px 100px}h1{font-size:clamp(38px,7vw,76px);line-height:1.04;letter-spacing:-.04em;margin:14px 0 24px;max-width:850px}h2{font-size:clamp(26px,4vw,40px);line-height:1.2;letter-spacing:-.02em}h3{font-size:21px;margin-top:28px}p{max-width:850px}.eyebrow{color:var(--lime);font-size:13px;letter-spacing:.12em;text-transform:uppercase}.intro{font-size:22px;color:var(--muted)}nav{display:flex;flex-wrap:wrap;gap:9px;margin:32px 0}nav a{padding:8px 12px;border:1px solid var(--line);border-radius:5px;text-decoration:none;font-size:14px}
+section{border-top:1px solid var(--line);margin-top:46px;padding-top:24px;scroll-margin-top:24px}.chat{color:var(--lime);font-weight:bold}li{padding:5px 0}ol{padding-left:26px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#090b0c;border:1px solid var(--line);padding:20px;border-radius:8px;font:15px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}code{overflow-wrap:anywhere;font-size:.92em}.prompt{margin:25px 0}.prompt button{font-size:14px}.result{border-left:4px solid var(--lime);padding:4px 0 4px 20px;margin:28px 0}.note{color:var(--muted);font-size:15px}.links{display:flex;flex-wrap:wrap;gap:18px;margin:20px 0}.status{background:#252518;border:1px solid #646334;border-radius:8px;padding:16px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}img{max-width:100%}.table-wrap{overflow-x:auto}footer{margin-top:50px;color:var(--muted);font-size:14px}blockquote{border-left:3px solid var(--lime);margin-left:0;padding-left:18px}
+@media(max-width:520px){main{padding:28px 18px 70px}body{font-size:16px}pre{padding:14px;font-size:14px}h1{font-size:42px}}
+@media print{body{background:white;color:black;font-size:11pt}header,nav,button{display:none}main{max-width:none;padding:0}section{break-inside:auto}pre,.status{background:#f5f5f5;color:black}a,.chat,.eyebrow,.note{color:#333}h1{font-size:32pt}h2{font-size:22pt}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style></head><body><header>COMANDOS AI / ПРАКТИКУМ</header><main><h1>Пользоваться командой</h1>
+<h2>Начать дело</h2>
+<p>Откройте свой проект. Положите полный вход в место, записанное диспетчером.</p>
+<p>Новый чат на новое дело. Назовите точное имя входа:</p>
+<blockquote>Запусти всю команду. Пробный прогон. Вход: [файл или комплект].</blockquote>
+<p>Когда версия проверяется без обучения, замените «Пробный» на «Финальный».</p>
+<p>При запуске от расписания ту же сохранённую задачу передаёт планировщик.</p>
+<p>В чате без общей папки прикладывайте актуальные инструкции и входные файлы.</p>
+<h2>Смотреть результат</h2>
+<ul>
+<li>Дошло: все обязательные шаги выполнены, результат и проверка этой попытки существуют.</li>
+<li>Принято: владелец или предусмотренный контрактом приёмщик подтвердил результат.</li>
+<li>Без ручного участия: известны все касания внутри согласованного участка, их ноль.</li>
+<li>Без содержательных исправлений: материал не пришлось переделывать; это не синоним «без рук».</li>
+<li>Нет данных: наблюдений недостаточно. Это не ноль и не успех.</li>
+</ul>
+<p>Откройте результат и проверку по ссылкам помощника. Экран недели 6 собирается отдельно</p>
+<p>от недели 5. Помощник использует scripts/build_status.py из комплекта: в терминале</p>
+<p>команда ниже, где полный путь нужно заменить своим. Сам участник не заполняет JSON.</p>
+<pre>python3 materialy-nedeli-6/week6/scripts/build_status.py --project /полный/путь/к/проекту</pre>
+<p>Экран DASHBOARD-N6.html в проекте является снимком: обновите сборку после нового дела.</p>
+<p>Без Python попросите помощника сделать таблицу из журнала и отметить ручной подсчёт.</p>
+<h2>Если остановилось</h2>
+<ul>
+<li>Нет данных: добавьте именно недостающий вход, не просите придумать его.</li>
+<li>Ждёт согласования: прочитайте материал и примите или дайте замечания.</li>
+<li>Ошибка инструмента: проверьте доступ и состояние сервиса. Не выдавайте сбой за отсутствие данных.</li>
+<li>Ошибка результата: в пробном чате объясните ожидаемое. Исправление инструкций отдельно согласуйте.</li>
+<li>Ошибка дашборда: сверяйте журнал и файлы. Не запускайте дорогое дело заново ради экрана.</li>
+</ul>
+<h2>Остановить и поддерживать</h2>
+<p>Команды паузы, идентификатор расписания и адрес уведомлений помощник записывает</p>
+<p>в инструкцию именно вашего проекта. Проверьте паузу до передачи. Остановка планировщика</p>
+<p>не отменяет уже отправленное письмо или выполняющийся запрос.</p>
+<p>Механик предлагает правки; вы принимаете решение. После изменения обязательна</p>
+<p>контрольная проверка. Для финальных замеров новой версии нужна новая серия.</p>
+<h2>Что хранится где</h2>
+<ul>
+<li>agenty/: паспорта ролей и диспетчер.</li>
+<li>Ваши существующие навыки: способы работы ролей; названия папок не меняем ради образца.</li>
+<li>kontekst/: входы, выходы, условия передачи и подключения без ключей.</li>
+<li>dela/: отдельная папка каждой попытки с результатом и проверкой.</li>
+<li>zhurnal-week6.md и dashboard/week6.json: новый учёт, история недели 5 не переписывается.</li>
+<li>Штатное хранилище секретов или отдельный защищённый .env: доступы, не раздатка.</li>
+</ul>
+<p>Перед публичным показом уберите персональные данные. Результат учебного примера</p>
+<p>не является доказательством экономии вашего бизнеса.</p><footer><a href="GUIDE-N6.html">Вернуться к гайду</a><p>Неделя 6 · комплект от 22.09.2026. Инструкции не заменяют проверку возможностей вашей среды.</p></footer></main><script>async function copyPrompt(id,button){const el=document.getElementById(id);try{await Promise.race([navigator.clipboard.writeText(el.textContent),new Promise((_,reject)=>setTimeout(()=>reject(new Error('clipboard timeout')),800))]);button.textContent='Скопировано';}catch(e){const range=document.createRange();range.selectNodeContents(el);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);button.textContent='Текст выделен: Ctrl+C / ⌘C';}setTimeout(()=>button.textContent='Скопировать промпт',3500);} </script></body></html>

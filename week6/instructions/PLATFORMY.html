@@ -1,0 +1,72 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Где работает команда и что именно переносится</title><style>
+:root{color-scheme:dark;--bg:#0d0e0f;--card:#181a1b;--line:#363a3b;--lime:#c8ff00;--text:#f0f0f0;--muted:#b9bfc0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:17px/1.65 Arial,Helvetica,sans-serif}
+a{color:var(--lime);text-underline-offset:4px}a:hover{color:#e1ff78}button{font:inherit;cursor:pointer;background:var(--lime);color:#10120a;border:0;border-radius:6px;padding:10px 18px}button:focus-visible,a:focus-visible{outline:3px solid #fff;outline-offset:4px}
+header{border-bottom:1px solid var(--line);padding:16px max(20px,calc((100vw - 1000px)/2));font-weight:bold;letter-spacing:.08em}
+main{max-width:1000px;margin:auto;padding:48px 24px 100px}h1{font-size:clamp(38px,7vw,76px);line-height:1.04;letter-spacing:-.04em;margin:14px 0 24px;max-width:850px}h2{font-size:clamp(26px,4vw,40px);line-height:1.2;letter-spacing:-.02em}h3{font-size:21px;margin-top:28px}p{max-width:850px}.eyebrow{color:var(--lime);font-size:13px;letter-spacing:.12em;text-transform:uppercase}.intro{font-size:22px;color:var(--muted)}nav{display:flex;flex-wrap:wrap;gap:9px;margin:32px 0}nav a{padding:8px 12px;border:1px solid var(--line);border-radius:5px;text-decoration:none;font-size:14px}
+section{border-top:1px solid var(--line);margin-top:46px;padding-top:24px;scroll-margin-top:24px}.chat{color:var(--lime);font-weight:bold}li{padding:5px 0}ol{padding-left:26px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#090b0c;border:1px solid var(--line);padding:20px;border-radius:8px;font:15px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}code{overflow-wrap:anywhere;font-size:.92em}.prompt{margin:25px 0}.prompt button{font-size:14px}.result{border-left:4px solid var(--lime);padding:4px 0 4px 20px;margin:28px 0}.note{color:var(--muted);font-size:15px}.links{display:flex;flex-wrap:wrap;gap:18px;margin:20px 0}.status{background:#252518;border:1px solid #646334;border-radius:8px;padding:16px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}img{max-width:100%}.table-wrap{overflow-x:auto}footer{margin-top:50px;color:var(--muted);font-size:14px}blockquote{border-left:3px solid var(--lime);margin-left:0;padding-left:18px}
+@media(max-width:520px){main{padding:28px 18px 70px}body{font-size:16px}pre{padding:14px;font-size:14px}h1{font-size:42px}}
+@media print{body{background:white;color:black;font-size:11pt}header,nav,button{display:none}main{max-width:none;padding:0}section{break-inside:auto}pre,.status{background:#f5f5f5;color:black}a,.chat,.eyebrow,.note{color:#333}h1{font-size:32pt}h2{font-size:22pt}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style></head><body><header>COMANDOS AI / ПРАКТИКУМ</header><main><h1>Где работает команда и что именно переносится</h1>
+<p>Проверка документации: 22.09.2026. Название модели не описывает всю среду. Gemini в браузере и Gemini CLI различаются; Claude в чате, Cowork и Claude Code не равнозначны. Сначала помощник проверяет доступные файлы, инструменты и запуск независимых исполнителей, затем выбирает адаптер.</p>
+<h2>Общий принцип</h2>
+<p>Паспорта в <code>agenty/</code> и навыки остаются каноническими документами. Карточка платформы содержит метаданные и ссылку на паспорт, а не вторую полную копию бизнес-инструкции. Изменения паспорта проверяются пробным запуском. Файл Markdown не является работающим агентом до запуска исполнителем.</p>
+<p>Неизвестная возможность означает «нужно проверить», не «эта платформа ничего не умеет». Наличие кнопки расписания не доказывает доступ к локальной папке или дочерним исполнителям.</p>
+<h2>Claude Code</h2>
+<p>Документированный механизм: <code>.claude/agents/*.md</code> внутри проекта, управление через <code>/agents</code>. Отдельный subagent имеет собственный контекст и набор инструментов. Настройку создаёт помощник по актуальному формату, даёт минимальные необходимые права и ссылку на паспорт.</p>
+<p>Проверка участника:</p>
+<p>1. Открыть нужный проект в Claude Code.</p>
+<p>2. Проверить через <code>/agents</code>, что карточки доступны.</p>
+<p>3. Попросить диспетчера показать выбранную роль и вход.</p>
+<p>4. Запустить одно пробное дело и проверить, что действительно был вызван исполнитель, а не только написано его имя.</p>
+<p>5. Проверить, что проверяющий получил исходник и критерии, не только вывод автора.</p>
+<p>Не включаем обход разрешений ради отсутствия остановок. Модель и доступы выбираются осознанно; более дешёвую модель проверяем на той же задаче по качеству, а не по названию. Эти карточки не являются автоматически работающей настройкой обычного Claude-чата или Cowork.</p>
+<p>Источник: <a href="https://code.claude.com/docs/en/sub-agents">Claude Code custom subagents</a>.</p>
+<h2>Gemini CLI</h2>
+<p>Текущая документация описывает встроенных и пользовательских subagents. Проектные карточки находятся в <code>.gemini/agents/*.md</code>, пользовательские в <code>~/.gemini/agents/*.md</code>. Поэтому старое общее утверждение «Gemini не умеет связывать роли» использовать нельзя.</p>
+<p>Помощник сначала сверяет установленную версию и доступность механизма. Затем создаёт тонкие карточки с корректным frontmatter и доступными именно в этой версии именами инструментов. Явное обращение к агенту поддерживается через <code>@имя</code>. Проверяем фактический вызов и результат.</p>
+<p>Gemini в браузере и Antigravity отдельно проверяются по доступным инструментам. Нельзя переносить на них настройки CLI только из-за общего бренда или выбранной модели.</p>
+<p>Источник: <a href="https://geminicli.com/docs/core/subagents/">Gemini CLI subagents</a>.</p>
+<h2>Codex</h2>
+<p>Официальная документация на 22.09.2026 описывает пользовательских исполнителей</p>
+<p>в <code>.codex/agents/*.toml</code>. Старое утверждение «у Codex нет карточек» больше не используем.</p>
+<p>Минимальный пример для помощника, только после проверки версии и существующего паспорта:</p>
+<pre>name = &quot;analitik&quot;
+description = &quot;Выполнить шаг анализа по паспорту проекта&quot;
+developer_instructions = &quot;Прочитай agenty/analitik.md относительно проекта. Выполни назначенный шаг и его проверку. Дело, попытку и вход возьми из задания диспетчера.&quot;</pre>
+<p>Подставляются реальные имя и путь. Модель и ограничения инструментов выбираются</p>
+<p>по установленной версии и правам задачи, не копируются слепо из чужого проекта.</p>
+<p><code>AGENTS.md</code> содержит короткую ссылку на <code>agenty/dispetcher.md</code> для команды запуска,</p>
+<p>а не копии всех паспортов. После настройки откройте новый чат проекта, запустите</p>
+<p>пробное дело и проверьте фактический вызов исполнителя, файл результата и проверку.</p>
+<p>Локальное расписание требует включённого компьютера и работающего приложения.</p>
+<p>Облачные задачи используют доступный им контекст и подключения, не получают</p>
+<p>автоматически папку с рабочего стола. Доступность зависит от среды и настроек аккаунта.</p>
+<p>Проверяйте место исполнения, права и результат реального срабатывания.</p>
+<p>Источники: <a href="https://learn.chatgpt.com/docs/agent-configuration/subagents">Codex subagents</a>,</p>
+<p><a href="https://learn.chatgpt.com/docs/automations?surface=app">scheduled tasks</a>.</p>
+<h2>Обычный чат ChatGPT, Gemini или Claude</h2>
+<p>Консервативный ручной маршрут остаётся рабочим, если среда позволяет читать приложенные материалы и выдавать требуемый результат:</p>
+<p>1. Приложить актуальные правила, паспорт нужной роли, нужные навыки и вход конкретного дела.</p>
+<p>2. Запустить роль в новом чате.</p>
+<p>3. Скачать результат и проверку; сохранить в папку соответствующего дела и попытки.</p>
+<p>4. Приложить следующей роли актуальный результат, её инструкции и критерии в новом чате.</p>
+<p>5. Записать ручную передачу как касание.</p>
+<p>Если чат не может создать файл нужного формата, запустить скрипт или прочитать необходимые данные, это явный блокер. Не имитируем выполнение скрипта текстом. Такой маршрут не называется автономной командой и не обещает работу 24/7 с локальной папкой. Для одного запуска без ручных передач выбирается доступная исполнительная среда, например проверенный CLI/Hermes. Переход не заставляет заново придумывать роли.</p>
+<h2>Hermes на компьютере или VPS</h2>
+<p>Передаются папка и правила, затем настраивается исполнение. <a href="PEREDAT-HERMES.html">Передача Hermes</a> и <a href="VPS-HERMES.html">установка на VPS</a> описывают конкретный маршрут. Важны три отдельных проверки: CLI из каталога проекта, gateway с <code>terminal.cwd</code>, cron с <code>--workdir</code>. Учебная конфигурация использует один профиль <code>default</code> и одного владельца.</p>
+<p>Источник: <a href="https://hermes-agent.nousresearch.com/docs/user-guide/configuration/">Hermes configuration</a>.</p>
+<h2>Что не переносится само</h2>
+<p>Ключи и OAuth, browser-сессии, MCP-подключения, Windows-программы, корпоративная сеть, разрешения файлов, переменные окружения и подписка пользователя. Для каждой зависимости в инструкции передачи указываем: где получить, кто разрешает, как проверить. Если перемещается только папка, пишем «папка передана»; «команда перенесена» только после проверенного сквозного запуска.</p>
+<h2>Минимальная проверка любой среды</h2>
+<ul>
+<li>Читает текущие, а не старые приложенные файлы.</li>
+<li>Может создать фактический результат требуемого формата.</li>
+<li>Проверка имеет доступ к исходникам.</li>
+<li>Независимые роли действительно исполняются независимо, если это заявлено.</li>
+<li>Есть устойчивое место результатов и журнала.</li>
+<li>Ограничения и ручные передачи отражены честно.</li>
+<li>Автозапуск проверен с закрытым пользовательским чатом, если обещан.</li>
+</ul>
+<p>В этой инструкции проверены документированные механизмы Claude Code, Gemini CLI и Hermes. Не выполнены установки и бизнес-прогоны во всех перечисленных продуктах. Ручной маршрут является безопасным ограниченным вариантом, а не утверждением о полном наборе функций любого тарифа.</p><footer><a href="../GUIDE-N6.html">Вернуться к гайду</a><p>Неделя 6 · комплект от 22.09.2026. Инструкции не заменяют проверку возможностей вашей среды.</p></footer></main><script>async function copyPrompt(id,button){const el=document.getElementById(id);try{await Promise.race([navigator.clipboard.writeText(el.textContent),new Promise((_,reject)=>setTimeout(()=>reject(new Error('clipboard timeout')),800))]);button.textContent='Скопировано';}catch(e){const range=document.createRange();range.selectNodeContents(el);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);button.textContent='Текст выделен: Ctrl+C / ⌘C';}setTimeout(()=>button.textContent='Скопировать промпт',3500);} </script></body></html>
