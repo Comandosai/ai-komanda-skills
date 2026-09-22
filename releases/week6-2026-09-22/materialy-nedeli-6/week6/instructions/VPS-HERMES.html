@@ -1,0 +1,150 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Команда на VPS: Ubuntu и Hermes</title><style>
+:root{color-scheme:dark;--bg:#0d0e0f;--card:#181a1b;--line:#363a3b;--lime:#c8ff00;--text:#f0f0f0;--muted:#b9bfc0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:17px/1.65 Arial,Helvetica,sans-serif}
+a{color:var(--lime);text-underline-offset:4px}a:hover{color:#e1ff78}button{font:inherit;cursor:pointer;background:var(--lime);color:#10120a;border:0;border-radius:6px;padding:10px 18px}button:focus-visible,a:focus-visible{outline:3px solid #fff;outline-offset:4px}
+header{border-bottom:1px solid var(--line);padding:16px max(20px,calc((100vw - 1000px)/2));font-weight:bold;letter-spacing:.08em}
+main{max-width:1000px;margin:auto;padding:48px 24px 100px}h1{font-size:clamp(38px,7vw,76px);line-height:1.04;letter-spacing:-.04em;margin:14px 0 24px;max-width:850px}h2{font-size:clamp(26px,4vw,40px);line-height:1.2;letter-spacing:-.02em}h3{font-size:21px;margin-top:28px}p{max-width:850px}.eyebrow{color:var(--lime);font-size:13px;letter-spacing:.12em;text-transform:uppercase}.intro{font-size:22px;color:var(--muted)}nav{display:flex;flex-wrap:wrap;gap:9px;margin:32px 0}nav a{padding:8px 12px;border:1px solid var(--line);border-radius:5px;text-decoration:none;font-size:14px}
+section{border-top:1px solid var(--line);margin-top:46px;padding-top:24px;scroll-margin-top:24px}.chat{color:var(--lime);font-weight:bold}li{padding:5px 0}ol{padding-left:26px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#090b0c;border:1px solid var(--line);padding:20px;border-radius:8px;font:15px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}code{overflow-wrap:anywhere;font-size:.92em}.prompt{margin:25px 0}.prompt button{font-size:14px}.result{border-left:4px solid var(--lime);padding:4px 0 4px 20px;margin:28px 0}.note{color:var(--muted);font-size:15px}.links{display:flex;flex-wrap:wrap;gap:18px;margin:20px 0}.status{background:#252518;border:1px solid #646334;border-radius:8px;padding:16px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}img{max-width:100%}.table-wrap{overflow-x:auto}footer{margin-top:50px;color:var(--muted);font-size:14px}blockquote{border-left:3px solid var(--lime);margin-left:0;padding-left:18px}
+@media(max-width:520px){main{padding:28px 18px 70px}body{font-size:16px}pre{padding:14px;font-size:14px}h1{font-size:42px}}
+@media print{body{background:white;color:black;font-size:11pt}header,nav,button{display:none}main{max-width:none;padding:0}section{break-inside:auto}pre,.status{background:#f5f5f5;color:black}a,.chat,.eyebrow,.note{color:#333}h1{font-size:32pt}h2{font-size:22pt}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style></head><body><header>COMANDOS AI / ПРАКТИКУМ</header><main><h1>Команда на VPS: Ubuntu и Hermes</h1>
+<p>Проверка документации: 22 сентября 2026. Команды ниже сверены с официальными источниками. На чужом сервере ничего не устанавливалось. Перед записью ведущий выполняет контрольный запуск на выделенном учебном VPS и фиксирует версию. Это инструкция для выбранного маршрута, не обещание совместимости любого проекта.</p>
+<h2>Что получится</h2>
+<p>Папка команды находится на сервере. Hermes читает диспетчера, запускает рабочий маршрут и сохраняет результаты. Gateway работает как служба, поэтому закрытие SSH и выключение ноутбука не должны останавливать расписание. VPS является компьютером; Hermes является исполнителем. Для работы нужны оба, а также доступ к выбранной модели.</p>
+<p>Учебный маршрут: отдельный VPS с Ubuntu 24.04 LTS, один пользователь <code>team</code>, один профиль Hermes <code>default</code>, один проект <code>/home/team/projects/ai-komanda</code>. Для начала выбирайте небольшой тариф с возможностью увеличения ресурсов; требования браузера и файлов могут быть существенно выше простого текстового процесса. Конкретный тариф утверждаем после измерения демонстрационного проекта, не называем его универсальным минимумом.</p>
+<h2>0. До покупки и подключения</h2>
+<ul>
+<li>Уточните доступность выбранного провайдера модели из региона сервера, способы оплаты и правила обработки данных.</li>
+<li>Сервер оплачивается отдельно от модели и сервисов. Подписка на чат не означает автоматически API-доступ или право безлимитной серверной работы.</li>
+<li>Если проект требует Windows Excel, локального принтера, закрытой сетевой папки или корпоративного сертификата, остановитесь и согласуйте архитектуру. Linux VPS не переносит эти возможности сам.</li>
+<li>Для 1С на компьютере с запретом установки ИИ используйте разрешённую выгрузку или интеграцию через администратора. Не обходите запрет.</li>
+<li>Подготовьте чистый комплект команды без ключей и персональных данных для первой проверки. Убедитесь, что диспетчер уже проверен локально.</li>
+<li>Запишите владельца сервера, ответственного за оплату, резервные копии и обновления.</li>
+</ul>
+<h2>1. Два окна терминала</h2>
+<p>На своём компьютере откройте терминал. <code>SERVER_IP</code> далее замените на адрес своего VPS. Значения в угловых скобках из примеров не вставляйте буквально.</p>
+<p>Если SSH-ключа для учебного сервера ещё нет:</p>
+<pre>ssh-keygen -t ed25519</pre>
+<p>При запросе имени укажите новый файл, например <code>~/.ssh/ai-komanda-vps</code>. Не перезаписывайте существующий ключ. Поставьте пароль на приватный ключ. В панель хостинга добавляется только файл с окончанием <code>.pub</code>. Приватный файл никуда не пересылается.</p>
+<p>Первый вход через учётную запись, которую выдал провайдер. Если это root:</p>
+<pre>ssh -i ~/.ssh/ai-komanda-vps root@SERVER_IP</pre>
+<p>При первом подключении сверьте отпечаток сервера с панелью/консолью хостинга. Не отключайте проверку host key. Если хостинг выдал другого административного пользователя, используйте его и <code>sudo</code> для административных команд.</p>
+<p>В серверном окне администратора:</p>
+<pre>apt update
+apt install git curl xz-utils rsync nano
+adduser team</pre>
+<p>Создайте пользовательский доступ через публичный ключ. Если парольный SSH разрешён, на своём компьютере:</p>
+<pre>ssh-copy-id -i ~/.ssh/ai-komanda-vps.pub team@SERVER_IP
+ssh -i ~/.ssh/ai-komanda-vps team@SERVER_IP</pre>
+<p>Если <code>ssh-copy-id</code> отсутствует или парольный вход выключен, попросите администратора добавить публичный ключ в <code>/home/team/.ssh/authorized_keys</code> с владельцем <code>team</code>, правами <code>700</code> на <code>.ssh</code> и <code>600</code> на <code>authorized_keys</code>. Приватный ключ для этого не нужен.</p>
+<p>Второе окно должно успешно войти как <code>team</code>. Проверка:</p>
+<pre>whoami
+pwd</pre>
+<p>Ожидаем <code>team</code> и <code>/home/team</code>. Не закрывайте административную сессию до проверки. Не выдавайте агенту root и не добавляйте <code>team</code> в sudo без отдельной необходимости. Входящие порты: для этого урока нужен SSH; публичная панель и открытый webhook не нужны. Ограничьте SSH своим адресом в firewall хостинга, сохранив аварийную консоль.</p>
+<h2>2. Установка без слепого запуска скачанного кода</h2>
+<p>Все дальнейшие команды, кроме явно отмеченных административных, выполняются в серверном окне <code>team</code>.</p>
+<pre>mkdir -p /home/team/install-review
+curl -fL https://hermes-agent.nousresearch.com/install.sh -o /home/team/install-review/hermes-install.sh
+sha256sum /home/team/install-review/hermes-install.sh
+less /home/team/install-review/hermes-install.sh</pre>
+<p><code>q</code> закрывает просмотр. Попросите технического помощника проверить установщик, источники загрузки и ожидаемые изменения. Контрольная сумма фиксирует просмотренный файл, но сама по себе не доказывает доверие к нему. После проверки:</p>
+<pre>bash /home/team/install-review/hermes-install.sh --skip-browser --skip-computer-use
+source /home/team/.bashrc
+hermes --help
+hermes doctor</pre>
+<p>Сначала ставим без браузера. Если процесс требует его, устанавливаем отдельно по текущей документации: системные библиотеки устанавливает администратор, браузер и профиль принадлежат <code>team</code>. Не запускайте браузер с доступами владельца без согласования. Установщик Hermes устанавливает необходимые языковые зависимости; отдельные библиотеки конкретных навыков проверяются дополнительно.</p>
+<p>Если <code>hermes</code> не найден, проверьте <code>/home/team/.local/bin/hermes --help</code>. Не запускайте исходный Python-файл вместо установленного launcher.</p>
+<p>Зафиксируйте версию исходников для видео и отчёта:</p>
+<pre>git -C /home/team/.hermes/hermes-agent rev-parse HEAD</pre>
+<h2>3. Модель, ключи и предел расходов</h2>
+<pre>hermes model
+hermes tools</pre>
+<p>В мастере выбираем провайдера, доступную модель и вводим ключ скрытым способом. На записи скрываем ввод и страницы личного кабинета. Инструменты включаем только нужные: файловые операции, терминал, делегирование для диспетчера при необходимости. Отдельно проверяем набор инструментов для <code>cron</code>, он может отличаться от интерактивного чата.</p>
+<p>Секреты Hermes хранятся в <code>/home/team/.hermes/.env</code>, настройки в <code>config.yaml</code>. Не копируйте целиком <code>.hermes</code> в пакет команды. Для дополнительного API используйте приватный редактор, не строку команды с ключом:</p>
+<pre>umask 077
+nano /home/team/.hermes/.env
+chmod 600 /home/team/.hermes/.env</pre>
+<p>Добавьте только имена и значения, которые требует проверенный адаптер, сохранив существующие строки. Пример имени: <code>MY_SERVICE_API_KEY</code>; название из примера не является настройкой конкретного сервиса. В проекте сохраняются только имена необходимых переменных и инструкция получения. Файл <code>.env</code> не надо показывать агенту или выводить через <code>cat</code>.</p>
+<p>В кабинете провайдера установите жёсткий лимит расходов, если доступен, и уведомления. В Hermes для учебного запуска:</p>
+<pre>hermes config set agent.max_turns 30
+hermes config set cron.max_parallel_jobs 1</pre>
+<p>30 итераций является стартовым учебным ограничением, не гарантией завершения и не денежным лимитом. Проверяйте счёт провайдера. Если лимит оборвал дело, результат не становится готовым. Не повышайте лимит бесконечно вместо исправления цикла.</p>
+<h2>4. Переносим подготовленный комплект</h2>
+<p>На сервере:</p>
+<pre>mkdir -p /home/team/projects/ai-komanda</pre>
+<p>На своём компьютере, только после проверки экспортной папки на секреты:</p>
+<pre>scp -i ~/.ssh/ai-komanda-vps -r /ABSOLUTE/PATH/ai-komanda-export/. team@SERVER_IP:/home/team/projects/ai-komanda/</pre>
+<p><code>/ABSOLUTE/PATH/ai-komanda-export</code> замените на реальный путь чистого экспорта. Это не рабочая папка с ключами и историей клиентов. Для повторной передачи сначала отдельная резервная копия, затем сравнение; не затирайте серверные результаты старой локальной копией.</p>
+<p>На сервере:</p>
+<pre>cd /home/team/projects/ai-komanda
+ls -la
+hermes config set terminal.cwd /home/team/projects/ai-komanda
+hermes</pre>
+<p>Первое сообщение:</p>
+<blockquote>Прочитай правила этого проекта и agenty/dispetcher.md. Проверь наличие входов, навыков, инструментов и проверок. Пока не запускай расписание и не отправляй ничего наружу. Покажи, что переносится без изменений, какие пути и зависимости требуют настройки. Не читай значения секретов: проверь только наличие доступа безопасным тестом.</blockquote>
+<p>Если паспорт находится по другому пути, подставьте найденный путь. Исправляются ссылки и адаптер исполнения, не переписывается бизнес-процесс. Проверяющий должен видеть исходные данные, а не только резюме автора. Если независимые исполнители недоступны, не объявляем обычный единый чат эквивалентом.</p>
+<h2>5. Ручное дело на сервере</h2>
+<p>В свежем сеансе Hermes из папки проекта:</p>
+<blockquote>Запусти всю команду. Пробный прогон. Вход: [точный путь тестового комплекта]. Ничего не публикуй; используй согласованный тестовый режим.</blockquote>
+<p>Проверьте фактические файлы результата и проверки, запись в журнале, отдельную папку попытки, правильное дело и остановки. Успешная установка Hermes ещё не является успешным переносом команды.</p>
+<h2>6. Gateway и работа после выхода из SSH</h2>
+<p>Для уведомлений своему Telegram сначала выполните:</p>
+<pre>hermes gateway setup</pre>
+<p>Мастер настраивает токен бота и разрешённых пользователей. Для учебного бота разрешите только свой идентификатор. Никогда не открывайте доступ всем к боту с терминалом. Выдайте тестовое сообщение и проверьте, что посторонний пользователь не получает доступ. Публичное сообщество не является административным чатом бота.</p>
+<p>Для работы расписания без мессенджера gateway также нужен. Под <code>team</code>:</p>
+<pre>hermes gateway install
+hermes gateway start
+hermes gateway status</pre>
+<p>В административном окне:</p>
+<pre>loginctl enable-linger team
+loginctl show-user team -p Linger</pre>
+<p>Ожидаем <code>Linger=yes</code>. Без lingering пользовательская служба может не пережить выход и не запуститься после загрузки. Не запускайте одновременно ручной <code>hermes gateway</code> и установленную службу.</p>
+<h2>7. Безопасная первая задача по расписанию</h2>
+<p>В новом терминале <code>team</code> проверьте синтаксис установленной версии:</p>
+<pre>hermes cron create --help
+hermes cron list</pre>
+<p>Создаём сначала приостановленную задачу. Это проверка подключения проекта, не повторная обработка бизнес-дела:</p>
+<pre>hermes cron create &quot;every 1h&quot; &quot;Прочитай agenty/dispetcher.md в текущем проекте. Только проверь наличие указанных входов и инструкций. Не выполняй дело, не меняй файлы команды и не отправляй сообщения наружу. Верни краткий статус и перечень недостающего.&quot; --workdir /home/team/projects/ai-komanda --name week6-canary --paused
+hermes cron list</pre>
+<p>Скопируйте точный ID задачи из списка:</p>
+<pre>hermes cron run JOB_ID
+hermes cron list</pre>
+<p><code>JOB_ID</code> заменяется реальным ID. Ручной запуск может обходить паузу и зависит от версии по синхронности: подтвердите завершение в статусе, а не по возврату команды. Выходы задач: <code>/home/team/.hermes/cron/output/&lt;job_id&gt;/</code>. Читайте только соответствующий файл, проверьте его перед отправкой наставнику.</p>
+<p><strong>Критично:</strong> у cron должен быть <code>--workdir</code>. Без него проектные правила могут не загрузиться, даже если в gateway настроен <code>terminal.cwd</code>.</p>
+<p>После успешной проверки замените задачу через помощника на ваш действительный маршрут. Текст для Hermes:</p>
+<blockquote>Настрой одну приостановленную задачу для этого проекта. Запуск [условие и часовой пояс]. В каждом запуске обрабатывай не более одного нового полного дела по agenty/dispetcher.md. Перед запуском проверь журнал, статус и блокировку дела. Повтор события не должен повторять внешнее действие. При отсутствии нового входа ничего не генерируй. При ожидании согласования сохрани состояние и уведомь только меня. Покажи ID, абсолютный workdir, расписание с часовым поясом, модель, инструменты и получателя. Не включай до моего согласия.</blockquote>
+<p>Проверьте созданное описание и ближайшее время в <code>hermes cron list</code>. На уровне процесса нужны атомарный захват дела и устойчивый ключ внешней операции; фраза «не повторяй» не заменяет их. Если адаптер не умеет защищать внешние действия, оставьте отправку ручной. Один параллельный cron не защищает от одновременного ручного запуска.</p>
+<p>Включение выбранной задачи:</p>
+<pre>hermes cron resume JOB_ID
+hermes cron list</pre>
+<p>Не используйте в расписании «продолжи как выше»: каждый запуск получает свежий контекст. Не создавайте отдельные временные cron-задачи на каждую роль: один диспетчер обязан дождаться проверенного выхода предыдущей.</p>
+<h2>8. Доказательство автономности</h2>
+<p>1. Оставьте один безопасный новый вход.</p>
+<p>2. Запишите ожидаемое время и номер дела.</p>
+<p>3. Выйдите из SSH командой <code>exit</code>, закройте рабочую сессию ноутбука.</p>
+<p>4. После срока войдите снова и проверьте <code>hermes gateway status</code>, <code>hermes cron list</code>, файлы результата и журнал.</p>
+<p>5. Подтвердите именно новый запуск, не старый файл и не только уведомление.</p>
+<p>6. Отдельно проверьте после согласованной перезагрузки учебного сервера. Не перезагружайте чужую рабочую машину.</p>
+<p>Если делается три финальных дела недели 6 на VPS, этот запуск может быть одним из трёх. Не добавляйте ещё пять только ради сервера.</p>
+<h2>9. Пауза, ошибки и обновление</h2>
+<pre>hermes cron pause JOB_ID
+hermes gateway status
+hermes doctor
+hermes cron list</pre>
+<p>Пауза предотвращает новые автоматические запуски, но не гарантирует прекращение уже выполняющегося дела. Для текущего сообщения в мессенджере есть <code>/stop</code>. Аварийная остановка всей службы:</p>
+<pre>hermes gateway stop</pre>
+<p>После принудительной остановки проверьте незавершённые дела и внешний сервис до повтора: запрос мог успеть выполнить действие. Для восстановления:</p>
+<pre>hermes gateway start
+hermes gateway status</pre>
+<p>Логи находятся в <code>/home/team/.hermes/logs/</code>, выход конкретного расписания в <code>cron/output/&lt;job_id&gt;/</code>. Ошибка исполнения и ошибка доставки уведомления разные: не запускайте дело заново только потому, что Telegram не получил результат. Если процесс не запускался вообще, проверьте службу, расписание, часовой пояс, профиль и права.</p>
+<p>Перед обновлением: пауза задач, завершение текущего дела, защищённая резервная копия проекта и состояния, фиксация версии. Затем <code>hermes update</code> и повтор контрольного дела. Не обновляйте прямо перед демонстрацией. Резервная копия <code>.hermes</code> содержит секреты и историю, её нельзя публиковать.</p>
+<h2>Источники и предел проверки</h2>
+<ul>
+<li><a href="https://hermes-agent.nousresearch.com/docs/getting-started/installation/">Установка Hermes</a>.</li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/configuration/">Настройки, секреты, рабочий каталог и лимиты</a>.</li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/messaging/">Gateway и пользовательская служба</a>.</li>
+<li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/cron/">Cron, workdir, pause, результаты</a>.</li>
+<li><a href="https://ubuntu.com/server/docs/how-to/security/openssh-server/">Ubuntu OpenSSH</a>.</li>
+</ul>
+<p>Проверено чтением официальных страниц. Не подтверждены в этом комплекте конкретный хостинг, расходы, доступ из страны участника, реальный SSH, доставка Telegram, перезагрузка VPS и успешность бизнес-процесса. Их подтверждает ведущий на учебном стенде, затем участник в своей среде.</p><footer><a href="../GUIDE-N6.html">Вернуться к гайду</a><p>Неделя 6 · комплект от 22.09.2026. Инструкции не заменяют проверку возможностей вашей среды.</p></footer></main><script>async function copyPrompt(id,button){const el=document.getElementById(id);try{await Promise.race([navigator.clipboard.writeText(el.textContent),new Promise((_,reject)=>setTimeout(()=>reject(new Error('clipboard timeout')),800))]);button.textContent='Скопировано';}catch(e){const range=document.createRange();range.selectNodeContents(el);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);button.textContent='Текст выделен: Ctrl+C / ⌘C';}setTimeout(()=>button.textContent='Скопировать промпт',3500);} </script></body></html>

@@ -1,0 +1,49 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Независимый разбор Grok 4.7</title><style>
+:root{color-scheme:dark;--bg:#0d0e0f;--card:#181a1b;--line:#363a3b;--lime:#c8ff00;--text:#f0f0f0;--muted:#b9bfc0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:17px/1.65 Arial,Helvetica,sans-serif}
+a{color:var(--lime);text-underline-offset:4px}a:hover{color:#e1ff78}button{font:inherit;cursor:pointer;background:var(--lime);color:#10120a;border:0;border-radius:6px;padding:10px 18px}button:focus-visible,a:focus-visible{outline:3px solid #fff;outline-offset:4px}
+header{border-bottom:1px solid var(--line);padding:16px max(20px,calc((100vw - 1000px)/2));font-weight:bold;letter-spacing:.08em}
+main{max-width:1000px;margin:auto;padding:48px 24px 100px}h1{font-size:clamp(38px,7vw,76px);line-height:1.04;letter-spacing:-.04em;margin:14px 0 24px;max-width:850px}h2{font-size:clamp(26px,4vw,40px);line-height:1.2;letter-spacing:-.02em}h3{font-size:21px;margin-top:28px}p{max-width:850px}.eyebrow{color:var(--lime);font-size:13px;letter-spacing:.12em;text-transform:uppercase}.intro{font-size:22px;color:var(--muted)}nav{display:flex;flex-wrap:wrap;gap:9px;margin:32px 0}nav a{padding:8px 12px;border:1px solid var(--line);border-radius:5px;text-decoration:none;font-size:14px}
+section{border-top:1px solid var(--line);margin-top:46px;padding-top:24px;scroll-margin-top:24px}.chat{color:var(--lime);font-weight:bold}li{padding:5px 0}ol{padding-left:26px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#090b0c;border:1px solid var(--line);padding:20px;border-radius:8px;font:15px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}code{overflow-wrap:anywhere;font-size:.92em}.prompt{margin:25px 0}.prompt button{font-size:14px}.result{border-left:4px solid var(--lime);padding:4px 0 4px 20px;margin:28px 0}.note{color:var(--muted);font-size:15px}.links{display:flex;flex-wrap:wrap;gap:18px;margin:20px 0}.status{background:#252518;border:1px solid #646334;border-radius:8px;padding:16px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}img{max-width:100%}.table-wrap{overflow-x:auto}footer{margin-top:50px;color:var(--muted);font-size:14px}blockquote{border-left:3px solid var(--lime);margin-left:0;padding-left:18px}
+@media(max-width:520px){main{padding:28px 18px 70px}body{font-size:16px}pre{padding:14px;font-size:14px}h1{font-size:42px}}
+@media print{body{background:white;color:black;font-size:11pt}header,nav,button{display:none}main{max-width:none;padding:0}section{break-inside:auto}pre,.status{background:#f5f5f5;color:black}a,.chat,.eyebrow,.note{color:#333}h1{font-size:32pt}h2{font-size:22pt}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style></head><body><header>COMANDOS AI / ПРАКТИКУМ</header><main><h1>Независимый разбор Grok 4.7</h1>
+<p>22 сентября 2026 модель grok-4.7 реально вызвана через локальный CLI.</p>
+<p>Первый проход по файлам исчерпал лимит ходов без итогового заключения.</p>
+<p>Повторному запуску переданы тексты навыка связки, трёх его инструкций и гайда.</p>
+<p>Он вернул предметный аудит трёх сценариев: одна роль без входа, две роли с правкой,</p>
+<p>три роли с согласованием и повтором события. Код завершения повторного вызова 0.</p>
+<h2>Исправлено после замечаний</h2>
+<ul>
+<li>Порядок проверки входа и регистрации попытки разделён; отказ до начала не выдан</li>
+</ul>
+<p>  за выполненное дело, безопасность имеет собственный режим и свидетельство.</p>
+<ul>
+<li>Для одной роли отсутствие межролевого контракта не блокирует настройку.</li>
+<li>Для чата без общей папки определены логические файлы, выдача владельцу и ограничения счётчика.</li>
+<li>Пробная правка остаётся в той же попытке, файлы получают новые версии,</li>
+</ul>
+<p>  зависимые роли действительно запускаются повторно, а не только перечитывается старый ответ.</p>
+<ul>
+<li>Принятие конкретной версии хранится отдельным свидетельством; промежуточное</li>
+</ul>
+<p>  согласование не означает приёмку всего дела. Новая версия требует нового решения.</p>
+<ul>
+<li>Сохраняются ключ входного события и квитанции операций. Повтор running/waiting</li>
+</ul>
+<p>  возвращает состояние, а не создаёт вторую рабочую обработку.</p>
+<ul>
+<li>Пауза и предел повторов проверяются до запуска. Новое согласие не разрешает</li>
+</ul>
+<p>  бесконтрольно повторять старую внешнюю операцию.</p>
+<ul>
+<li>Safety-попытки не входят в финальную тройку; отсутствие урока не требует изменения навыка.</li>
+</ul>
+<p>Основной агент также закрепил явную загрузку диспетчера по короткой команде в новой</p>
+<p>сессии и единый файл ZAPUSK-KOMANDY.txt для ограниченного чата.</p>
+<h2>Граница проверки</h2>
+<p>Это документальный аудит, не выполнение интеграций. Grok сообщил об ограничении</p>
+<p>полноты доставленного контекста; его ответ не является заверением, что проверен</p>
+<p>каждый файл комплекта. Исправления проверены основным агентом и локальными тестами;</p>
+<p>повторного полного независимого прогона всех изменений на VPS не было.</p><footer><a href="GUIDE-N6.html">Вернуться к гайду</a><p>Неделя 6 · комплект от 22.09.2026. Инструкции не заменяют проверку возможностей вашей среды.</p></footer></main><script>async function copyPrompt(id,button){const el=document.getElementById(id);try{await Promise.race([navigator.clipboard.writeText(el.textContent),new Promise((_,reject)=>setTimeout(()=>reject(new Error('clipboard timeout')),800))]);button.textContent='Скопировано';}catch(e){const range=document.createRange();range.selectNodeContents(el);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);button.textContent='Текст выделен: Ctrl+C / ⌘C';}setTimeout(()=>button.textContent='Скопировать промпт',3500);} </script></body></html>

@@ -1,0 +1,357 @@
+[
+  {
+    "path": "materialy-nedeli-6/chatgpt/mehanik.txt",
+    "sha256": "f399fcab5332058f5062b16421a65054e7cb642846db23a5c1ff4db08664431c",
+    "bytes": 23604
+  },
+  {
+    "path": "materialy-nedeli-6/chatgpt/otchet.txt",
+    "sha256": "14921194fb0f3b380670d5877583f294a988b69a6ec88b55971e4c982005ff0d",
+    "bytes": 44912
+  },
+  {
+    "path": "materialy-nedeli-6/chatgpt/svyazat-komandu.txt",
+    "sha256": "c4fc51d1283639ad326b1c94a94f408165bebeb57a2d7c40a562bc6b9c6b08cf",
+    "bytes": 34748
+  },
+  {
+    "path": "materialy-nedeli-6/mehanik/SKILL.md",
+    "sha256": "1d6626645e960c9ff3667d06f5019c6743bc0f622c8f0e8dd13c4d4e226b357e",
+    "bytes": 19450
+  },
+  {
+    "path": "materialy-nedeli-6/mehanik/references/nedelya-6.md",
+    "sha256": "312e3a32ee25becafa8ab8f7cdb81741738ea4b66ae10ff7397695d14ad4bf12",
+    "bytes": 4378
+  },
+  {
+    "path": "materialy-nedeli-6/otchet/SKILL.md",
+    "sha256": "5c6972770fa46b222c3bd0cf8c042dfcf58f236c1537aa7982b319df2a4018a2",
+    "bytes": 1841
+  },
+  {
+    "path": "materialy-nedeli-6/otchet/references/nedelya-3.md",
+    "sha256": "1aa36f217b8437ce73cde3fd3c06c1232cebd250b5b93858128a12880e4ec4f9",
+    "bytes": 21998
+  },
+  {
+    "path": "materialy-nedeli-6/otchet/references/nedelya-5.md",
+    "sha256": "8171e59a83b0bff5db587c72f880e5fa91723959d4e5be2d4efbb27b574db843",
+    "bytes": 12416
+  },
+  {
+    "path": "materialy-nedeli-6/otchet/references/nedelya-6.md",
+    "sha256": "40a4e51ac2ffa7fefe50c349e4d89a1c95a9d0718dfbfaf3567f8d4ad2f93bc2",
+    "bytes": 7941
+  },
+  {
+    "path": "materialy-nedeli-6/svyazat-komandu/SKILL.md",
+    "sha256": "dcf45f7c7f62593c75bd25b179ea6a6805569464aea4f5f2583b9dd5025fbb8e",
+    "bytes": 2836
+  },
+  {
+    "path": "materialy-nedeli-6/svyazat-komandu/references/nastrojka.md",
+    "sha256": "8b2a00b9d1921404083c22df16d89cdcb3f60160dc4111dc95c78f42d2d723d0",
+    "bytes": 7725
+  },
+  {
+    "path": "materialy-nedeli-6/svyazat-komandu/references/uchet.md",
+    "sha256": "bc9e22b7717ba3b10c4c44770d9068b994bfc65c74e6f63a3fee5d48d4b6e994",
+    "bytes": 8950
+  },
+  {
+    "path": "materialy-nedeli-6/svyazat-komandu/references/zapusk.md",
+    "sha256": "77f56946e331a9cec84058df470cb10ad4bad46be3baf7faab1e86a977c886a5",
+    "bytes": 14536
+  },
+  {
+    "path": "materialy-nedeli-6/week6/GROK-PROVERKA.html",
+    "sha256": "b6571e89263dd619c17a4b69557c5e87691672e49e39b4604ae2e8a216eb80e7",
+    "bytes": 7602
+  },
+  {
+    "path": "materialy-nedeli-6/week6/GROK-PROVERKA.md",
+    "sha256": "8f7afc3cfe40cf0ca4e862046d3f43cce2afb3947b3faddd700b19ded9a723fc",
+    "bytes": 3515
+  },
+  {
+    "path": "materialy-nedeli-6/week6/GUIDE-N6.html",
+    "sha256": "6290fffdb75d03e761bb8073790085d0156dc51600a763248141c90358d1b895",
+    "bytes": 38161
+  },
+  {
+    "path": "materialy-nedeli-6/week6/PAMYATKA-VLADELCA.html",
+    "sha256": "656d1bdb897293ae404bf1a4459ac26ccaa29fab3923f765b53a4b2de2e048e4",
+    "bytes": 9241
+  },
+  {
+    "path": "materialy-nedeli-6/week6/PAMYATKA-VLADELCA.md",
+    "sha256": "62abfba01d78ef7798e37b99c0fd6d08c98b500b9e3de6be1056d16b2ceb4bc8",
+    "bytes": 5098
+  },
+  {
+    "path": "materialy-nedeli-6/week6/PROVERKA.html",
+    "sha256": "1b5162b794de4a5f7654b89a57817efd3043e1aab45ab11656ce3136a99c442f",
+    "bytes": 8453
+  },
+  {
+    "path": "materialy-nedeli-6/week6/PROVERKA.md",
+    "sha256": "d01f4a69f214e2f7810db134dafe3fe73522186ddb263a1cfee272a8ad7179c8",
+    "bytes": 4282
+  },
+  {
+    "path": "materialy-nedeli-6/week6/README.md",
+    "sha256": "471960e6389a473e64ba37487dbb7d9f157d4fd96dee311c7482aea6cdb9d3e5",
+    "bytes": 2144
+  },
+  {
+    "path": "materialy-nedeli-6/week6/SLEDUYUSHCHAYA-KOMANDA.html",
+    "sha256": "b836cbdc921a829ee870075ecc55fa79226cc2b8c3dd98f39f5efcaca118fd90",
+    "bytes": 7634
+  },
+  {
+    "path": "materialy-nedeli-6/week6/SLEDUYUSHCHAYA-KOMANDA.md",
+    "sha256": "77b353611e08759b3b6546a4ab0b1041dfd2dd9c0a5d40f4c6337bca9bb6501b",
+    "bytes": 3583
+  },
+  {
+    "path": "materialy-nedeli-6/week6/assets/shablon-hakatona.html",
+    "sha256": "4d39a70d65ef705c3edea401a135f2c204ea8383f4d611036a3d1ff079a1164e",
+    "bytes": 8945
+  },
+  {
+    "path": "materialy-nedeli-6/week6/content.json",
+    "sha256": "1188be0ba0f60bceff47f8126dcba0726188caafdd1f37b2ab93e398872c82db",
+    "bytes": 30816
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/LIVE-FORWARD-CHECK.md",
+    "sha256": "c83168bf6903d5c1e217e9f6b7fae1192d77968f2612cb6b6a8c2a26ce91dfb8",
+    "bytes": 3867
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/README.md",
+    "sha256": "881b600a60ed40b2e97474ffc59d17ddaaabc0de53b1e666d3e5f868a98d7179",
+    "bytes": 5791
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/REZULTAT-ZHIVOGO-TESTA.md",
+    "sha256": "43c924f79959b70bea2fa0f8767880126ed8b496787020057005f48e4257ba6c",
+    "bytes": 2280
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/cases/approval.json",
+    "sha256": "69912b7f0c2b14236b3ed3d8b034862cdf2b58bdc2883cb018b41fd4d82e79fe",
+    "bytes": 137
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/cases/final-1.json",
+    "sha256": "0b185c70410cd1d325db8c02ccd0390f3e6bc82e3e08608a3e032278d0982bc9",
+    "bytes": 137
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/cases/final-2.json",
+    "sha256": "72dca1a0cf97c8bae5b1f6a0f44175ef73750510cca3348b2d7b53dd93075aa7",
+    "bytes": 128
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/cases/final-3.json",
+    "sha256": "4a3e8753e1dbeb016afe209a6d033cbad3a7a32a3e7249014e3920a14cfa3906",
+    "bytes": 140
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/cases/missing.json",
+    "sha256": "c5c84ee67e3b27311aa91f7477307a760c821127817d0160bf4c5bf2c684d88b",
+    "bytes": 51
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/cases/trial-1.json",
+    "sha256": "9aac7366efd1f579af9e458bcde7275a12ed8f6c9371298533041fcdcafa27c8",
+    "bytes": 148
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/cases/trial-2.json",
+    "sha256": "7e22cc726b907e0f5bc2fbf4e88dacff44072e2a51963480df373772e1c7554f",
+    "bytes": 151
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/AGENTS.md",
+    "sha256": "e660fe9b1ff67b55e422f91eca038b03ecee167d32d13fb3d6b296348d11c455",
+    "bytes": 771
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/KARTA-PROCESSA.md",
+    "sha256": "17829aafb2101d8a919786a494245257f7664f7bbe4ed6a56603e34fe25c56a4",
+    "bytes": 605
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/README.md",
+    "sha256": "433b47a203aedc5f74ee428d8ecc75b2480c4cb2c5ae3ae67afbb3b1e12e1c53",
+    "bytes": 3054
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/agenty/analitik.md",
+    "sha256": "5dcd4ca5a840d1558c8abcb0406f5be9d170c7fba44b042c5304b080c2a9c8ce",
+    "bytes": 429
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/agenty/avtor.md",
+    "sha256": "d330bfbc20cbf08e7a48c4bd71c2b5d23545a907c12f7a195b77c9d778f2b79b",
+    "bytes": 467
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/kontekst/kontrakt-stykov.md",
+    "sha256": "c94be6c09093bb40d563eff34cb4363737c2efd5ce49f1fb4b277f89a3a0527d",
+    "bytes": 929
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/kontekst/spravochnik.md",
+    "sha256": "3f9c38a1a2dfe2ba3f7e42ab86cb52a6f4b8eccf0023dcc665a72c56f86c8ab0",
+    "bytes": 787
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/navyki/napisat-otvet/SKILL.md",
+    "sha256": "729afeaf53b1988b4a083cd86263d7cc9e781ff51f9b55bfef5495cc3af0b5d0",
+    "bytes": 861
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/navyki/proverit/SKILL.md",
+    "sha256": "89bd1192b556e4d954ee2e347cba3c3a99db00c6092993feaaa689f10787fe8c",
+    "bytes": 845
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/navyki/razobrat-zayavku/SKILL.md",
+    "sha256": "66b63811a799c4b63d224356b2233ef127a9ee3610faf6eac3a760e136633e0d",
+    "bytes": 709
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/vhod/final-1.md",
+    "sha256": "3ae8f8a2e4038e8d157f2dae3641d79755d8ea9e5f60f142c2bc0a53a9e2b6e0",
+    "bytes": 166
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/vhod/final-2.md",
+    "sha256": "9751b5bfddb24d92dd971e1251e0c01015bbb02310b6bce63d8d2bf6b9c0aa19",
+    "bytes": 141
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/vhod/final-3.md",
+    "sha256": "e238a5b1d87ecf4acceca79c4610bda0b57ee5aaaf5343779a9433045da4ddd6",
+    "bytes": 104
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/vhod/trial-1.md",
+    "sha256": "89003d2991da107f8397a03e419dde28381b4cfe91989a4d600cfb65ae0e5985",
+    "bytes": 153
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/live-project/vhod/trial-2.md",
+    "sha256": "311564315d4a3b43f5ceac57f34ca6e45b4415e343c6e721849f9ac2efee166e",
+    "bytes": 168
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/simulator.py",
+    "sha256": "24edcfa5e1fc5d563d805796739be093882e5805a011851b44cedda35cbce3a0",
+    "bytes": 3595
+  },
+  {
+    "path": "materialy-nedeli-6/week6/demo/test_simulator.py",
+    "sha256": "02bba46117e2dcf762db7eb838575042e5dd085c28587cc9789e12f14cf15406",
+    "bytes": 3349
+  },
+  {
+    "path": "materialy-nedeli-6/week6/instructions/PEREDAT-HERMES.html",
+    "sha256": "59b6c8ae85556331dd522f0b1b9f29387eca66e564403015a4317cf6e230302c",
+    "bytes": 10994
+  },
+  {
+    "path": "materialy-nedeli-6/week6/instructions/PEREDAT-HERMES.md",
+    "sha256": "f2d2cc69f5161db913c54ee6565914d4dbc022496690d9e5ac9e4841f4b2bc6e",
+    "bytes": 6788
+  },
+  {
+    "path": "materialy-nedeli-6/week6/instructions/PLATFORMY.html",
+    "sha256": "0e17f5b9f8d58b476c20508252e0eb8b2c9399e461a6ed4d0fd7c2fe01a8312d",
+    "bytes": 15649
+  },
+  {
+    "path": "materialy-nedeli-6/week6/instructions/PLATFORMY.md",
+    "sha256": "824bf0bdc004789e66f47554bdd298ae5037298b595b358f0cdb588babeb5cb2",
+    "bytes": 11144
+  },
+  {
+    "path": "materialy-nedeli-6/week6/instructions/PODKLYUCHENIYA.html",
+    "sha256": "88b0b5b9e2e707052986dcfd7418cbe1ff9bf7d224329990853889257d6e950c",
+    "bytes": 18190
+  },
+  {
+    "path": "materialy-nedeli-6/week6/instructions/PODKLYUCHENIYA.md",
+    "sha256": "61063c1758597e482c7e1623f81708a403fae0add1f1302aa5ea261ce14c590c",
+    "bytes": 13842
+  },
+  {
+    "path": "materialy-nedeli-6/week6/instructions/VPS-HERMES.html",
+    "sha256": "11567f00b637621b200a1d727e3286d47669851948a4aeff653c3142fff1e625",
+    "bytes": 28701
+  },
+  {
+    "path": "materialy-nedeli-6/week6/instructions/VPS-HERMES.md",
+    "sha256": "f9f0335f44a6e4c185711efadd3008ae75686a81c60f3ddf438cc72150c56357",
+    "bytes": 23704
+  },
+  {
+    "path": "materialy-nedeli-6/week6/prompts.json",
+    "sha256": "bd4e417841fb2bdb585ed08403405dcb21a88da062ff1f1d60fc8cec9d74a5b4",
+    "bytes": 8515
+  },
+  {
+    "path": "materialy-nedeli-6/week6/recording/PERED-ZAPISYU.html",
+    "sha256": "995a9eb6efef73b787d24f855c34e8b4211115735ea5fbe678fe8c50a5f1ee75",
+    "bytes": 7639
+  },
+  {
+    "path": "materialy-nedeli-6/week6/recording/PERED-ZAPISYU.md",
+    "sha256": "629962bf8485d47300dd7061455dfa53d2c92342cedb5ff22ee944aef216a75a",
+    "bytes": 3557
+  },
+  {
+    "path": "materialy-nedeli-6/week6/recording/SCENARIY-VIDEO.html",
+    "sha256": "113f2346bc74e3cbb4b44b2d1fb56c555a9ac95e77f63d0a31ad5f710970efd6",
+    "bytes": 18767
+  },
+  {
+    "path": "materialy-nedeli-6/week6/recording/SCENARIY-VIDEO.md",
+    "sha256": "74b0e57480c2b0ac94abc2aa0dc098d17cdb953f5d398da3a0bd0a1516ae4fd9",
+    "bytes": 13682
+  },
+  {
+    "path": "materialy-nedeli-6/week6/scripts/build_kit.py",
+    "sha256": "2dc46817c1b935317dab7d4310a45b1f6d1e7573aec4907225c2546d7d4f1a7a",
+    "bytes": 7991
+  },
+  {
+    "path": "materialy-nedeli-6/week6/scripts/build_status.py",
+    "sha256": "ea775963401c87b6564aea581da8afb56d36e712642ddad8dea435d88477cdcf",
+    "bytes": 7490
+  },
+  {
+    "path": "materialy-nedeli-6/week6/scripts/package_kit.py",
+    "sha256": "1ec8948d548dc8be18f07dbfc846cf51efd3d72c127232e19e554df53bdad988",
+    "bytes": 2638
+  },
+  {
+    "path": "materialy-nedeli-6/week6/tests/browser.mjs",
+    "sha256": "a8171f327e2d32d65f3fc06f5e110215db3a3d9d88c73612700c0bc8a7d43bbc",
+    "bytes": 2856
+  },
+  {
+    "path": "materialy-nedeli-6/week6/tests/test_bundle.py",
+    "sha256": "81b8588477710fcf805acf37125411a5e21834bdff14a9e4ffd87d829541e5bc",
+    "bytes": 3097
+  },
+  {
+    "path": "materialy-nedeli-6/week6/tests/test_status.py",
+    "sha256": "058a7e5f15816693d38bca11ff357f2804f0a96716eaa58293f532dc91447aff",
+    "bytes": 2935
+  }
+]
