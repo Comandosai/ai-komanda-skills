@@ -19,13 +19,19 @@ class Links(HTMLParser):
 class Bundle(unittest.TestCase):
     def test_github_install_is_pinned_and_non_destructive(self):
         prompts=json.loads((ROOT/'prompts.json').read_text())
-        for key in ('p1','p6','p9'):
-            text=prompts[key]
-            self.assertRegex(text,r'raw\.githubusercontent\.com/Comandosai/ai-komanda-skills/[0-9a-f]{40}/')
-            self.assertIn('SHA-256',text)
-            self.assertIn('не заменяй существующие файлы',text)
-            self.assertIn('не распаковывай поверх',text)
-            self.assertIn('чат-версию',text)
+        text=prompts['p1']
+        self.assertRegex(text,r'github\.com/Comandosai/ai-komanda-skills/tree/[0-9a-f]{40}/')
+        self.assertIn('без замены существующих файлов',text)
+        self.assertIn('целиком со справочниками',text)
+        self.assertIn('Если скачать не можешь',text)
+        for key in ('p6','p9'):
+            self.assertIn('сохранённый на шаге 1',prompts[key])
+            self.assertNotIn('SHA-256',prompts[key])
+            self.assertNotIn('.zip',prompts[key])
+    def test_existing_workplace_is_the_default(self):
+        data=json.loads((ROOT/'content.json').read_text())
+        self.assertIn('рабочее место недели 5',data['steps'][0]['chat'])
+        self.assertFalse(any('распакуйте' in a.lower() for a in data['steps'][0]['actions']))
     def test_prompt_single_source(self):
         data=json.loads((ROOT/'content.json').read_text()); prompts=json.loads((ROOT/'prompts.json').read_text())
         expected={p['id']:p['text'] for s in data['steps'] for p in s.get('prompts',[])}

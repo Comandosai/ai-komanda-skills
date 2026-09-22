@@ -58,7 +58,7 @@ def build():
     esc=html.escape
     out=['<p class="eyebrow">Продолжение недели 5</p><h1>'+esc(data['title'])+'</h1><p class="intro">'+esc(data['subtitle'])+'</p>',
          '<p>Все шаги на одной странице. Основной путь выполняют все; VPS и Hermes выбирайте, если нужен перенос. Видео добавим после записи.</p>',
-         '<div class="links"><a href="downloads/AI-KOMANDA-N6.zip" download>Скачать комплект</a><a href="recording/SCENARIY-VIDEO.html">Для ведущего: сценарии записи</a><a href="PROVERKA.html">Что проверено</a></div>',
+         '<details><summary>Если помощник не может скачать инструкции</summary><p><a href="downloads/AI-KOMANDA-N6.zip" download>Скачать материалы вручную</a>. Это запасной вариант, не новое рабочее место. Для обычного чата приложите chatgpt/svyazat-komandu.txt из архива и запрошенные файлы вашего проекта. Для механика и отчёта позже используйте соответствующие файлы из chatgpt. Ключи не загружайте.</p></details>',
          '<nav aria-label="Шаги">'+''.join('<a href="#'+s['id']+'">'+esc(s['title'])+'</a>' for s in data['steps'])+'</nav>']
     prompts={}
     for s in data['steps']:
@@ -66,7 +66,8 @@ def build():
         for p in s.get('prompts',[]):
             prompts[p['id']]=p['text']
             out.append('<div class="prompt"><h3>'+esc(p['label'])+'</h3><pre id="'+p['id']+'">'+esc(p['text'])+'</pre><button onclick="copyPrompt(\''+p['id']+'\',this)">Скопировать промпт</button></div>')
-        out.append('<div class="result"><strong>Проверьте результат</strong><p>'+esc(s['result'])+'</p></div><p class="note">'+esc(s['stop'])+'</p>')
+        out.append('<div class="result"><strong>Проверьте результат</strong><p>'+esc(s['result'])+'</p></div>')
+        if s['stop']: out.append('<details class="note"><summary>Если возникли сложности</summary><p>'+esc(s['stop'])+'</p></details>')
         out.append('<div class="links">'+''.join('<a href="'+esc(url)+'">'+esc(label)+'</a>' for label,url in s.get('links',[]))+'</div></section>')
     (ROOT/'GUIDE-N6.html').write_text(page(data['title'],'\n'.join(out)))
     (ROOT/'prompts.json').write_text(json.dumps(prompts,ensure_ascii=False,indent=2)+'\n')
