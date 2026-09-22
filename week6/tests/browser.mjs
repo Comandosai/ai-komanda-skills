@@ -16,8 +16,8 @@ const errors=[];page.on('pageerror',e=>errors.push(e.message));
 for(const width of [1440,390]){
  await page.setViewportSize({width,height:1000});
  await page.goto('file://'+path.join(root,'GUIDE-N6.html'));
- assert.equal(await page.locator('section').count(),10);
- assert.equal(await page.locator('.prompt button').count(),10);
+ assert.equal(await page.locator('section').count(),11);
+ assert.equal(await page.locator('.prompt button').count(),13);
  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  await page.screenshot({path:path.join(shots,`guide-${width}.png`)});
  await page.locator('#trial').scrollIntoViewIfNeeded();

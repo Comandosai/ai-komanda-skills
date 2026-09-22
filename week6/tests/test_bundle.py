@@ -17,6 +17,18 @@ class Links(HTMLParser):
         if tag=='a' and 'href' in a:self.links.append(a['href'])
 
 class Bundle(unittest.TestCase):
+    def test_workflow_order_and_separate_handoffs(self):
+        data=json.loads((ROOT/'content.json').read_text())
+        self.assertEqual([s['id'] for s in data['steps']],
+            ['start','link','trial','connect','improve','final','pack','host','auto','report','deck'])
+        prompts={p['id']:p['text'] for s in data['steps'] for p in s.get('prompts',[])}
+        self.assertNotIn('p-host',prompts)
+        self.assertIn('p-hermes',prompts)
+        self.assertIn('p-vps',prompts)
+        self.assertIn('p-mechanic-schedule',prompts)
+        self.assertIn('p10',prompts)
+        self.assertIn('ссылку на сервис',prompts['p4'])
+        self.assertNotIn('настрой расписание',prompts['p6'].lower())
     def test_github_install_is_pinned_and_non_destructive(self):
         prompts=json.loads((ROOT/'prompts.json').read_text())
         text=prompts['p1']

@@ -6,7 +6,7 @@ import re
 import zipfile
 
 ROOT=Path(__file__).resolve().parents[2]
-RELEASE=ROOT/'releases/week6-2026-09-22/materialy-nedeli-6'
+RELEASE=ROOT/'releases/week6-2026-09-22-v2/materialy-nedeli-6'
 SKILL_ROOT=RELEASE if RELEASE.exists() else ROOT
 TOPS=('svyazat-komandu','mehanik','otchet','week6')
 DENY={'__pycache__','.git','downloads','node_modules','evidence'}
