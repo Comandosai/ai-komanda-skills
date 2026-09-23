@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Гранит-Сервис · Тендерный отдел · Защита недели 6</title>
+<title>Защита недели 6</title>
 <style>
 /* ============================================================
    COMANDOS AI · токены из 03-Resources/35-comandos-design-system
@@ -539,10 +539,10 @@ body.speaking .speaker{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
         <div class="hero-facts" id="heroFacts"></div>
       </div>
       <div class="ba">
-        <div class="k">Было · я сам</div>
+        <div class="k" id="heroBeforeLabel">Было · я сам</div>
         <div class="was" id="heroWas"></div>
         <div class="sep"></div>
-        <div class="k">Стало · команда</div>
+        <div class="k" id="heroAfterLabel">Стало · команда</div>
         <div class="now"><span class="cnt" id="heroNow" data-to="0" data-suffix=" мин">0</span></div>
         <div class="s" id="heroSummary"></div>
       </div>
@@ -558,7 +558,7 @@ body.speaking .speaker{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
   <section class="slide" data-cue="Веди пальцем сверху вниз: кладу файлы, пишу фразу, команда работает, получаю документ.">
     <p class="eyebrow">Экран 2 · как это работает</p>
     <h2>Я пишу одну фразу. Остальное делает команда</h2>
-    <p class="lede">Одно настоящее дело от 22 сентября, шаг за шагом. Ничего не собрано специально для показа.</p>
+    <p class="lede" id="pipelineLede"></p>
 
     <div class="story">
       <div class="srow">
@@ -588,7 +588,7 @@ body.speaking .speaker{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
       <div class="srow">
         <div class="snum">4</div>
         <div class="sbody">
-          <h4>Получаю готовое предложение</h4>
+          <h4 id="pipelineResultTitle"></h4>
           <div class="outwrap">
             <div id="pipeDoc"></div>
             <div class="outnote" id="pipeNote"></div>
@@ -632,7 +632,7 @@ body.speaking .speaker{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
 
     <div class="route-sum">
       <div class="sum-card">
-        <div class="k">Время на одно КП</div>
+        <div class="k" id="routeTimeLabel">Время на одно дело</div>
         <div class="v" id="sumTime"></div>
       </div>
       <div class="sum-card">
@@ -645,8 +645,8 @@ body.speaking .speaker{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
       </div>
     </div>
     <div class="legend-src">
-      <div><span class="src src-fact">замерено</span> по журналу трёх финальных дел</div>
-      <div><span class="src src-said">со слов</span> время шагов «было»</div>
+      <div><span class="src src-fact">замерено</span> по журналу выбранных дел</div>
+      <div><span class="src src-said">до запуска</span> оценка исходного маршрута</div>
     </div>
   </section>
 
@@ -654,14 +654,14 @@ body.speaking .speaker{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
   <section class="slide" data-cue="Назови только большое число. Три справа зал прочитает сам, пока ты молчишь.">
     <p class="eyebrow">Экран 5 · было и стало</p>
     <h2 id="metricsTitle"></h2>
-    <p class="lede">Четыре числа, которые изменились за неделю. У каждого свой источник.</p>
+    <p class="lede" id="metricsLede">Четыре числа, которые изменились за неделю. У каждого свой источник.</p>
     <div class="kpi">
       <div class="kpi-hero" id="kpiHero"></div>
       <div class="kpi-rest" id="kpiRest"></div>
     </div>
     <div class="legend-src">
-      <div><span class="src src-fact">замерено</span> три финальных дела, медиана</div>
-      <div><span class="src src-said">со слов</span> состояние до недели 6</div>
+      <div id="metricsLegendAfter"><span class="src src-fact">замерено</span> состояние после запуска</div>
+      <div id="metricsLegendBefore"><span class="src src-said">со слов</span> состояние до недели 6</div>
     </div>
   </section>
 
@@ -725,9 +725,9 @@ body.speaking .speaker{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
   <section class="slide" data-cue="Это блок для клуба, не для жюри. На защите его можно пропустить.">
     <p class="eyebrow">Экран 9 · моя оценка</p>
     <h2>Что я думаю о практикуме</h2>
-    <p class="lede">Мои оценки и мои слова. Это мнение владельца, а не замер по файлам.</p>
+    <p class="lede" id="feedbackLede">Мои оценки и мои слова. Это мнение владельца, а не замер по файлам.</p>
     <div class="scores" id="scores"></div>
-    <div class="col-head"><h3>Что оказалось самым ценным</h3><span class="src src-said">со слов</span></div>
+    <div class="col-head"><h3>Что оказалось самым ценным</h3><span class="src src-said" id="feedbackSource">со слов</span></div>
     <ul class="list" id="valued"></ul>
   </section>
 
@@ -961,6 +961,8 @@ const mdBold = t => t.replace(/&/g,'&amp;').replace(/</g,'&lt;')
 
 $('#stepInTime').textContent = P.inTime ? '· ' + P.inTime : '';
 $('#stepRunTime').textContent = P.runTime || '';
+$('#pipelineLede').textContent = shown(P.lede,'Одно настоящее дело из рабочей папки, шаг за шагом.');
+$('#pipelineResultTitle').textContent = shown(P.resultTitle,'Получаю готовый результат');
 $('#pipeCmd').innerHTML = mdBold(shown(P.command));
 
 P.in.forEach(f => $('#pipeIn').append(el('div','filecard',
@@ -988,14 +990,14 @@ $('#teamLede').textContent = `${DATA.roles.length} роли, ${totalSkills} на
   [DATA.roles.length, 'роли в команде'],
   [totalSkills, 'навыка у ролей'],
   [totalRuns, 'запусков в журнале'],
-  [fmtMinShort(savedByRoles), 'экономии на их шагах']
+  [fmtMinShort(savedByRoles), shown(DATA.rolesDeltaLabel,'разницы на шагах ролей')]
 ].forEach(([v,k]) => $('#teamStrip').append(el('div','ts',`<div class="v">${v}</div><div class="k">${k}</div>`)));
 
 function fmtMinShort(m){ return !Number.isFinite(Number(m)) ? 'не измерено' : Number(m)>=60 ? `${Math.floor(Number(m)/60)} ч ${Number(m)%60} мин` : `${Number(m)} мин`; }
 
-const flowParts = ['Заявка'];
+const flowParts = [shown(DATA.flowStart,'Вход')];
 DATA.roles.forEach(r => flowParts.push(r.name));
-flowParts.push('КП клиенту');
+flowParts.push(shown(DATA.flowEnd,'Результат'));
 flowParts.forEach((p,i) => {
   const isRoleNode = i > 0 && i < flowParts.length-1;
   if(i) $('#flow').append(el('span','farrow','→'));
@@ -1047,7 +1049,9 @@ DATA.steps.forEach((s, i) => {
   route.append(step);
 });
 
-function isRole(who){ return !['Руками','Не было','Моё решение'].includes(who); }
+function isRole(who){
+  return !/^(Руками|Не было|Мо[её] решение|Мой запуск)/i.test(shown(who));
+}
 
 function paintRoute(){
   const other = state === 'after' ? 'before' : 'after';
@@ -1082,6 +1086,7 @@ function paintRoute(){
 }
 $('#btnBefore').onclick = () => { state = 'before'; paintRoute(); };
 $('#btnAfter').onclick  = () => { state = 'after';  paintRoute(); };
+$('#routeTimeLabel').textContent = shown(DATA.routeTimeLabel,'Время на одно дело');
 paintRoute();
 
 /* --- было и стало: один герой и три плитки --- */
@@ -1101,13 +1106,19 @@ $('#heroWas').textContent = fmtMin(heroBefore);
 $('#heroNow').dataset.to = Number.isFinite(heroAfter) ? heroAfter : 0;
 $('#heroNow').dataset.suffix = Number.isFinite(heroAfter) ? ' мин' : '';
 if(!Number.isFinite(heroAfter)) $('#heroNow').textContent = 'не измерено';
+$('#heroBeforeLabel').innerHTML = 'Было · я сам ' + srcTag(hero.beforeSrc || 'said');
+$('#heroAfterLabel').innerHTML = 'Стало · команда ' + srcTag(hero.afterSrc || hero.src || 'fact');
 $('#heroSummary').textContent = shown(DATA.heroSummary,'Команда проводит одно дело от входа до проверенного результата.');
 $('#metricsTitle').textContent = `Было ${fmtMin(heroBefore)}. Стало ${fmtMin(heroAfter)}`;
+$('#metricsLede').textContent = shown(DATA.metricsLede,'Четыре числа, у каждого свой источник.');
+$('#metricsLegendAfter').innerHTML = `<span class="src src-fact">замерено</span> ${esc(shown(DATA.metricsLegendAfter,'состояние после запуска'))}`;
+const beforeLegendSrc = hero.beforeSrc === 'fore' ? 'fore' : 'said';
+$('#metricsLegendBefore').innerHTML = `<span class="src src-${beforeLegendSrc}">${beforeLegendSrc === 'fore' ? 'моделирование' : 'со слов'}</span> ${esc(shown(DATA.metricsLegendBefore,'состояние до недели 6'))}`;
 $('#kpiHero').innerHTML = `
-  <div class="k">Было · я сам</div>
+  <div class="k">Было · я сам ${srcTag(hero.beforeSrc || 'said')}</div>
   <div class="was">${esc(fmtMin(heroBefore))}</div>
   <div class="sep"></div>
-  <div class="k">Стало · команда</div>
+  <div class="k">Стало · команда ${srcTag(hero.afterSrc || hero.src || 'fact')}</div>
   <div class="now"><span class="cnt" data-to="${Number.isFinite(heroAfter)?heroAfter:0}" data-suffix="${Number.isFinite(heroAfter)?' мин':''}">${Number.isFinite(heroAfter)?'0':'—'}</span></div>
   <div class="foot">
     <span class="dbig">${heroD.txt}</span>
@@ -1157,6 +1168,11 @@ DATA.feedback.scores.forEach(sc => {
      <div class="scale">${cells}</div>
      <div class="sn">${esc(sc.note)}</div>`));
 });
+$('#feedbackLede').textContent = shown(DATA.feedback.lede,'Мои оценки и мои слова. Это мнение владельца, а не замер по файлам.');
+if(DATA.feedback.src === 'fore'){
+  $('#feedbackSource').className = 'src src-fore';
+  $('#feedbackSource').textContent = 'моделирование';
+}
 DATA.feedback.valued.forEach((v,i) => $('#valued').append(
   el('li','',`<span class="pin up">${i+1}</span><span>${esc(v)}</span>`)));
 
