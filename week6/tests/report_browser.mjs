@@ -22,6 +22,9 @@ for(const rel of ['assets/shablon-hakatona.html','demo/final-report/PREZENTACIYA
   await page.waitForTimeout(50);
   assert.equal(await page.locator('.slide').count(),9,rel);
   assert.equal(await page.locator('#counter').textContent(),'1 / 9',rel);
+  assert.equal(await page.locator('.brand-logo').count(),1,rel);
+  assert.ok(await page.locator('.brand-logo').evaluate(img=>img.complete&&img.naturalWidth>0),rel+' logo');
+  if(rel.includes('demo/')) assert.match(await page.locator('.brand-logo').getAttribute('src'),/^data:image\/png;base64,/);
   const layout=await page.evaluate(()=>({scrollWidth:document.documentElement.scrollWidth,innerWidth}));
   const overflowing=await page.evaluate(()=>[...document.querySelectorAll('*')].map(e=>({tag:e.tagName,cls:e.className,id:e.id,right:e.getBoundingClientRect().right,width:e.getBoundingClientRect().width,scroll:e.scrollWidth})).filter(x=>x.right>innerWidth+1||x.scroll>x.width+1).slice(0,8));
   assert.ok(layout.scrollWidth<=layout.innerWidth,rel+' width '+width+' '+JSON.stringify({layout,overflowing}));

@@ -45,11 +45,10 @@ button{font:inherit;color:inherit;cursor:pointer}
   position:sticky; top:0; z-index:40;
 }
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em}
-.brand .mark{
-  width:26px;height:26px;border-radius:7px;background:var(--ink);
-  display:grid;place-items:center;flex:0 0 auto;
+.brand-logo{
+  width:34px;height:34px;border-radius:8px;display:block;object-fit:cover;
+  flex:0 0 auto;box-shadow:var(--shadow-sm);
 }
-.brand .mark i{width:9px;height:9px;border-radius:50%;background:var(--accent);display:block}
 .brand small{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;
   text-transform:uppercase;color:var(--text-faint);display:block;font-weight:500}
 .topbar .who{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -518,7 +517,7 @@ body.speaking .speaker{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
 
 <div class="topbar">
   <div class="brand">
-    <span class="mark"><i></i></span>
+    <img class="brand-logo" src="comandos-logo.png" alt="COMANDOS">
     <span>COMANDOS AI<small>Практикум · неделя 6</small></span>
   </div>
   <div class="who">

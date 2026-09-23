@@ -5,6 +5,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import base64
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,8 +43,13 @@ class Week6Report(unittest.TestCase):
         self.assertIn("Молочный благородный", text)
         self.assertIn("Режим выступления", text)
         self.assertIn('id="btnBefore"', text)
+        self.assertIn('class="brand-logo"', text)
+        self.assertIn('src="comandos-logo.png"', text)
         self.assertIn("WEEK6_DATA_START", text)
         self.assertIn("WEEK6_DATA_END", text)
+        logo = ROOT / "assets/comandos-logo.png"
+        self.assertTrue(logo.is_file())
+        self.assertGreater(logo.stat().st_size, 1000)
 
     def test_demo_is_explicitly_simulated_and_consistent(self):
         report = (ROOT / "demo/final-report/OTCHET-N6.md").read_text()
@@ -77,6 +83,9 @@ class Week6Report(unittest.TestCase):
         self.assertIn(r"\u003cimg", rendered)
         self.assertNotIn('<img src=x onerror="window.pwned=1">', rendered)
         self.assertEqual(rendered.count("WEEK6_DATA_START"), 1)
+        expected_logo = base64.b64encode((ROOT / "assets/comandos-logo.png").read_bytes()).decode("ascii")
+        self.assertIn(f'data:image/png;base64,{expected_logo}', rendered)
+        self.assertNotIn('src="comandos-logo.png"', rendered)
 
 
 if __name__ == "__main__":

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 from pathlib import Path
 import re
@@ -14,6 +15,7 @@ END = "/* WEEK6_DATA_END */"
 BLOCK = re.compile(
     re.escape(START) + r"\s*const DATA = [\s\S]*?;\s*" + re.escape(END)
 )
+LOGO_SRC = 'src="comandos-logo.png"'
 
 
 def render(template: Path, data_path: Path, output: Path) -> None:
@@ -23,6 +25,14 @@ def render(template: Path, data_path: Path, output: Path) -> None:
         raise ValueError("Корневое значение данных презентации должно быть объектом")
     if not BLOCK.search(source):
         raise ValueError("В шаблоне не найден единственный блок WEEK6_DATA")
+    if source.count(LOGO_SRC) != 1:
+        raise ValueError("В шаблоне должна быть одна ссылка на логотип COMANDOS")
+
+    logo = template.parent / "comandos-logo.png"
+    if not logo.is_file():
+        raise FileNotFoundError(f"Не найден логотип COMANDOS: {logo}")
+    logo_data = base64.b64encode(logo.read_bytes()).decode("ascii")
+    source = source.replace(LOGO_SRC, f'src="data:image/png;base64,{logo_data}"', 1)
 
     encoded = json.dumps(data, ensure_ascii=False, indent=2)
     encoded = encoded.replace("<", "\\u003c").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")

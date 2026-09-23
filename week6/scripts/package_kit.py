@@ -9,7 +9,7 @@ ROOT=Path(__file__).resolve().parents[2]
 SKILL_ROOT=ROOT
 TOPS=('svyazat-komandu','mehanik','otchet','week6')
 DENY={'__pycache__','.git','downloads','node_modules','evidence','tests'}
-EXT={'.md','.html','.json','.py','.mjs','.txt'}
+EXT={'.md','.html','.json','.py','.mjs','.txt','.png'}
 OMIT={Path('week6/SLEDUYUSHCHAYA-KOMANDA.md'),Path('week6/SLEDUYUSHCHAYA-KOMANDA.html')}
 
 def candidates():

@@ -29,7 +29,8 @@
 - instructions/: подробные API/извлечение, VPS, Hermes, платформы; рядом HTML-копии для браузера.
 - assets/shablon-hakatona.html: утверждённый светлый шаблон защиты;
   демонстрационный блок данных обязательно заменяется через
-  scripts/render_hackathon.py.
+  scripts/render_hackathon.py. Официальный знак лежит в
+  assets/comandos-logo.png и при сборке встраивается внутрь автономного HTML.
 - demo/final-report/dannye-prezentacii.json: только пример структуры данных, не
   значения для реальной сдачи.
 - scripts/: сборка страниц, нового снимка учёта, архива и проверки.
