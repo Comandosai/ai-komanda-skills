@@ -10,7 +10,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const shots=fs.mkdtempSync(path.join(os.tmpdir(),'week6-browser-'));
 const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});
-const context=await browser.newContext({offline:true});
+const context=await browser.newContext({offline:true,reducedMotion:'reduce'});
 const page=await context.newPage();
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
 for(const width of [1440,390]){
@@ -29,16 +29,16 @@ for(const width of [1440,390]){
  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  await page.screenshot({path:path.join(shots,`vps-${width}.png`)});
  await page.goto('file://'+path.join(root,'assets/shablon-hakatona.html'));
- await page.locator('#mode').click();
+ await page.waitForTimeout(50);
  for(let i=0;i<9;i++){
-  assert.equal(await page.locator('.slide.active').count(),1);
+  assert.equal(await page.locator('.slide.on').count(),1);
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await page.waitForTimeout(50);
   await page.screenshot({path:path.join(shots,`deck-${width}-${i}.png`),fullPage:true});
   await page.keyboard.press('ArrowRight');
  }
- await page.keyboard.press('n');assert.ok(await page.locator('body').evaluate(e=>e.classList.contains('notes')));
- await page.keyboard.press('b');assert.ok(await page.locator('body').evaluate(e=>e.classList.contains('blackout')));
- await page.keyboard.press('Escape');assert.ok(await page.locator('body').evaluate(e=>!e.classList.contains('blackout')));
+ await page.locator('#speakBtn').click();
+ assert.ok(await page.locator('body').evaluate(e=>e.classList.contains('speaking')));
 }
 assert.deepEqual(errors,[]);
 await browser.close();console.log('PASS Chromium offline, desktop/mobile, copy, 9 slides, controls. Screenshots: '+shots);

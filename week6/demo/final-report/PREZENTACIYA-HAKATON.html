@@ -1,84 +1,1462 @@
-<!doctype html>
-<html lang="ru">
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Моя AI-команда / Хакатон</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Гранит-Сервис · Тендерный отдел · Защита недели 6</title>
 <style>
-:root{--bg:#0d0e0f;--card:#17191a;--line:#34383a;--ink:#f3f5f4;--muted:#aab2b3;--lime:#c8ff00;--warn:#ffcb6b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:20px/1.45 Arial,Helvetica,sans-serif}.slide{min-height:100vh;max-width:1500px;margin:auto;padding:5vh 6vw 110px;border-bottom:1px solid var(--line)}.brand,.label{color:var(--lime);letter-spacing:.12em;font-size:14px;text-transform:uppercase}.brand{margin-bottom:5vh}h1{font-size:clamp(42px,6vw,88px);line-height:1.03;letter-spacing:-.045em;max-width:1100px;margin:.25em 0}h2{font-size:clamp(32px,4vw,58px);line-height:1.1;letter-spacing:-.035em;margin:.2em 0 .7em}h3{font-size:22px;margin:.2em 0 .55em}.lede{font-size:clamp(21px,2.3vw,32px);max-width:1050px;color:#d7dcdb}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}.money-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.money-grid .big{font-size:clamp(32px,4vw,64px)}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}.card,.big{overflow-wrap:anywhere}.big{font-size:clamp(36px,5vw,72px);line-height:1;color:var(--lime);font-weight:700}.muted,.note{color:var(--muted)}.note{font-size:16px}.badge{display:inline-block;border:1px solid #66706c;border-radius:999px;padding:3px 9px;margin:4px 4px 0 0;font-size:13px;color:#dce3df}.badge.fore{border-color:var(--warn);color:var(--warn)}ul{padding-left:1.1em}li{margin:.55em 0}.flow{display:grid;gap:12px}.flow .card{position:relative}.flow .card:not(:last-child):after{content:'↓';display:block;color:var(--lime);position:absolute;left:50%;bottom:-23px;z-index:2}.doc{white-space:pre-wrap;font:15px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;color:#d9e0dc;max-height:230px;overflow:auto}table{width:100%;border-collapse:collapse;font-size:17px}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-weight:400}.bar{height:12px;background:#25292a;border-radius:99px;overflow:hidden;margin-top:10px}.bar>span{display:block;height:100%;background:var(--lime)}.empty{color:var(--muted);font-style:italic}.warn{color:var(--warn)}aside{display:none;color:#bec5c6;border-top:1px solid var(--line);padding-top:18px;margin-top:28px;font-size:16px}body.notes aside{display:block}body.presenting .slide{display:none}body.presenting .slide.active{display:block}nav{position:fixed;bottom:0;left:0;right:0;background:#17191afa;border-top:1px solid #444;padding:10px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:8}button{font:15px Arial;background:var(--lime);color:#10120b;border:0;border-radius:5px;padding:9px 14px;cursor:pointer}button:focus-visible{outline:3px solid white}#count{font-size:15px;color:#bbb}body.blackout:after{content:'';position:fixed;inset:0;background:black;z-index:10}@media(max-width:620px){body{font-size:18px}.slide{padding:28px 20px 150px}.brand{margin-bottom:34px}.grid{grid-template-columns:1fr}table{font-size:14px;display:block;overflow-x:auto}nav{gap:7px}button{padding:8px 10px}}@media print{nav{display:none}.slide,body.presenting .slide{display:block;min-height:0;break-after:page;padding:30px}body{background:white;color:black}.card{background:white}.brand,.label,.muted,.note,.empty{color:#444}.big{color:#222}aside{display:none!important}}
+/* ============================================================
+   COMANDOS AI · токены из 03-Resources/35-comandos-design-system
+   Светлая тема «Молочный благородный». Файл автономный:
+   ни одного внешнего запроса, открывается без интернета.
+   ============================================================ */
+:root{
+  --bg:#F4EFE3; --bg-elev-1:#FBF7EC; --bg-elev-2:#EDE6D4; --bg-elev-3:#E2D9C2;
+  --line:rgba(38,28,20,.10); --line-strong:rgba(38,28,20,.22);
+  --text:#1F1B16; --text-muted:#5A4F44; --text-faint:#9A8E7E;
+  --accent:#D9FC67; --accent-ink:#1F1B16; --ink:#1F1B16; --ink-2:#2B251E;
+  --plum:#5B3A6E; --plum-soft:#EFE6F0;
+  --warm:#8A7C6A;
+  --ok:#3F8F5B; --warn:#C0892E; --bad:#B23A3A;
+  --shadow-sm:0 1px 2px rgba(31,27,22,.05);
+  --shadow-md:0 6px 20px rgba(31,27,22,.07);
+  --shadow-lg:0 24px 56px rgba(31,27,22,.10);
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:24px; --r-pill:999px;
+  --font-sans:"Raleway","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-serif:"Instrument Serif","EB Garamond",Georgia,serif;
+  --font-mono:"JetBrains Mono","SF Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --dur:360ms;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--font-sans); background:var(--bg); color:var(--text);
+  font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  min-height:100vh; display:flex; flex-direction:column;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+
+/* ---------- каркас ---------- */
+.topbar{
+  display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+  padding:14px 28px; border-bottom:1px solid var(--line);
+  background:rgba(251,247,236,.72); backdrop-filter:blur(8px);
+  position:sticky; top:0; z-index:40;
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em}
+.brand .mark{
+  width:26px;height:26px;border-radius:7px;background:var(--ink);
+  display:grid;place-items:center;flex:0 0 auto;
+}
+.brand .mark i{width:9px;height:9px;border-radius:50%;background:var(--accent);display:block}
+.brand small{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--text-faint);display:block;font-weight:500}
+.topbar .who{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.org{font-weight:700;font-size:14px}
+.seg{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--text-muted);
+  background:var(--bg-elev-2);border:1px solid var(--line);border-radius:var(--r-pill);padding:4px 10px}
+
+.stage{flex:1;display:flex;flex-direction:column;align-items:center;padding:28px 20px 12px}
+.slide{
+  width:100%; max-width:1120px; background:var(--bg-elev-1);
+  border:1px solid var(--line); border-radius:var(--r-xl);
+  box-shadow:var(--shadow-md); padding:clamp(22px,3.2vw,40px);
+  display:none; animation:slideIn var(--dur) var(--ease) both;
+}
+.slide.on{display:block}
+@keyframes slideIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--text-faint);font-weight:600;margin:0 0 10px}
+h1{font-size:clamp(34px,5.4vw,60px);line-height:1.02;letter-spacing:-.025em;font-weight:800;margin:0 0 18px}
+h2{font-size:clamp(24px,3.2vw,36px);line-height:1.12;letter-spacing:-.02em;font-weight:700;margin:0 0 6px}
+.lede{font-size:clamp(15px,1.6vw,18px);color:var(--text-muted);max-width:62ch;margin:0 0 22px}
+.muted{color:var(--text-muted)}
+.faint{color:var(--text-faint)}
+
+/* ---------- бейджи источника: главный приём этой презентации ---------- */
+.src{
+  display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);
+  font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+  padding:3px 8px;border-radius:var(--r-pill);white-space:nowrap;vertical-align:middle;
+}
+.src::before{content:"";width:6px;height:6px;border-radius:50%;flex:0 0 auto}
+.src-fact{background:var(--ink);color:var(--accent)}
+.src-fact::before{background:var(--accent)}
+.src-said{background:transparent;color:var(--plum);border:1px solid var(--plum)}
+.src-said::before{background:var(--plum)}
+.src-fore{background:transparent;color:var(--text-muted);border:1px dashed var(--line-strong)}
+.src-fore::before{background:var(--text-faint)}
+
+.legend-src{display:flex;gap:18px;flex-wrap:wrap;align-items:center;
+  padding-top:16px;margin-top:22px;border-top:1px solid var(--line)}
+.legend-src div{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted)}
+
+/* ---------- титул ---------- */
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:start}
+.hero-plate{
+  background:var(--ink);color:#F7F4EC;border-radius:var(--r-lg);padding:26px;
+}
+.hero-plate .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(247,244,236,.55);margin-bottom:8px}
+.hero-plate .v{font-family:var(--font-serif);font-size:clamp(40px,6vw,64px);line-height:.95;color:var(--accent)}
+.hero-plate .s{margin-top:10px;font-size:13px;color:rgba(247,244,236,.72);line-height:1.45}
+.hero-facts{display:grid;gap:10px;margin-top:18px}
+.fact-row{display:flex;gap:12px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line)}
+.fact-row .k{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--text-faint);width:118px;flex:0 0 auto}
+.fact-row .v{font-weight:600}
+
+/* ---------- маршрут ---------- */
+.toggle{
+  display:inline-flex;background:var(--bg-elev-2);border:1px solid var(--line);
+  border-radius:var(--r-pill);padding:3px;gap:2px;margin-bottom:22px;
+}
+.toggle button{
+  border:0;background:transparent;border-radius:var(--r-pill);
+  padding:8px 20px;font-size:13px;font-weight:600;color:var(--text-muted);
+  transition:all 160ms var(--ease);
+}
+.toggle button[aria-pressed="true"]{background:var(--ink);color:var(--accent);box-shadow:var(--shadow-sm)}
+
+.route{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end;
+  position:relative;padding:0 0 4px}
+.route::before{
+  content:"";position:absolute;left:0;right:0;bottom:78px;height:1px;
+  background:var(--line);z-index:0;
+}
+.step{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;gap:8px}
+.bar-wrap{height:150px;display:flex;align-items:flex-end;position:relative}
+.ghost{
+  position:absolute;left:0;right:0;bottom:0;border:1px dashed var(--line-strong);
+  border-bottom:0;border-radius:6px 6px 0 0;pointer-events:none;
+  transition:height var(--dur) var(--ease),opacity var(--dur) var(--ease);
+}
+.ghost span{
+  position:absolute;top:-19px;left:0;right:0;text-align:center;
+  font-family:var(--font-mono);font-size:10px;color:var(--text-faint);
+}
+.bar{
+  width:100%;border-radius:6px 6px 0 0;position:relative;
+  transition:height var(--dur) var(--ease),background var(--dur) var(--ease);
+  min-height:4px;cursor:default;
+}
+.bar.byrole{background:var(--ink)}
+.bar.byhand{background:var(--bg-elev-3);border:1px solid var(--line-strong);border-bottom:0}
+.bar .mins{
+  position:absolute;top:-21px;left:0;right:0;text-align:center;
+  font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--text-muted);
+}
+.bar.byrole::after{
+  content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:7px;
+  width:7px;height:7px;border-radius:50%;background:var(--accent);
+}
+.step .nm{font-size:12px;font-weight:600;line-height:1.25;min-height:30px}
+.step .who{
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;
+  padding:3px 6px;border-radius:var(--r-pill);text-align:center;line-height:1.3;
+  transition:all var(--dur) var(--ease);
+}
+.who.byrole{background:var(--plum-soft);color:var(--plum);border:1px solid rgba(91,58,110,.25)}
+.who.byhand{background:transparent;color:var(--text-faint);border:1px dashed var(--line-strong)}
+
+.route-sum{display:flex;gap:14px;flex-wrap:wrap;margin-top:24px}
+.sum-card{
+  flex:1;min-width:190px;background:var(--bg-elev-2);border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:16px 18px;
+}
+.sum-card .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text-faint);margin-bottom:6px}
+.sum-card .v{font-family:var(--font-serif);font-size:34px;line-height:1;letter-spacing:-.01em}
+.sum-card .v small{font-family:var(--font-sans);font-size:14px;font-weight:600;letter-spacing:0}
+
+/* ---------- титул: было и стало ---------- */
+.ba{background:var(--ink);color:#F7F4EC;border-radius:var(--r-lg);padding:24px 26px}
+.ba .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(247,244,236,.5);margin-bottom:5px}
+.ba .was{font-family:var(--font-serif);font-size:34px;line-height:1;color:rgba(247,244,236,.5);
+  text-decoration:line-through;text-decoration-thickness:1px}
+.ba .now{font-family:var(--font-serif);font-size:clamp(44px,6vw,62px);line-height:1;color:var(--accent)}
+.ba .sep{height:1px;background:rgba(247,244,236,.15);margin:16px 0}
+.ba .s{margin-top:14px;font-size:13px;color:rgba(247,244,236,.72);line-height:1.5}
+.owner{display:flex;align-items:center;gap:8px}
+.owner .av{width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--accent);
+  display:grid;place-items:center;font-weight:700;font-size:11px;flex:0 0 auto}
+
+/* ---------- как это работает: история в четыре полосы ---------- */
+.story{display:grid;gap:0}
+.srow{display:grid;grid-template-columns:44px 1fr;gap:20px;padding:22px 0;
+  border-bottom:1px solid var(--line);align-items:start}
+.srow:last-child{border-bottom:0;padding-bottom:4px}
+.snum{width:38px;height:38px;border-radius:50%;background:var(--ink);color:var(--accent);
+  display:grid;place-items:center;font-family:var(--font-serif);font-size:21px;line-height:1}
+.sbody{min-width:0}
+.sbody h4{margin:6px 0 13px;font-size:18px;font-weight:700;letter-spacing:-.01em}
+.sbody h4 span{font-weight:400;color:var(--text-muted);font-size:15px}
+
+.files{display:flex;gap:10px;flex-wrap:wrap}
+.filecard{display:flex;gap:10px;align-items:flex-start;background:var(--bg-elev-2);
+  border:1px solid var(--line);border-radius:var(--r-md);padding:11px 13px;flex:1;min-width:200px}
+.filecard .ext{font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.04em;
+  background:var(--ink);color:var(--accent);border-radius:5px;padding:3px 6px;flex:0 0 auto;margin-top:1px}
+.filecard .fn{font-size:13px;font-weight:600;line-height:1.3;word-break:break-word}
+.filecard .fm{font-size:11.5px;color:var(--text-faint);margin-top:2px;line-height:1.35}
+
+.bigcmd{background:var(--ink);color:#F7F4EC;border-radius:var(--r-lg) var(--r-lg) var(--r-lg) 6px;
+  padding:18px 24px;font-size:clamp(16px,2.1vw,22px);line-height:1.4;display:inline-block;max-width:100%}
+.bigcmd b{color:var(--accent);font-weight:600}
+
+.runrow{display:flex;gap:10px;flex-wrap:wrap}
+.runcard{flex:1;min-width:158px;background:var(--bg-elev-2);border:1px solid var(--line);
+  border-radius:var(--r-md);padding:13px 15px}
+.runcard.hand{background:transparent;border-style:dashed}
+.runcard .rw{display:flex;align-items:center;gap:9px;font-weight:700;font-size:14.5px}
+.runcard .dot{width:16px;height:16px;border-radius:50%;background:var(--ink);
+  display:grid;place-items:center;flex:0 0 auto}
+.runcard .dot::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.runcard.hand .dot{background:var(--bg-elev-3)}
+.runcard.hand .dot::after{background:var(--text-faint)}
+.runcard .rd{font-size:12.5px;color:var(--text-muted);margin-top:5px;line-height:1.4}
+.runcard .rt{font-family:var(--font-mono);font-size:11px;color:var(--text-faint);margin-top:6px}
+
+.outwrap{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:20px;align-items:start}
+.outnote{font-size:13.5px;color:var(--text-muted);line-height:1.6}
+.outnote .path{font-family:var(--font-mono);font-size:11px;color:var(--text);
+  background:var(--bg-elev-2);border:1px solid var(--line);border-radius:6px;
+  padding:4px 8px;display:inline-block;margin-top:9px;word-break:break-all}
+
+.docprev{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:#FFFDF8;
+  box-shadow:var(--shadow-sm)}
+.docprev .dhead{display:flex;align-items:center;gap:8px;padding:9px 12px;
+  background:var(--bg-elev-2);border-bottom:1px solid var(--line)}
+.docprev .dhead .fn{font-size:12.5px;font-weight:600}
+.docprev .dhead .fmeta{margin-left:auto;font-size:11px;color:var(--text-faint)}
+.docprev .dbody{padding:18px 22px;font-size:13px;line-height:1.75;color:#2A2620}
+.docprev .dbody b{font-weight:700}
+
+/* ---------- плитки было и стало ---------- */
+.kpi{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px}
+.kpi-hero{background:var(--ink);color:#F7F4EC;border-radius:var(--r-lg);padding:30px;
+  display:flex;flex-direction:column;justify-content:center}
+.kpi-hero .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(247,244,236,.5)}
+.kpi-hero .was{font-family:var(--font-serif);font-size:34px;line-height:1.1;
+  color:rgba(247,244,236,.5);text-decoration:line-through;text-decoration-thickness:1px}
+.kpi-hero .now{font-family:var(--font-serif);font-size:clamp(50px,7.5vw,78px);
+  line-height:1;color:var(--accent);margin-top:2px}
+.kpi-hero .sep{height:1px;background:rgba(247,244,236,.15);margin:16px 0}
+.kpi-hero .foot{display:flex;align-items:center;gap:12px;margin-top:18px;flex-wrap:wrap}
+.kpi-hero .dbig{font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--accent);
+  border:1px solid rgba(217,252,103,.35);border-radius:var(--r-pill);padding:5px 12px}
+.kpi-hero .fs{font-size:12.5px;color:rgba(247,244,236,.62);line-height:1.45;flex:1;min-width:150px}
+
+.kpi-rest{display:grid;gap:12px;align-content:start}
+.kt{background:var(--bg-elev-2);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:16px 20px;display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:16px;align-items:center}
+.kt .k{font-size:14px;font-weight:600;line-height:1.3}
+.kt .k em{display:block;font-style:normal;font-weight:400;font-size:11.5px;
+  color:var(--text-faint);margin-top:3px}
+.kt .vals{display:flex;align-items:baseline;gap:9px;white-space:nowrap}
+.kt .was{font-family:var(--font-serif);font-size:23px;color:var(--text-faint);
+  text-decoration:line-through;text-decoration-thickness:1px}
+.kt .arr{color:var(--text-faint);font-family:var(--font-mono);font-size:12px}
+.kt .now{font-family:var(--font-serif);font-size:34px;line-height:1}
+.kt .d{font-family:var(--font-mono);font-size:12.5px;font-weight:700;color:var(--ok);
+  min-width:54px;text-align:right}
+
+/* ---------- оценка практикума ---------- */
+.scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.score{background:var(--bg-elev-2);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px 24px}
+.score .q{font-size:14.5px;font-weight:600;line-height:1.35;margin-bottom:12px}
+.score .sv{display:flex;align-items:baseline;gap:8px}
+.score .sv b{font-family:var(--font-serif);font-size:clamp(46px,6.5vw,64px);line-height:1;font-weight:400}
+.score .sv span{font-family:var(--font-mono);font-size:14px;color:var(--text-faint)}
+.scale{display:flex;gap:4px;margin-top:16px}
+.scale i{flex:1;height:11px;border-radius:3px;background:var(--bg-elev-3);
+  transition:background 500ms var(--ease)}
+.scale i.on{background:var(--ink)}
+.scale i.peak{background:var(--accent);box-shadow:inset 0 0 0 1px rgba(31,27,22,.25)}
+.score .sn{font-size:12.5px;color:var(--text-muted);margin-top:13px;line-height:1.5}
+
+/* ---------- команда: роли и их навыки ---------- */
+.team-strip{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.ts{flex:1;min-width:132px;background:var(--bg-elev-2);border:1px solid var(--line);
+  border-radius:var(--r-md);padding:13px 15px}
+.ts .v{font-family:var(--font-serif);font-size:32px;line-height:1;letter-spacing:-.01em}
+.ts .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-faint);margin-top:3px}
+
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.fnode{border-radius:var(--r-pill);padding:7px 15px;font-size:12.5px;font-weight:600;
+  border:1px solid var(--line-strong);background:var(--bg-elev-2);color:var(--text-muted)}
+.fnode.isrole{background:var(--ink);color:#F7F4EC;border-color:transparent;
+  display:inline-flex;align-items:center;gap:7px}
+.fnode.isrole i{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:0 0 auto}
+.farrow{color:var(--text-faint);font-size:13px;font-family:var(--font-mono)}
+
+.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+.role{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
+  background:var(--bg-elev-1);display:flex;flex-direction:column;box-shadow:var(--shadow-sm)}
+.role-head{background:var(--ink);color:#F7F4EC;padding:17px 18px}
+.role-head .nm{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16.5px;letter-spacing:-.01em}
+.role-head .nm i{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:0 0 auto}
+.role-head .duty{font-size:12.5px;color:rgba(247,244,236,.66);margin-top:6px;line-height:1.45}
+.role-time{display:flex;align-items:baseline;gap:9px;margin-top:14px;
+  font-family:var(--font-mono);font-size:12px}
+.role-time .was{color:rgba(247,244,236,.45);text-decoration:line-through}
+.role-time .now{color:var(--accent);font-weight:700;font-size:16px}
+.role-io{padding:11px 18px;border-bottom:1px solid var(--line);
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.03em;color:var(--text-muted);line-height:1.7}
+.role-io b{color:var(--text);font-weight:600}
+.role-skills{padding:4px 18px 10px;flex:1}
+.skill{padding:13px 0;border-bottom:1px solid var(--line)}
+.skill:last-child{border-bottom:0}
+.skill .sn{font-family:var(--font-mono);font-size:11.5px;font-weight:700;color:var(--plum);
+  word-break:break-all}
+.skill .sw{font-size:12.5px;color:var(--text-muted);margin:4px 0 10px;line-height:1.42}
+.skill-stats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.stat{font-family:var(--font-mono);font-size:10px;letter-spacing:.03em;background:var(--bg-elev-2);
+  border:1px solid var(--line);border-radius:var(--r-pill);padding:3px 8px;color:var(--text-faint);white-space:nowrap}
+.stat b{color:var(--text);font-weight:700}
+.meter{height:5px;background:var(--bg-elev-3);border-radius:var(--r-pill);overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--ink);border-radius:var(--r-pill);
+  transition:width 900ms var(--ease)}
+.meter-lbl{display:flex;justify-content:space-between;gap:8px;font-size:10.5px;
+  color:var(--text-faint);margin-top:6px;font-family:var(--font-mono)}
+.meter-lbl b{color:var(--text)}
+.role-guard{padding:12px 18px;background:var(--bg-elev-2);border-top:1px solid var(--line);
+  font-size:11.5px;color:var(--text-muted);line-height:1.45}
+
+/* ---------- дамбеллы ---------- */
+.dumb{display:grid;gap:4px;margin-top:8px}
+.dumb-row{
+  display:grid;grid-template-columns:200px 1fr 92px;gap:16px;align-items:center;
+  padding:13px 0;border-bottom:1px solid var(--line);
+}
+.dumb-row:last-child{border-bottom:0}
+.dumb-row .lbl{font-size:13.5px;font-weight:600;line-height:1.3}
+.dumb-row .lbl em{display:block;font-style:normal;font-weight:400;font-size:11px;color:var(--text-faint);margin-top:2px}
+.track{position:relative;height:34px}
+.track .connector{
+  position:absolute;top:50%;height:2px;background:var(--line-strong);
+  transform:translateY(-50%);border-radius:2px;
+  transition:left var(--dur) var(--ease),width var(--dur) var(--ease);
+}
+.dot{
+  position:absolute;top:50%;transform:translate(-50%,-50%);border-radius:50%;
+  box-shadow:0 0 0 2px var(--bg-elev-1);transition:left var(--dur) var(--ease);
+}
+.dot.b{width:11px;height:11px;background:var(--warm)}
+.dot.a{width:15px;height:15px;background:var(--plum)}
+.dot .tag{
+  position:absolute;left:50%;transform:translateX(-50%);top:-20px;white-space:nowrap;
+  font-family:var(--font-mono);font-size:10.5px;font-weight:600;color:var(--text-muted);
+}
+.dot.a .tag{color:var(--plum);top:auto;bottom:-21px}
+.delta{
+  font-family:var(--font-mono);font-size:12px;font-weight:700;text-align:right;white-space:nowrap;
+}
+.delta.good{color:var(--ok)} .delta.flat{color:var(--text-faint)}
+.chart-legend{display:flex;gap:18px;align-items:center;margin:2px 0 14px;font-size:12px;color:var(--text-muted)}
+.chart-legend span{display:inline-flex;align-items:center;gap:7px}
+.chart-legend i{width:11px;height:11px;border-radius:50%;display:block}
+
+/* ---------- деньги ---------- */
+.money{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.money-col{border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;background:var(--bg-elev-2)}
+.money-col.dark{background:var(--ink);border-color:transparent;color:#F7F4EC}
+.money-col h3{margin:0 0 4px;font-size:17px;font-weight:700}
+.money-col.dark h3{color:#F7F4EC}
+.money-col .sub{font-size:12.5px;color:var(--text-muted);margin-bottom:18px}
+.money-col.dark .sub{color:rgba(247,244,236,.6)}
+.big{font-family:var(--font-serif);font-size:clamp(38px,5.6vw,56px);line-height:1;letter-spacing:-.01em}
+.money-col.dark .big{color:var(--accent)}
+.formula{
+  font-family:var(--font-mono);font-size:11.5px;line-height:1.8;color:var(--text-muted);
+  background:var(--bg-elev-1);border:1px dashed var(--line-strong);border-radius:var(--r-md);
+  padding:12px 14px;margin-top:16px;
+}
+.money-col.dark .formula{background:rgba(247,244,236,.06);border-color:rgba(247,244,236,.18);color:rgba(247,244,236,.8)}
+.money-line{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.money-col.dark .money-line{border-color:rgba(247,244,236,.14)}
+.money-line:last-of-type{border-bottom:0}
+.verdict{
+  margin-top:20px;border-left:3px solid var(--accent);background:var(--bg-elev-2);
+  border-radius:0 var(--r-md) var(--r-md) 0;padding:16px 20px;
+}
+.verdict b{display:block;margin-bottom:4px}
+
+/* ---------- доказательство ---------- */
+.deals{width:100%;border-collapse:collapse;font-size:13.5px}
+.deals th{
+  text-align:left;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text-faint);font-weight:600;
+  padding:0 12px 10px 0;border-bottom:1px solid var(--line-strong);
+}
+.deals td{padding:14px 12px 14px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.deals tr:last-child td{border-bottom:0}
+.deals .num{font-family:var(--font-mono);font-weight:700}
+.dot-st{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;white-space:nowrap}
+.dot-st i{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.st-ok i{background:var(--ok)} .st-warn i{background:var(--warn)}
+.guards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.guard{display:flex;gap:11px;align-items:flex-start;background:var(--bg-elev-2);
+  border:1px solid var(--line);border-radius:var(--r-md);padding:13px 15px;font-size:13px}
+.guard i{width:8px;height:8px;border-radius:50%;background:var(--ok);margin-top:6px;flex:0 0 auto}
+
+/* ---------- две колонки: сильное / границы ---------- */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.list li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;line-height:1.45}
+.list .pin{
+  width:22px;height:22px;border-radius:7px;flex:0 0 auto;display:grid;place-items:center;
+  font-family:var(--font-mono);font-size:11px;font-weight:700;margin-top:1px;
+}
+.pin.up{background:var(--ink);color:var(--accent)}
+.pin.hand{background:var(--bg-elev-3);color:var(--text-muted)}
+.col-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.col-head h3{margin:0;font-size:18px}
+
+/* ---------- план ---------- */
+.plan{display:grid;gap:0;margin-top:6px}
+.plan-item{display:grid;grid-template-columns:118px 1fr;gap:20px;padding:18px 0;
+  border-bottom:1px solid var(--line);align-items:start}
+.plan-item:last-child{border-bottom:0}
+.plan-date{font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--plum);
+  background:var(--plum-soft);border-radius:var(--r-pill);padding:5px 10px;text-align:center}
+.plan-item h4{margin:0 0 4px;font-size:16px}
+.ask{margin-top:22px;background:var(--ink);color:#F7F4EC;border-radius:var(--r-lg);padding:22px 24px}
+.ask .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:8px}
+.ask p{margin:0;font-size:16px;line-height:1.5}
+
+/* ---------- нижняя панель ---------- */
+.navbar{
+  position:sticky;bottom:0;z-index:40;background:rgba(251,247,236,.82);backdrop-filter:blur(8px);
+  border-top:1px solid var(--line);padding:10px 28px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.progress{position:absolute;top:0;left:0;height:2px;background:var(--ink);
+  transition:width var(--dur) var(--ease)}
+.dots{display:flex;gap:6px;margin:0 auto}
+.dots button{width:9px;height:9px;padding:0;border:0;border-radius:50%;background:var(--bg-elev-3);
+  transition:all 160ms var(--ease)}
+.dots button[aria-current="true"]{background:var(--ink);width:22px;border-radius:var(--r-pill)}
+.nav-btn{
+  border:1px solid var(--line-strong);background:transparent;border-radius:var(--r-md);
+  height:36px;padding:0 14px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:7px;
+  transition:all 140ms var(--ease);
+}
+.nav-btn:hover{background:var(--bg-elev-2)}
+.nav-btn.primary{background:var(--ink);color:var(--accent);border-color:transparent}
+.nav-btn[disabled]{opacity:.35;pointer-events:none}
+.counter{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);min-width:44px;text-align:center}
+
+/* ---------- режим выступления ---------- */
+.speaker{display:none;max-width:1120px;width:100%;margin:12px auto 0;
+  border:1px dashed var(--line-strong);border-radius:var(--r-lg);padding:16px 20px;background:var(--bg-elev-2)}
+body.speaking .speaker{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.speaker .cue{flex:1;min-width:240px;font-size:14px;color:var(--text-muted);line-height:1.5}
+.speaker .cue b{color:var(--text);display:block;margin-bottom:2px}
+.timer{font-family:var(--font-mono);font-size:26px;font-weight:700;letter-spacing:.02em}
+.timer.over{color:var(--bad)}
+
+/* ---------- подсказка ---------- */
+.tip{
+  position:fixed;pointer-events:none;z-index:90;background:var(--ink);color:#F7F4EC;
+  border-radius:var(--r-sm);padding:7px 10px;font-size:12px;line-height:1.4;
+  box-shadow:var(--shadow-lg);opacity:0;transition:opacity 120ms;max-width:230px;
+}
+.tip.on{opacity:1}
+.tip b{color:var(--accent)}
+
+/* ---------- адаптив ---------- */
+@media (max-width:1000px){
+  .roles{grid-template-columns:1fr}
+  .outwrap{grid-template-columns:1fr}
+  .kpi{grid-template-columns:1fr}
+  .scores{grid-template-columns:1fr}
+  .kt{grid-template-columns:1fr auto;gap:10px}
+  .kt .d{grid-column:1/-1;text-align:left}
+  .srow{grid-template-columns:34px 1fr;gap:14px}
+  .snum{width:30px;height:30px;font-size:17px}
+}
+@media (max-width:900px){
+  .hero-grid,.money,.two{grid-template-columns:1fr}
+  .route{grid-template-columns:1fr;gap:10px}
+  .route::before{display:none}
+  .step{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;
+    border-bottom:1px solid var(--line);padding-bottom:10px}
+  .bar-wrap{height:auto;order:3;grid-column:1/-1}
+  .bar{height:10px!important;width:var(--w);border-radius:var(--r-pill);min-width:12px}
+  .bar .mins{position:static;text-align:left;margin-top:6px}
+  .bar.byrole::after{display:none}
+  .step .nm{min-height:0}
+  .dumb-row{grid-template-columns:1fr;gap:6px}
+  .dumb-row .delta{text-align:left}
+  .track{margin-top:16px;margin-bottom:8px}
+  .guards{grid-template-columns:1fr}
+  .plan-item{grid-template-columns:1fr;gap:8px}
+  .plan-date{justify-self:start;padding:5px 14px}
+  .topbar,.navbar{padding-left:16px;padding-right:16px}
+  .stage{padding:16px 12px 10px}
+  .deals thead{display:none}
+  .deals td{display:block;padding:4px 0;border:0}
+  .deals tr{display:block;padding:14px 0;border-bottom:1px solid var(--line)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+@media print{
+  .topbar,.navbar,.speaker{display:none}
+  .slide{display:block!important;box-shadow:none;break-after:page;margin-bottom:20px}
+  body{background:#fff}
+}
 </style>
 </head>
 <body>
-<section class="slide" id="s1"><div class="brand">COMANDOS AI / Хакатон</div><p class="label">01 / Результат</p><h1 data-field="title"></h1><p class="lede" data-field="lede"></p><div class="grid" data-slot="hero"></div><aside>Назовите процесс, владельца и одно честное изменение. 20 секунд.</aside></section>
-<section class="slide" id="s2"><div class="brand">Как это работает</div><p class="label">02 / Одно дело</p><h2>От входа до результата</h2><div class="grid"><div><h3>Маршрут</h3><div class="flow" data-slot="pipeline"></div></div><div><h3>Настоящий результат</h3><div class="card"><p class="muted" data-field="deal"></p><pre class="doc" data-field="document"></pre><p class="note" data-field="docnote"></p></div></div></div><aside>Покажите один вход, последовательность ролей и сохранённый результат. 30 секунд.</aside></section>
-<section class="slide" id="s3"><div class="brand">Команда</div><p class="label">03 / Роли и навыки</p><h2>Кто за что отвечает</h2><div class="grid" data-slot="roles"></div><aside>Говорите только о реально описанных и проверенных ролях. 25 секунд.</aside></section>
-<section class="slide" id="s4"><div class="brand">Маршрут</div><p class="label">04 / Было и стало</p><h2>Те же шаги, другой способ работы</h2><div class="card"><table><thead><tr><th>Шаг</th><th>Было</th><th>Стало</th></tr></thead><tbody data-slot="steps"></tbody></table></div><aside>Покажите, где остался человек и почему это нормально. 25 секунд.</aside></section>
-<section class="slide" id="s5"><div class="brand">Изменение</div><p class="label">05 / Метрики</p><h2>Что измерено</h2><div class="grid" data-slot="metrics"></div><aside>Для каждого числа назовите источник: файл, слова владельца или расчёт. 25 секунд.</aside></section>
-<section class="slide" id="s6"><div class="brand">Экономика</div><p class="label">06 / Часы и расходы</p><h2>Не смешиваем разные величины</h2><div class="grid money-grid" data-slot="money"></div><div class="card" style="margin-top:18px"><h3>Формула</h3><ul data-slot="formula"></ul><p class="note" data-field="verdict"></p></div><aside>Освобождённое время не называйте сокращением расходов. 25 секунд.</aside></section>
-<section class="slide" id="s7"><div class="brand">Честная картина</div><p class="label">07 / Сработало и осталось</p><h2>Без витринной магии</h2><div class="grid"><div class="card"><h3>Сработало</h3><ul data-slot="wins"></ul></div><div class="card"><h3>Осталось руками или неизвестно</h3><ul data-slot="limits"></ul></div></div><aside>Одна неудача или неизвестное не портит защиту, если оно названо. 25 секунд.</aside></section>
-<section class="slide" id="s8"><div class="brand">Что дальше</div><p class="label">08 / 30 дней</p><h2>Три проверяемых шага</h2><div class="grid"><div class="card"><h3>План</h3><ol data-slot="plan"></ol></div><div class="card"><h3>Возможности</h3><ul data-slot="opps"></ul></div></div><aside>Дата плюс результат, который можно проверить. 25 секунд.</aside></section>
-<section class="slide" id="s9"><div class="brand">Моя оценка</div><p class="label">09 / Своими словами</p><h2>Что было ценным</h2><div class="grid" data-slot="scores"></div><div class="card" style="margin-top:18px"><ul data-slot="valued"></ul></div><aside>Оценки и формулировки принадлежат участнику. 20 секунд.</aside></section>
-<nav aria-label="Управление презентацией"><button id="mode" type="button">Показ слайдов</button><button id="prev" type="button" aria-label="Предыдущий слайд">←</button><span id="count"></span><button id="next" type="button" aria-label="Следующий слайд">→</button><button id="notes" type="button">Заметки</button><button id="fullscreen" type="button">Полный экран</button></nav>
-<script id="dannye" type="application/json">
-{"meta":{"org":"Учебная полка","segment":"Вымышленная мастерская учебных макетов","owner":"Демонстрационный участник","ownerRole":"Владелец решения","process":"Обработка заявки на полку","date":"2026-09-22","version":"demo-report-1"},"hero":{"title":"Заявка -> проверенный черновик","lede":"Учебная репетиция. Ответы владельца смоделированы и не являются отзывом Дмитрия.","wasTotal":{"v":"35 мин","src":"said"},"nowTotal":{"v":"12 мин","src":"said"},"facts":[{"k":"Живых пробных дел","v":"1","src":"fact"},{"k":"Финальных дел","v":"0 из 3","src":"fact"}]},"pipeline":{"dealId":"trial-1","inTime":null,"runTime":null,"command":null,"in":[{"ext":".md","name":"trial-1.md","meta":"две полки, ширина 60 см, глубина 20 см"}],"run":[{"who":"Аналитик","what":"выделяет факты и пробелы","t":null,"hand":false},{"who":"Автор","what":"готовит черновик","t":null,"hand":false},{"who":"Проверяющий","what":"сверяет с источниками","t":null,"hand":false},{"who":"Владелец","what":"принимает конкретную версию","t":null,"hand":true}],"doc":{"ext":".md","name":"02-answer.md","meta":"фрагмент по сводке живого теста","body":"Поняли: нужны две полки шириной 60 см и глубиной 20 см.\nУточните, пожалуйста, высоту и подтвердите, что нужен учебный деревянный макет.\nЦена и срок пока не подтверждены."},"note":"Ответ не отправлялся. Первичные файлы попытки в этой копии недоступны.","path":"week6/demo/REZULTAT-ZHIVOGO-TESTA.md"},"roles":[{"name":"Аналитик","duty":"Выделяет факты, параметры и пробелы","input":"заявка и справочник","output":"01-analysis.md и 01-check.md","guard":"не пишет ответ клиенту","skills":[{"id":"razobrat-zayavku","what":"разбор заявки","runs":1,"avg":null,"pct":null,"pctLabel":"приёмка неизвестна"},{"id":"proverit","what":"самопроверка","runs":1,"avg":null,"pct":null,"pctLabel":"время неизвестно"}]},{"name":"Автор","duty":"Готовит черновик по принятому анализу","input":"заявка, справочник, анализ","output":"02-answer.md и 02-check.md","guard":"не отправляет сообщение и не выдумывает цену","skills":[{"id":"napisat-otvet","what":"черновик ответа","runs":1,"avg":null,"pct":null,"pctLabel":"приёмка неизвестна"},{"id":"proverit","what":"самопроверка","runs":1,"avg":null,"pct":null,"pctLabel":"время неизвестно"}]}],"steps":[{"name":"Прочитать заявку","before":{"who":"человек","min":5},"after":{"who":"аналитик","min":1}},{"name":"Выделить факты и пробелы","before":{"who":"человек","min":10},"after":{"who":"аналитик","min":3}},{"name":"Написать черновик","before":{"who":"человек","min":12},"after":{"who":"автор","min":4}},{"name":"Проверить","before":{"who":"человек","min":5},"after":{"who":"проверяющий","min":2}},{"name":"Принять версию","before":{"who":"человек","min":3},"after":{"who":"человек","min":2}}],"metrics":[{"label":"Время на дело","sub":"смоделированный ответ","unit":"мин","before":35,"after":12,"better":"down","src":"said"},{"label":"Живой пробный проход","sub":"по сводке","unit":"дело","before":null,"after":1,"better":"up","src":"fact"},{"label":"Финальная серия","sub":"результатов нет","unit":"из 3","before":null,"after":0,"better":"up","src":"fact"},{"label":"Касания человека","sub":"журнала событий нет","unit":"","before":null,"after":null,"better":"down","src":null}],"money":{"hoursFreed":{"v":"9,2 ч/мес","src":"fore"},"formula":["35 - 12 = 23 минуты на дело","23 x 24 = 552 минуты в месяц","552 / 60 = 9,2 часа в месяц"],"rate":null,"potential":null,"costs":[["Среда и запросы","600 руб/мес, смоделировано"]],"verdict":"Учебный прогноз. Денежная экономия не доказана."},"wins":["Две роли имеют паспорта, навыки и контракт выходов","Один пробный вход прошёл отдельную проверку по сводке","Черновик не обещает цену или срок и не отправлен наружу"],"limits":["Владелец не принял trial-1","Три финальных дела не выполнены","В исходной папке нет диспетчера, подключения и расписания","Первичные файлы живого прохода недоступны в этой копии"],"plan":[["2026-09-25","Сохранить диспетчера","trial-2 проходит полным комплектом"],["2026-10-05","Выполнить три финальных дела","у каждого есть проверка и решение владельца"],["2026-10-20","Проверить недельный цикл механика","есть журнал и одна подтверждённая правка"]],"opps":["Подключить безопасную папку входящих заявок","Проверить защиту от повторного события","Переносить в постоянно включённую среду только после локальной серии"],"feedback":{"scores":[{"q":"Полезность практикума","v":{"v":8,"src":"said"},"note":"Маршрут стал понятным, но ещё нет финальной серии. Смоделировано."},{"q":"Вероятность рекомендации","v":{"v":7,"src":"said"},"note":"Сначала хочу проверить на реальных входах. Смоделировано."}],"valued":["Стало видно, где нельзя придумывать цену","Принятие версии должно остаться у владельца","Нужна помощь с диспетчером и защитой от дубля"]},"missing":[{"field":"Реальное время и касания","why":"нет журнала событий"},{"field":"Ставка часа","why":"не сообщена"}]}
-</script>
+
+<div class="topbar">
+  <div class="brand">
+    <span class="mark"><i></i></span>
+    <span>COMANDOS AI<small>Практикум · неделя 6</small></span>
+  </div>
+  <div class="who">
+    <span class="owner"><span class="av" id="ownerAv"></span><span class="org" id="orgName"></span></span>
+    <span class="seg" id="segName"></span>
+  </div>
+</div>
+
+<div class="stage">
+
+  <!-- 1. ТИТУЛ -->
+  <section class="slide on" data-cue="Кто я, что за процесс, что команда делает теперь. 20 секунд, не больше.">
+    <p class="eyebrow">Защита · неделя 6</p>
+    <h1 id="heroTitle"></h1>
+    <p class="lede" id="heroLede"></p>
+    <div class="hero-grid">
+      <div>
+        <div class="hero-facts" id="heroFacts"></div>
+      </div>
+      <div class="ba">
+        <div class="k">Было · я сам</div>
+        <div class="was" id="heroWas"></div>
+        <div class="sep"></div>
+        <div class="k">Стало · команда</div>
+        <div class="now"><span class="cnt" id="heroNow" data-to="0" data-suffix=" мин">0</span></div>
+        <div class="s" id="heroSummary"></div>
+      </div>
+    </div>
+    <div class="legend-src">
+      <div><span class="src src-fact">замерено</span> есть попытка, файл и дата</div>
+      <div><span class="src src-said">со слов</span> владелец назвал сам</div>
+      <div><span class="src src-fore">прогноз</span> посчитано по формуле</div>
+    </div>
+  </section>
+
+  <!-- 2. КАК ЭТО РАБОТАЕТ -->
+  <section class="slide" data-cue="Веди пальцем сверху вниз: кладу файлы, пишу фразу, команда работает, получаю документ.">
+    <p class="eyebrow">Экран 2 · как это работает</p>
+    <h2>Я пишу одну фразу. Остальное делает команда</h2>
+    <p class="lede">Одно настоящее дело от 22 сентября, шаг за шагом. Ничего не собрано специально для показа.</p>
+
+    <div class="story">
+      <div class="srow">
+        <div class="snum">1</div>
+        <div class="sbody">
+          <h4>Кладу файлы в папку проекта <span id="stepInTime"></span></h4>
+          <div class="files" id="pipeIn"></div>
+        </div>
+      </div>
+
+      <div class="srow">
+        <div class="snum">2</div>
+        <div class="sbody">
+          <h4>Пишу одну фразу в чат</h4>
+          <div class="bigcmd" id="pipeCmd"></div>
+        </div>
+      </div>
+
+      <div class="srow">
+        <div class="snum">3</div>
+        <div class="sbody">
+          <h4>Команда работает <span id="stepRunTime"></span></h4>
+          <div class="runrow" id="pipeRun"></div>
+        </div>
+      </div>
+
+      <div class="srow">
+        <div class="snum">4</div>
+        <div class="sbody">
+          <h4>Получаю готовое предложение</h4>
+          <div class="outwrap">
+            <div id="pipeDoc"></div>
+            <div class="outnote" id="pipeNote"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend-src">
+      <div><span class="src src-fact">замерено</span> файлы и время взяты из папки дела и журнала</div>
+    </div>
+  </section>
+
+  <!-- 3. КОМАНДА -->
+  <section class="slide" data-cue="Покажи состав. Назови каждую роль одним предложением: что берёт на входе и что отдаёт.">
+    <p class="eyebrow">Экран 3 · состав команды</p>
+    <h2>Кто работает и что умеет каждый</h2>
+    <p class="lede" id="teamLede"></p>
+
+    <div class="team-strip" id="teamStrip"></div>
+    <div class="flow" id="flow"></div>
+    <div class="roles" id="roles"></div>
+
+    <div class="legend-src">
+      <div><span class="src src-fact">замерено</span> все показатели навыков взяты из журнала попыток</div>
+    </div>
+  </section>
+
+  <!-- 3. МАРШРУТ -->
+  <section class="slide" data-cue="Переключи было и стало. Скажи вслух: шаги те же, изменилось кто их делает.">
+    <p class="eyebrow">Экран 4 · маршрут одного дела</p>
+    <h2>Шаги остались те же. Изменилось, кто их делает</h2>
+    <p class="lede" id="routeLede"></p>
+
+    <div class="toggle" role="group" aria-label="Переключение состояния">
+      <button id="btnBefore" aria-pressed="false">Было</button>
+      <button id="btnAfter" aria-pressed="true">Стало</button>
+    </div>
+
+    <div class="route" id="route"></div>
+
+    <div class="route-sum">
+      <div class="sum-card">
+        <div class="k">Время на одно КП</div>
+        <div class="v" id="sumTime"></div>
+      </div>
+      <div class="sum-card">
+        <div class="k">Шагов закрыто ролями</div>
+        <div class="v" id="sumRoles"></div>
+      </div>
+      <div class="sum-card">
+        <div class="k">Касаний человека</div>
+        <div class="v" id="sumHands"></div>
+      </div>
+    </div>
+    <div class="legend-src">
+      <div><span class="src src-fact">замерено</span> по журналу трёх финальных дел</div>
+      <div><span class="src src-said">со слов</span> время шагов «было»</div>
+    </div>
+  </section>
+
+  <!-- 5. ЦИФРЫ -->
+  <section class="slide" data-cue="Назови только большое число. Три справа зал прочитает сам, пока ты молчишь.">
+    <p class="eyebrow">Экран 5 · было и стало</p>
+    <h2 id="metricsTitle"></h2>
+    <p class="lede">Четыре числа, которые изменились за неделю. У каждого свой источник.</p>
+    <div class="kpi">
+      <div class="kpi-hero" id="kpiHero"></div>
+      <div class="kpi-rest" id="kpiRest"></div>
+    </div>
+    <div class="legend-src">
+      <div><span class="src src-fact">замерено</span> три финальных дела, медиана</div>
+      <div><span class="src src-said">со слов</span> состояние до недели 6</div>
+    </div>
+  </section>
+
+  <!-- 5. ДЕНЬГИ -->
+  <section class="slide" data-cue="Здесь главное не соврать. Скажи: это освобождённые часы, а не деньги в кассе.">
+    <p class="eyebrow">Экран 6 · экономика</p>
+    <h2>Часы и расходы. Отдельно</h2>
+    <p class="lede">Эти две колонки намеренно не складываются в одну цифру.</p>
+    <div class="money">
+      <div class="money-col dark">
+        <h3>Освобождённое время</h3>
+        <div class="sub">Потенциал, а не сокращение расходов</div>
+        <div class="big"><span class="cnt" id="hoursFreed" data-to="0" data-suffix=" ч">0</span></div>
+        <div class="money-line"><span>в месяц</span><span class="src src-fore">прогноз</span></div>
+        <div class="formula" id="formulaTime"></div>
+      </div>
+      <div class="money-col">
+        <h3>Что это стоит</h3>
+        <div class="sub">Фактические платежи за месяц</div>
+        <div class="big" id="costTotal"></div>
+        <div id="costLines" style="margin-top:14px"></div>
+        <div class="formula">Деньгами освобождённые часы станут только<br>если занять их другой оплачиваемой работой.</div>
+      </div>
+    </div>
+    <div class="verdict">
+      <b>Что я говорю честно</b>
+      <span class="muted" id="moneyVerdict"></span>
+    </div>
+  </section>
+
+  <!-- 7. СИЛЬНОЕ И ГРАНИЦЫ -->
+  <section class="slide" data-cue="Правая колонка усиливает, а не ослабляет. Проговори её спокойно.">
+    <p class="eyebrow">Экран 7 · честная картина</p>
+    <h2>Что сработало и что осталось руками</h2>
+    <div class="two">
+      <div>
+        <div class="col-head"><h3>Сработало</h3><span class="src src-fact">замерено</span></div>
+        <ul class="list" id="wins"></ul>
+      </div>
+      <div>
+        <div class="col-head"><h3>Осталось руками</h3><span class="src src-said">со слов</span></div>
+        <ul class="list" id="limits"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. ПЛАН И ВОЗМОЖНОСТИ -->
+  <section class="slide" data-cue="Три шага с датами. Потом одной фразой скажи, куда это можно развернуть дальше.">
+    <p class="eyebrow">Экран 8 · что дальше</p>
+    <h2>Следующие 30 дней</h2>
+    <p class="lede">Три шага, у каждого дата и проверяемый результат.</p>
+    <div class="plan" id="plan"></div>
+
+    <div style="margin-top:26px">
+      <div class="col-head"><h3>Какие возможности я вижу для себя</h3><span class="src src-said">со слов</span></div>
+      <ul class="list" id="opps"></ul>
+    </div>
+  </section>
+
+  <!-- 10. ОЦЕНКА -->
+  <section class="slide" data-cue="Это блок для клуба, не для жюри. На защите его можно пропустить.">
+    <p class="eyebrow">Экран 9 · моя оценка</p>
+    <h2>Что я думаю о практикуме</h2>
+    <p class="lede">Мои оценки и мои слова. Это мнение владельца, а не замер по файлам.</p>
+    <div class="scores" id="scores"></div>
+    <div class="col-head"><h3>Что оказалось самым ценным</h3><span class="src src-said">со слов</span></div>
+    <ul class="list" id="valued"></ul>
+  </section>
+
+</div>
+
+<div class="speaker">
+  <div class="timer" id="timer">5:00</div>
+  <div class="cue"><b>Что сказать на этом экране</b><span id="cueText"></span></div>
+  <button class="nav-btn" id="resetTimer">Сбросить таймер</button>
+</div>
+
+<div class="navbar">
+  <div class="progress" id="progress"></div>
+  <button class="nav-btn" id="prev">← Назад</button>
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="counter"></span>
+  <button class="nav-btn" id="speakBtn">Режим выступления</button>
+  <button class="nav-btn primary" id="next">Дальше →</button>
+</div>
+
+<div class="tip" id="tip"></div>
+
 <script>
-const data=JSON.parse(document.getElementById('dannye').textContent);
-const one=s=>document.querySelector(s), all=s=>[...document.querySelectorAll(s)];
-const known=v=>v!==null&&v!==undefined&&v!=='';
-const val=v=>v&&typeof v==='object'&&Object.prototype.hasOwnProperty.call(v,'v')?v.v:v;
-const source=v=>v&&typeof v==='object'?v.src:null;
-const display=(v,fallback='Нет подтверждённых данных')=>known(val(v))?String(val(v)):fallback;
-function node(tag,text,cls){const n=document.createElement(tag);if(known(text))n.textContent=String(text);if(cls)n.className=cls;return n}
-function badge(src){if(!src)return null;return node('span',src==='fact'?'из файла':src==='said'?'со слов':src==='fore'?'расчёт':'неизвестно','badge '+src)}
-function appendBadge(parent,value){const b=badge(source(value));if(b)parent.appendChild(b)}
-function emptyList(slot,text='Нет подтверждённых данных'){slot.appendChild(node('li',text,'empty'))}
-function fillList(selector,items,format=x=>display(x)){const slot=one(selector);slot.replaceChildren();if(!items||!items.length)return emptyList(slot);items.forEach(x=>slot.appendChild(node('li',format(x))))}
-one('[data-field="title"]').textContent=display(data.hero?.title||data.meta?.process,'Процесс пока не указан');
-one('[data-field="lede"]').textContent=display(data.hero?.lede,[data.meta?.owner,data.meta?.org].filter(known).join(' · '));
-const hero=one('[data-slot="hero"]');
-[['Было',data.hero?.wasTotal],['Стало',data.hero?.nowTotal]].forEach(([k,v])=>{const c=node('div',null,'card');c.append(node('p',k,'muted'),node('div',display(v),'big'));appendBadge(c,v);hero.appendChild(c)});
-(data.hero?.facts||[]).forEach(f=>{const c=node('div',null,'card');c.append(node('p',display(f.k),'muted'),node('div',display(f.v),'big'));appendBadge(c,f);hero.appendChild(c)});
-const pipe=one('[data-slot="pipeline"]');
-const inputs=data.pipeline?.in||[];
-const inputText=inputs.length?inputs.map(x=>[x.name,x.meta].filter(known).join(' · ')).join('; '):'Вход не подтверждён';
-pipe.appendChild(node('div',inputText,'card'));
-(data.pipeline?.run||[]).forEach(x=>pipe.appendChild(node('div',[x.who,x.what,x.t].filter(known).join(' · '),'card')));
-if(!(data.pipeline?.run||[]).length)pipe.appendChild(node('div','Маршрут не подтверждён','card empty'));
-one('[data-field="deal"]').textContent=[data.pipeline?.dealId,data.pipeline?.path].filter(known).join(' · ')||'Дело не указано';
-one('[data-field="document"]').textContent=display(data.pipeline?.doc?.body,'Фрагмент результата недоступен');
-one('[data-field="docnote"]').textContent=[data.pipeline?.doc?.name,data.pipeline?.note].filter(known).join(' · ')||'Источник результата не указан';
-const roles=one('[data-slot="roles"]');
-if(!(data.roles||[]).length)roles.appendChild(node('p','Состав команды не подтверждён','empty'));
-(data.roles||[]).forEach(r=>{const c=node('article',null,'card');c.append(node('h3',display(r.name,'Роль без названия')),node('p',display(r.duty)),node('p','Вход: '+display(r.input)),node('p','Выход: '+display(r.output)));if(known(r.guard))c.appendChild(node('p','Граница: '+r.guard,'note'));const ul=node('ul');(r.skills||[]).forEach(s=>ul.appendChild(node('li',[s.id,s.what,known(s.runs)?'запусков: '+s.runs:null,known(s.pctLabel)?s.pctLabel:null].filter(known).join(' · '))));if(!(r.skills||[]).length)emptyList(ul,'Показатели навыков неизвестны');c.appendChild(ul);roles.appendChild(c)});
-const steps=one('[data-slot="steps"]');
-if(!(data.steps||[]).length){const tr=node('tr');const td=node('td','Маршрут не подтверждён','empty');td.colSpan=3;tr.appendChild(td);steps.appendChild(tr)}
-(data.steps||[]).forEach(s=>{const tr=node('tr');tr.append(node('td',display(s.name)),node('td',[display(s.before?.who),known(s.before?.min)?s.before.min+' мин':null].filter(known).join(' · ')),node('td',[display(s.after?.who),known(s.after?.min)?s.after.min+' мин':null].filter(known).join(' · ')));steps.appendChild(tr)});
-const metrics=one('[data-slot="metrics"]');
-if(!(data.metrics||[]).length)metrics.appendChild(node('p','Метрики пока не подтверждены','empty'));
-(data.metrics||[]).forEach(m=>{const c=node('div',null,'card');c.append(node('p',display(m.label),'muted'),node('div',display(m.after)+(known(m.unit)?' '+m.unit:''),'big'),node('p','Было: '+display(m.before)+(known(m.unit)?' '+m.unit:''),'note'));appendBadge(c,m);metrics.appendChild(c)});
-const money=one('[data-slot="money"]');
-[['Освобождено часов',data.money?.hoursFreed],['Ставка часа',data.money?.rate],['Потенциальная ценность',data.money?.potential]].forEach(([k,v])=>{const c=node('div',null,'card');c.append(node('p',k,'muted'),node('div',display(v),'big'));appendBadge(c,v);money.appendChild(c)});
-(data.money?.costs||[]).forEach(x=>{const c=node('div',null,'card');c.append(node('p',display(x[0]),'muted'),node('div',display(x[1]),'big'));money.appendChild(c)});
-fillList('[data-slot="formula"]',data.money?.formula||[]);
-one('[data-field="verdict"]').textContent=display(data.money?.verdict,'Вывод по экономике не сформирован');
-fillList('[data-slot="wins"]',data.wins||[]);
-const limits=[...(data.limits||[]),...(data.missing||[]).map(x=>[x.field,x.why].filter(known).join(': '))];
-fillList('[data-slot="limits"]',limits);
-fillList('[data-slot="plan"]',data.plan||[],x=>Array.isArray(x)?x.filter(known).join(' · '):display(x));
-fillList('[data-slot="opps"]',data.opps||[]);
-const scores=one('[data-slot="scores"]');
-if(!(data.feedback?.scores||[]).length)scores.appendChild(node('p','Оценки не даны','empty'));
-(data.feedback?.scores||[]).forEach(s=>{const c=node('div',null,'card');const numeric=Number(val(s.v));c.append(node('p',display(s.q),'muted'),node('div',known(s.v)?display(s.v)+' / 10':'Не указано','big'));if(Number.isFinite(numeric)){const bar=node('div',null,'bar');const span=node('span');span.style.width=Math.max(0,Math.min(100,numeric*10))+'%';bar.appendChild(span);c.appendChild(bar)}if(known(s.note))c.appendChild(node('p',s.note,'note'));appendBadge(c,s.v);scores.appendChild(c)});
-fillList('[data-slot="valued"]',data.feedback?.valued||[]);
-const slides=all('.slide');let index=0;
-function show(){slides.forEach((s,i)=>s.classList.toggle('active',i===index));one('#count').textContent=(index+1)+' / '+slides.length}
-function move(n){index=Math.max(0,Math.min(slides.length-1,index+n));show();if(!document.body.classList.contains('presenting'))slides[index].scrollIntoView()}
-one('#prev').addEventListener('click',()=>move(-1));one('#next').addEventListener('click',()=>move(1));
-one('#mode').addEventListener('click',e=>{document.body.classList.toggle('presenting');e.currentTarget.textContent=document.body.classList.contains('presenting')?'Все страницы':'Показ слайдов';show();window.scrollTo(0,0)});
-one('#notes').addEventListener('click',()=>document.body.classList.toggle('notes'));
-one('#fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch(e){}});
-document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();move(1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();move(-1)}if(e.key.toLowerCase()==='n')document.body.classList.toggle('notes');if(e.key.toLowerCase()==='f')one('#fullscreen').click();if(e.key.toLowerCase()==='b')document.body.classList.toggle('blackout');if(e.key==='Escape')document.body.classList.remove('blackout')});show();
+/* ============================================================
+   ДАННЫЕ. В боевом шаблоне этот объект заполняет навык otchet
+   из подтверждённого OTCHET-N6.md. Вёрстка ниже его не знает.
+   ============================================================ */
+/* WEEK6_DATA_START — этот блок заменяет render_hackathon.py */
+const DATA = {
+  "org": "Гранит-Сервис",
+  "segment": "Тендерный отдел · подготовка КП",
+  "heroTitle": "Команда, которая готовит коммерческие предложения",
+  "heroLede": "Оптовая торговля стройматериалами. Три роли закрывают путь от входящей заявки до готового КП. Решения по скидкам и финальная отправка остались за мной.",
+  "heroSummary": "Одно коммерческое предложение от входящей заявки до готового файла. Три роли делают то, что раньше делал я.",
+  "facts": [
+    [
+      "Процесс",
+      "Подготовка КП по входящей заявке",
+      null
+    ],
+    [
+      "Ролей в команде",
+      "3: Разборщик, Сметчик, Контролёр",
+      null
+    ],
+    [
+      "Финальных дел",
+      "3 из 3 доведены до результата",
+      "fact"
+    ],
+    [
+      "Среда",
+      "Claude Code, рабочая папка на компьютере",
+      null
+    ],
+    [
+      "Подключено",
+      "1 контур: выгрузка прайсов поставщиков",
+      "fact"
+    ]
+  ],
+  "owner": "Игорь Ремизов",
+  "ownerRole": "владелец",
+  "pipeline": {
+    "dealId": "2291",
+    "inTime": "2 минуты",
+    "runTime": "31 минуту",
+    "command": "Запусти всю команду. Финальный прогон. Вход: **dela/2291/**",
+    "in": [
+      {
+        "ext": "EML",
+        "name": "Заявка 2291.eml",
+        "meta": "письмо от ООО «Севертранс»"
+      },
+      {
+        "ext": "XLSX",
+        "name": "Спецификация.xlsx",
+        "meta": "14 позиций, объект «Склад № 3»"
+      },
+      {
+        "ext": "PDF",
+        "name": "Узел крепления.pdf",
+        "meta": "1 лист, чертёж"
+      }
+    ],
+    "run": [
+      {
+        "who": "Разборщик",
+        "what": "собрал 14 позиций из письма и вложений",
+        "t": "6 мин"
+      },
+      {
+        "who": "Сметчик",
+        "what": "нашёл цены и посчитал смету",
+        "t": "21 мин"
+      },
+      {
+        "who": "Контролёр",
+        "what": "сверил с заявкой и принял",
+        "t": "4 мин"
+      },
+      {
+        "who": "Я",
+        "what": "утвердил скидку и отправил",
+        "t": "3 мин",
+        "hand": true
+      }
+    ],
+    "doc": {
+      "ext": "MD",
+      "name": "03-KP-2291.md",
+      "meta": "создан командой, 22 сентября",
+      "body": "**Коммерческое предложение № 2291**\nООО «Севертранс» · 22 сентября 2026\n\nОбъект: склад № 3, узел крепления\nПозиций: 14 · срок поставки 12 рабочих дней\n\nСумма без НДС: 1 033 333 ₽\nНДС 20%: 206 667 ₽\n**Итого: 1 240 000 ₽**\n\nУсловия: 50% предоплата, доставка до объекта."
+    },
+    "note": "Рядом с предложением команда сама сложила расчёт по позициям, независимую проверку Контролёра и запись моего решения по скидке. Папку она создала тоже сама.",
+    "path": "dela/2291/final-1/03-KP-2291.md"
+  },
+  "roles": [
+    {
+      "name": "Разборщик заявок",
+      "duty": "Вынимает позиции из письма и вложений, приводит их к одному виду",
+      "input": "Письмо клиента, вложения PDF и XLSX",
+      "output": "Таблица позиций с количеством и единицами",
+      "was": 35,
+      "now": 6,
+      "guard": "Права: только чтение. Ничего не отправляет и не считает деньги.",
+      "skills": [
+        {
+          "id": "razobrat-zayavku",
+          "what": "Достаёт позиции из вложения в таблицу",
+          "runs": 17,
+          "avg": "4 мин",
+          "pct": 88,
+          "pctLabel": "принято без правок"
+        },
+        {
+          "id": "proverit-polnotu",
+          "what": "Сверяет число позиций с исходным файлом",
+          "runs": 17,
+          "avg": "2 мин",
+          "pct": 100,
+          "pctLabel": "совпало с оригиналом"
+        }
+      ]
+    },
+    {
+      "name": "Сметчик",
+      "duty": "Находит цены, считает сумму и собирает готовое КП по шаблону",
+      "input": "Таблица позиций, прайсы трёх поставщиков",
+      "output": "Файл КП с расчётом и условиями",
+      "was": 130,
+      "now": 21,
+      "guard": "Скидку выше 7% не применяет. Останавливается и спрашивает владельца.",
+      "skills": [
+        {
+          "id": "nayti-ceny",
+          "what": "Ищет позиции в прайсах трёх поставщиков",
+          "runs": 15,
+          "avg": "6 мин",
+          "pct": 80,
+          "pctLabel": "позиций найдено сразу"
+        },
+        {
+          "id": "poschitat-smetu",
+          "what": "Считает сумму, НДС и доставку по правилам компании",
+          "runs": 15,
+          "avg": "5 мин",
+          "pct": 93,
+          "pctLabel": "расчёт принят с первого раза"
+        },
+        {
+          "id": "oformit-kp",
+          "what": "Собирает КП по фирменному шаблону",
+          "runs": 15,
+          "avg": "4 мин",
+          "pct": 87,
+          "pctLabel": "без правок оформления"
+        }
+      ]
+    },
+    {
+      "name": "Контролёр",
+      "duty": "Независимо сверяет готовое КП с исходной заявкой до отправки",
+      "input": "Готовое КП и исходная заявка",
+      "output": "Отметка «принято» либо список расхождений",
+      "was": 25,
+      "now": 4,
+      "guard": "Не правит КП сам. Возвращает Сметчику с точным списком расхождений.",
+      "skills": [
+        {
+          "id": "proverit-kp",
+          "what": "Сверяет позиции, цены, сроки и условия с заявкой",
+          "runs": 15,
+          "avg": "3 мин",
+          "pct": 27,
+          "pctLabel": "дел, где нашёл расхождение",
+          "invert": true
+        }
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "name": "Приём заявки",
+      "before": {
+        "who": "Руками",
+        "min": 12
+      },
+      "after": {
+        "who": "Руками",
+        "min": 12
+      }
+    },
+    {
+      "name": "Разбор вложений",
+      "before": {
+        "who": "Руками",
+        "min": 35
+      },
+      "after": {
+        "who": "Разборщик",
+        "min": 6
+      }
+    },
+    {
+      "name": "Поиск позиций",
+      "before": {
+        "who": "Руками",
+        "min": 55
+      },
+      "after": {
+        "who": "Сметчик",
+        "min": 9
+      }
+    },
+    {
+      "name": "Расчёт сметы",
+      "before": {
+        "who": "Руками",
+        "min": 45
+      },
+      "after": {
+        "who": "Сметчик",
+        "min": 7
+      }
+    },
+    {
+      "name": "Проверка",
+      "before": {
+        "who": "Не было",
+        "min": 25
+      },
+      "after": {
+        "who": "Контролёр",
+        "min": 4
+      }
+    },
+    {
+      "name": "Оформление КП",
+      "before": {
+        "who": "Руками",
+        "min": 30
+      },
+      "after": {
+        "who": "Сметчик",
+        "min": 5
+      }
+    },
+    {
+      "name": "Отправка клиенту",
+      "before": {
+        "who": "Руками",
+        "min": 18
+      },
+      "after": {
+        "who": "Моё решение",
+        "min": 3
+      }
+    }
+  ],
+  "metrics": [
+    {
+      "label": "Время на одно КП",
+      "unit": "мин",
+      "sub": "медиана трёх финальных дел",
+      "before": 220,
+      "after": 46,
+      "better": "down",
+      "src": "fact"
+    },
+    {
+      "label": "Касаний человека",
+      "unit": "",
+      "sub": "запусков и переносов за одно дело",
+      "before": 9,
+      "after": 2,
+      "better": "down",
+      "src": "fact"
+    },
+    {
+      "label": "Шагов без рук",
+      "unit": "из 7",
+      "sub": "шаг прошёл ролью целиком",
+      "before": 0,
+      "after": 5,
+      "better": "up",
+      "src": "fact"
+    },
+    {
+      "label": "Возвратов на доработку",
+      "unit": "%",
+      "sub": "КП, которые пришлось переделывать",
+      "before": 40,
+      "after": 10,
+      "better": "down",
+      "src": "said"
+    }
+  ],
+  "timeFormula": "220 мин − 46 мин = 174 мин на одно КП\n174 мин × 12 КП в месяц = 2 088 мин\n2 088 мин ≈ 35 часов в месяц",
+  "hoursFreed": 35,
+  "costTotal": "3 500 ₽",
+  "moneyVerdict": "35 часов в месяц освободились, это расчёт по трём делам, помноженный на количество заявок со слов владельца. Пока это не снижение фонда оплаты труда. Прямые расходы 3 500 рублей в месяц уже есть.",
+  "costs": [
+    [
+      "Подписка на среду",
+      "2 400 ₽"
+    ],
+    [
+      "Оплата запросов к модели",
+      "1 100 ₽"
+    ],
+    [
+      "Моё время на поддержку",
+      "≈ 1 ч в неделю"
+    ]
+  ],
+  "deals": [
+    {
+      "id": "final-1",
+      "input": "Заявка 2291, ООО «Севертранс», 14 позиций",
+      "result": "КП на 1 240 000 ₽, проверено Контролёром",
+      "time": "44 мин",
+      "status": "ok",
+      "note": "Прошло без остановок"
+    },
+    {
+      "id": "final-2",
+      "input": "Заявка 2294, ИП Лыков, 6 позиций",
+      "result": "КП на 318 000 ₽, проверено Контролёром",
+      "time": "38 мин",
+      "status": "warn",
+      "note": "Остановка: нет цены на 2 позиции, запросил у поставщика"
+    },
+    {
+      "id": "final-3",
+      "input": "Заявка 2297, ООО «Гидромаш», 23 позиции",
+      "result": "КП на 2 870 000 ₽, проверено Контролёром",
+      "time": "56 мин",
+      "status": "warn",
+      "note": "Остановка на моё согласование скидки выше 7%"
+    }
+  ],
+  "guards": [
+    "Запуск без вложения: команда остановилась и назвала причину, пустое КП не создала",
+    "Повтор уже завершённой заявки: вернула прежний результат, второй файл не сделала"
+  ],
+  "wins": [
+    "Сметчик перестал терять позиции из вложений. Раньше в каждой второй заявке пропадала одна-две строки",
+    "Появилась проверка как отдельный шаг. До недели 6 её просто не существовало",
+    "КП уходит клиенту в тот же день, а не на следующее утро"
+  ],
+  "limits": [
+    "Приём заявки: почта пока не подключена, письмо открываю сам",
+    "Скидка выше 7% и финальная отправка только по моему решению. Так и задумано",
+    "Прайсы трёх поставщиков обновляю вручную раз в неделю",
+    "Расписание не настроено: команда запускается моей командой"
+  ],
+  "plan": [
+    [
+      "до 10 окт",
+      "Подключить почту как источник заявок",
+      "Проверяю на 5 настоящих письмах, вход попадает в папку без меня"
+    ],
+    [
+      "до 20 окт",
+      "Поставить обновление прайсов по расписанию",
+      "Утренний запуск, уведомление при сбое"
+    ],
+    [
+      "до 31 окт",
+      "Передать команду второму менеджеру",
+      "Он проводит 10 дел без меня, замеряю время заново"
+    ]
+  ],
+  "opps": [
+    "Тот же маршрут для заявок на монтаж. Там ручной работы даже больше, чем в КП",
+    "Отдать команду второму менеджеру и снять тендеры с себя целиком",
+    "Подготовка КП как услуга для двух знакомых поставщиков, у них та же боль"
+  ],
+  "feedback": {
+    "scores": [
+      {
+        "q": "Насколько практикум оказался полезен",
+        "v": 9,
+        "note": "Снял балл за неделю 4: там я потерялся и два дня догонял группу."
+      },
+      {
+        "q": "Насколько вероятно, что я порекомендую",
+        "v": 10,
+        "note": "Уже показал систему двум знакомым из стройки, оба просят ссылку."
+      }
+    ],
+    "valued": [
+      "Это не курс про ИИ, а сборка рабочей вещи. К шестой неделе у меня в папке лежит команда, а не конспект",
+      "Требование доказывать каждую цифру файлом. Из-за него я впервые честно посчитал, во что мне обходится одно КП",
+      "Разбор механика. Он нашёл в журнале то, чего я сам не видел месяц"
+    ]
+  }
+};
+/* WEEK6_DATA_END */
+
+/* ============================================================
+   РЕНДЕР
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const el = (t, c, h) => { const n = document.createElement(t); if(c) n.className = c; if(h!=null) n.innerHTML = h; return n; };
+const esc = v => String(v ?? '').replace(/[&<>"']/g, ch => ({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[ch]));
+const known = v => v !== null && v !== undefined && v !== '';
+const shown = (v, fallback='Не подтверждено') => known(v) ? String(v) : fallback;
+const srcTag = k => k ? `<span class="src src-${k==='fact'?'fact':k==='said'?'said':'fore'}">${k==='fact'?'замерено':k==='said'?'со слов':'прогноз'}</span>` : '';
+const fmtMin = m => !Number.isFinite(Number(m)) ? 'не измерено' : Number(m) >= 60 ? `${Math.floor(Number(m)/60)} ч ${Number(m)%60 ? (Number(m)%60)+' мин' : ''}`.trim() : `${Number(m)} мин`;
+
+$('#orgName').textContent = DATA.org;
+$('#ownerAv').textContent = shown(DATA.owner,'?').split(' ').map(w=>w[0]).join('').slice(0,3);
+$('#ownerAv').title = [DATA.owner,DATA.ownerRole].filter(known).join(', ');
+$('#segName').textContent = DATA.segment;
+$('#heroTitle').textContent = DATA.heroTitle;
+$('#heroLede').textContent = DATA.heroLede;
+document.title = [DATA.org, DATA.segment, 'Защита недели 6'].filter(known).join(' · ');
+
+DATA.facts.forEach(([k,v,s]) => {
+  $('#heroFacts').append(el('div','fact-row',`<span class="k">${esc(k)}</span><span class="v">${esc(shown(v))} ${srcTag(s)}</span>`));
+});
+
+/* --- как это работает: история в четыре полосы --- */
+const P = DATA.pipeline;
+const mdBold = t => t.replace(/&/g,'&amp;').replace(/</g,'&lt;')
+  .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');
+
+$('#stepInTime').textContent = P.inTime ? '· ' + P.inTime : '';
+$('#stepRunTime').textContent = P.runTime || '';
+$('#pipeCmd').innerHTML = mdBold(shown(P.command));
+
+P.in.forEach(f => $('#pipeIn').append(el('div','filecard',
+  `<span class="ext">${esc(f.ext)}</span><div><div class="fn">${esc(f.name)}</div><div class="fm">${esc(f.meta)}</div></div>`)));
+
+P.run.forEach(r => $('#pipeRun').append(el('div','runcard' + (r.hand ? ' hand' : ''),
+  `<div class="rw"><span class="dot"></span>${esc(r.who)}</div>
+   <div class="rd">${esc(r.what)}</div><div class="rt">${esc(r.t)}</div>`)));
+
+$('#pipeDoc').append(el('div','docprev',
+  `<div class="dhead">
+     <span style="font-family:var(--font-mono);font-size:9px;font-weight:700;background:var(--ink);
+       color:var(--accent);border-radius:5px;padding:3px 6px">${esc(P.doc.ext)}</span>
+     <span class="fn">${esc(P.doc.name)}</span><span class="fmeta">${esc(P.doc.meta)}</span>
+   </div>
+   <div class="dbody">${mdBold(P.doc.body)}</div>`));
+$('#pipeNote').innerHTML = esc(P.note) + `<span class="path">${esc(P.path)}</span>`;
+
+/* --- команда: роли и навыки --- */
+const totalSkills = DATA.roles.reduce((a,r) => a + r.skills.length, 0);
+const totalRuns   = DATA.roles.reduce((a,r) => a + r.skills.reduce((b,s) => b + (Number(s.runs)||0), 0), 0);
+const savedByRoles = DATA.roles.reduce((a,r) => a + ((Number(r.was)||0) - (Number(r.now)||0)), 0);
+$('#teamLede').textContent = `${DATA.roles.length} роли, ${totalSkills} навыков. У каждого навыка показаны доступные замеры по журналу: запуски, время и приёмка.`;
+[
+  [DATA.roles.length, 'роли в команде'],
+  [totalSkills, 'навыка у ролей'],
+  [totalRuns, 'запусков в журнале'],
+  [fmtMinShort(savedByRoles), 'экономии на их шагах']
+].forEach(([v,k]) => $('#teamStrip').append(el('div','ts',`<div class="v">${v}</div><div class="k">${k}</div>`)));
+
+function fmtMinShort(m){ return !Number.isFinite(Number(m)) ? 'не измерено' : Number(m)>=60 ? `${Math.floor(Number(m)/60)} ч ${Number(m)%60} мин` : `${Number(m)} мин`; }
+
+const flowParts = ['Заявка'];
+DATA.roles.forEach(r => flowParts.push(r.name));
+flowParts.push('КП клиенту');
+flowParts.forEach((p,i) => {
+  const isRoleNode = i > 0 && i < flowParts.length-1;
+  if(i) $('#flow').append(el('span','farrow','→'));
+  $('#flow').append(el('span','fnode' + (isRoleNode ? ' isrole' : ''),
+    (isRoleNode ? '<i></i>' : '') + esc(p)));
+});
+
+DATA.roles.forEach(r => {
+  const card = el('div','role');
+  const skills = r.skills.map(s => `
+    <div class="skill">
+      <div class="sn">${esc(s.id)}</div>
+      <div class="sw">${esc(s.what)}</div>
+      <div class="skill-stats">
+        <span class="stat">запусков <b>${esc(shown(s.runs))}</b></span>
+        <span class="stat">в среднем <b>${esc(shown(s.avg))}</b></span>
+      </div>
+      <div class="meter"><i data-pct="${Number(s.pct)||0}"></i></div>
+      <div class="meter-lbl"><span>${esc(shown(s.pctLabel))}</span><b>${known(s.pct)?esc(s.pct)+'%':'—'}</b></div>
+    </div>`).join('');
+  card.innerHTML = `
+    <div class="role-head">
+      <div class="nm"><i></i>${esc(r.name)}</div>
+      <div class="duty">${esc(r.duty)}</div>
+      <div class="role-time"><span class="was">${fmtMinShort(r.was)}</span>
+        <span>→</span><span class="now">${fmtMinShort(r.now)}</span>
+        <span style="color:rgba(247,244,236,.45)">на одно дело</span></div>
+    </div>
+    <div class="role-io"><b>Вход:</b> ${esc(r.input)}<br><b>Выход:</b> ${esc(r.output)}</div>
+    <div class="role-skills">${skills}</div>
+    <div class="role-guard">${esc(r.guard)}</div>`;
+  $('#roles').append(card);
+});
+
+/* --- маршрут --- */
+let state = 'after';
+const maxMin = Math.max(1,...DATA.steps.flatMap(s => [Number(s.before.min)||0, Number(s.after.min)||0]));
+const route = $('#route');
+$('#routeLede').textContent = `${DATA.steps.length} шагов от входа до результата. Высота столбца — время шага.`;
+DATA.steps.forEach((s, i) => {
+  const step = el('div','step');
+  step.innerHTML = `
+    <div class="bar-wrap">
+      <div class="ghost"><span></span></div>
+      <div class="bar" data-i="${i}"><span class="mins"></span></div>
+    </div>
+    <div class="nm">${esc(s.name)}</div>
+    <div class="who"></div>`;
+  route.append(step);
+});
+
+function isRole(who){ return !['Руками','Не было','Моё решение'].includes(who); }
+
+function paintRoute(){
+  const other = state === 'after' ? 'before' : 'after';
+  DATA.steps.forEach((s, i) => {
+    const d = s[state], o = s[other];
+    const bar = route.children[i].querySelector('.bar');
+    const gh  = route.children[i].querySelector('.ghost');
+    const who = route.children[i].querySelector('.who');
+    const dMin = Number(d.min)||0, oMin = Number(o.min)||0;
+    const h = Math.max(4, Math.round(dMin / maxMin * 150));
+    bar.style.height = h + 'px';
+    bar.style.setProperty('--w', Math.max(6, dMin / maxMin * 100) + '%');
+    bar.className = 'bar ' + (isRole(d.who) ? 'byrole' : 'byhand');
+    bar.querySelector('.mins').textContent = known(d.min) ? d.min + ' мин' : 'не измерено';
+    bar.dataset.tip = `<b>${esc(s.name)}</b><br>${esc(d.who)} · ${esc(shown(d.min,'не измерено'))} мин`;
+    const gh_h = Math.max(4, Math.round(oMin / maxMin * 150));
+    gh.style.height = gh_h + 'px';
+    gh.style.opacity = oMin > dMin ? 1 : 0;
+    gh.querySelector('span').textContent = oMin > dMin
+      ? (state === 'after' ? 'было ' : 'стало ') + o.min : '';
+    who.textContent = d.who;
+    who.className = 'who ' + (isRole(d.who) ? 'byrole' : 'byhand');
+  });
+  const total = DATA.steps.reduce((a,s) => a + (Number(s[state].min)||0), 0);
+  const roles = DATA.steps.filter(s => isRole(s[state].who)).length;
+  const hands = DATA.steps.length - roles;
+  $('#sumTime').innerHTML  = fmtMin(total);
+  $('#sumRoles').innerHTML = `${roles} <small>из ${DATA.steps.length}</small>`;
+  $('#sumHands').innerHTML = `${hands} <small>шага</small>`;
+  $('#btnBefore').setAttribute('aria-pressed', state === 'before');
+  $('#btnAfter').setAttribute('aria-pressed',  state === 'after');
+}
+$('#btnBefore').onclick = () => { state = 'before'; paintRoute(); };
+$('#btnAfter').onclick  = () => { state = 'after';  paintRoute(); };
+paintRoute();
+
+/* --- было и стало: один герой и три плитки --- */
+function deltaOf(m){
+  if(!Number.isFinite(Number(m.before)) || !Number.isFinite(Number(m.after))) return {txt:'не измерено',good:false};
+  if(Number(m.before) === 0) return { txt:`0 → ${m.after}`, good:Number(m.after) > 0 };
+  const down = m.better === 'down';
+  const pct = down ? Math.round((1 - m.after/m.before)*100)
+                   : Math.round((m.after/m.before - 1)*100);
+  return { txt:(down ? '−' : '+') + Math.abs(pct) + '%',
+           good: down ? m.after < m.before : m.after > m.before };
+}
+const hero = DATA.metrics[0] || {label:'Время на дело',sub:'нет данных',before:null,after:null}, heroD = deltaOf(hero);
+const heroBefore = hero ? Number(hero.before) : NaN;
+const heroAfter = hero ? Number(hero.after) : NaN;
+$('#heroWas').textContent = fmtMin(heroBefore);
+$('#heroNow').dataset.to = Number.isFinite(heroAfter) ? heroAfter : 0;
+$('#heroNow').dataset.suffix = Number.isFinite(heroAfter) ? ' мин' : '';
+if(!Number.isFinite(heroAfter)) $('#heroNow').textContent = 'не измерено';
+$('#heroSummary').textContent = shown(DATA.heroSummary,'Команда проводит одно дело от входа до проверенного результата.');
+$('#metricsTitle').textContent = `Было ${fmtMin(heroBefore)}. Стало ${fmtMin(heroAfter)}`;
+$('#kpiHero').innerHTML = `
+  <div class="k">Было · я сам</div>
+  <div class="was">${esc(fmtMin(heroBefore))}</div>
+  <div class="sep"></div>
+  <div class="k">Стало · команда</div>
+  <div class="now"><span class="cnt" data-to="${Number.isFinite(heroAfter)?heroAfter:0}" data-suffix="${Number.isFinite(heroAfter)?' мин':''}">${Number.isFinite(heroAfter)?'0':'—'}</span></div>
+  <div class="foot">
+    <span class="dbig">${heroD.txt}</span>
+    <span class="fs">${esc(shown(hero?.label).toLowerCase())}, ${esc(shown(hero?.sub))}</span>
+  </div>`;
+
+DATA.metrics.slice(1).forEach(m => {
+  const d = deltaOf(m);
+  const u = m.unit ? ' ' + m.unit : '';
+  $('#kpiRest').append(el('div','kt',
+    `<div class="k">${esc(m.label)} ${srcTag(m.src)}<em>${esc(m.sub)}</em></div>
+     <div class="vals"><span class="was">${esc(shown(m.before))}${esc(u)}</span><span class="arr">→</span>
+       <span class="now">${esc(shown(m.after))}${esc(u)}</span></div>
+     <div class="d">${d.txt}</div>`));
+});
+
+/* --- деньги --- */
+$('#hoursFreed').dataset.to = Number.isFinite(Number(DATA.hoursFreed)) ? Number(DATA.hoursFreed) : 0;
+$('#hoursFreed').dataset.suffix = Number.isFinite(Number(DATA.hoursFreed)) ? ' ч' : '';
+if(!Number.isFinite(Number(DATA.hoursFreed))) $('#hoursFreed').textContent = 'не измерено';
+$('#costTotal').textContent = shown(DATA.costTotal,'Расходы не подтверждены');
+$('#moneyVerdict').textContent = shown(DATA.moneyVerdict,'Вывод по экономике пока не сформирован.');
+$('#formulaTime').innerHTML = esc(shown(DATA.timeFormula,'Формула недоступна')).replace(/\n/g,'<br>');
+DATA.costs.forEach(([k,v]) => {
+  $('#costLines').append(el('div','money-line',`<span>${esc(k)}</span><span style="font-weight:600">${esc(v)}</span>`));
+});
+
+/* --- колонки --- */
+DATA.wins.forEach((w,i)   => $('#wins').append(el('li','',`<span class="pin up">${i+1}</span><span>${esc(w)}</span>`)));
+DATA.limits.forEach(l     => $('#limits').append(el('li','',`<span class="pin hand">·</span><span>${esc(l)}</span>`)));
+
+/* --- план --- */
+DATA.plan.forEach(([date,title,res]) => {
+  $('#plan').append(el('div','plan-item',
+    `<span class="plan-date">${esc(date)}</span>
+     <div><h4>${esc(title)}</h4><div class="muted" style="font-size:14px">${esc(res)}</div></div>`));
+});
+DATA.opps.forEach((o,i) => $('#opps').append(
+  el('li','',`<span class="pin up">${i+1}</span><span>${esc(o)}</span>`)));
+
+DATA.feedback.scores.forEach(sc => {
+  const cells = Array.from({length:10}, (_,i) =>
+    `<i class="${i < sc.v ? (i === sc.v-1 ? 'on peak' : 'on') : ''}"></i>`).join('');
+  $('#scores').append(el('div','score',
+    `<div class="q">${esc(sc.q)}</div>
+     <div class="sv"><b class="cnt" data-to="${Number(sc.v)||0}">0</b><span>/ 10</span></div>
+     <div class="scale">${cells}</div>
+     <div class="sn">${esc(sc.note)}</div>`));
+});
+DATA.feedback.valued.forEach((v,i) => $('#valued').append(
+  el('li','',`<span class="pin up">${i+1}</span><span>${esc(v)}</span>`)));
+
+/* ============================================================
+   НАВИГАЦИЯ, СЧЁТЧИКИ, ВЫСТУПЛЕНИЕ
+   ============================================================ */
+const slides = [...document.querySelectorAll('.slide')];
+let idx = 0;
+const dots = $('#dots');
+slides.forEach((s,i) => {
+  const b = el('button'); b.setAttribute('aria-label','Экран '+(i+1));
+  b.onclick = () => go(i); dots.append(b);
+});
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function countUp(node){
+  const to = +node.dataset.to, suf = node.dataset.suffix || '';
+  if(reduce){ node.textContent = to + suf; return; }
+  const dur = 900, t0 = performance.now();
+  (function tick(t){
+    const p = Math.min(1,(t-t0)/dur), e = 1 - Math.pow(1-p,3);
+    node.textContent = Math.round(to*e) + suf;
+    if(p<1) requestAnimationFrame(tick);
+  })(t0);
+}
+
+function go(i){
+  idx = Math.max(0, Math.min(slides.length-1, i));
+  slides.forEach((s,k) => s.classList.toggle('on', k===idx));
+  [...dots.children].forEach((d,k) => d.setAttribute('aria-current', k===idx));
+  $('#counter').textContent = (idx+1) + ' / ' + slides.length;
+  $('#progress').style.width = ((idx+1)/slides.length*100) + '%';
+  $('#prev').disabled = idx === 0;
+  $('#next').disabled = idx === slides.length-1;
+  $('#cueText').textContent = slides[idx].dataset.cue || '';
+  slides[idx].querySelectorAll('.cnt').forEach(countUp);
+  slides[idx].querySelectorAll('.meter i').forEach(m => {
+    m.style.width = '0';
+    if(reduce){ m.style.width = m.dataset.pct + '%'; return; }
+    requestAnimationFrame(() => requestAnimationFrame(() => { m.style.width = m.dataset.pct + '%'; }));
+  });
+  window.scrollTo({top:0, behavior: reduce ? 'auto' : 'smooth'});
+}
+$('#prev').onclick = () => go(idx-1);
+$('#next').onclick = () => go(idx+1);
+addEventListener('keydown', e => {
+  if(['ArrowRight','PageDown',' '].includes(e.key)){ e.preventDefault(); go(idx+1); }
+  if(['ArrowLeft','PageUp'].includes(e.key)){ e.preventDefault(); go(idx-1); }
+});
+
+/* режим выступления */
+let left = 300, timerId = null;
+function paintTimer(){
+  const m = Math.floor(Math.abs(left)/60), s = String(Math.abs(left)%60).padStart(2,'0');
+  $('#timer').textContent = (left<0?'−':'') + m + ':' + s;
+  $('#timer').classList.toggle('over', left<0);
+}
+$('#speakBtn').onclick = () => {
+  const on = document.body.classList.toggle('speaking');
+  $('#speakBtn').textContent = on ? 'Выйти из выступления' : 'Режим выступления';
+  $('#cueText').textContent = slides[idx].dataset.cue || '';
+  clearInterval(timerId);
+  if(on){ timerId = setInterval(() => { left--; paintTimer(); }, 1000); }
+};
+$('#resetTimer').onclick = () => { left = 300; paintTimer(); };
+paintTimer();
+
+/* подсказки при наведении */
+const tip = $('#tip');
+addEventListener('pointermove', e => {
+  const host = e.target.closest('[data-tip]');
+  if(!host){ tip.classList.remove('on'); return; }
+  tip.innerHTML = host.dataset.tip;
+  tip.classList.add('on');
+  const pad = 14;
+  tip.style.left = Math.min(e.clientX + pad, innerWidth - tip.offsetWidth - 8) + 'px';
+  tip.style.top  = Math.max(8, e.clientY - tip.offsetHeight - pad) + 'px';
+});
+
+go(0);
 </script>
 </body>
 </html>

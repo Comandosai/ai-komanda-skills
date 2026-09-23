@@ -677,37 +677,66 @@ Markdown является источником правды. В HTML нельз�
 
 ## 7. Подготовь данные презентации
 
-Используй объект ниже. Пустые поля оставляй `null`. При вставке JSON в HTML
-экранируй символ `<` как `\u003c`, чтобы данные не могли закрыть тег `script`.
+Используй структуру канонического светлого шаблона. Пустые поля оставляй `null` и
+показывай как «не подтверждено», а не как ноль. Данные сначала сохрани отдельным
+файлом `dannye-prezentacii.json`; в HTML их вставляет штатный скрипт, который
+экранирует опасные символы.
 
 ```json
 {
-  "meta": {"org": null, "segment": null, "owner": null, "ownerRole": null, "process": null, "date": null, "version": null},
-  "hero": {"title": null, "lede": null, "wasTotal": null, "nowTotal": null, "facts": []},
-  "pipeline": {"dealId": null, "inTime": null, "runTime": null, "command": null, "in": [], "run": [], "doc": null, "note": null, "path": null},
+  "org": null,
+  "segment": null,
+  "heroTitle": null,
+  "heroLede": null,
+  "heroSummary": null,
+  "facts": [],
+  "owner": null,
+  "ownerRole": null,
+  "pipeline": {"dealId": null, "inTime": null, "runTime": null, "command": null, "in": [], "run": [], "doc": {}, "note": null, "path": null},
   "roles": [],
   "steps": [],
   "metrics": [],
-  "money": {"hoursFreed": null, "formula": [], "rate": null, "potential": null, "costs": [], "verdict": null},
+  "timeFormula": null,
+  "hoursFreed": null,
+  "costTotal": null,
+  "moneyVerdict": null,
+  "costs": [],
+  "deals": [],
+  "guards": [],
   "wins": [],
   "limits": [],
   "plan": [],
   "opps": [],
-  "feedback": {"scores": [], "valued": []},
-  "missing": []
+  "feedback": {"scores": [], "valued": []}
 }
 ```
 
-Для чисел используй объекты `{ "v": значение, "src": "fact|said|fore" }`,
-когда экрану важны происхождение и формат. `pipeline.doc.body` содержит только
-безопасный фрагмент текстового результата. Для бинарного файла показывай карточку:
-имя, тип, размер и дату, но не выдумывай превью.
+`facts` содержит тройки `[название, значение, fact|said|fore|null]`. В `metrics`
+у каждого показателя есть `before`, `after`, `unit`, `sub`, `better` и `src`.
+`pipeline.doc.body` содержит короткий фрагмент настоящего результата; допустима
+только Markdown-разметка `**жирный текст**`. Для бинарного файла показывай карточку:
+имя, тип, размер и дату, но не выдумывай превью. Полный пример структуры лежит в
+`week6/demo/final-report/dannye-prezentacii.json`; его значения являются
+демонстрационными и не переносятся в отчёт участника.
 
 ## 8. Собери `PREZENTACIYA-HAKATON.html`
 
-Возьми `week6/assets/shablon-hakatona.html`. Замени только JSON внутри
-`<script id="dannye" type="application/json">`. Вёрстку и рабочий JavaScript не
-переписывай. HTML берёт данные только из готового Markdown и работает без сети.
+Возьми `week6/assets/shablon-hakatona.html`. Это утверждённый светлый шаблон
+`PREZENTACIYA-HAKATON-demo.html`: молочный фон, интерактивное сравнение
+«было/стало», карточки ролей, режим выступления и таймер. Вёрстку и рабочий
+JavaScript не переписывай.
+
+Собери HTML штатным скриптом:
+
+```bash
+python3 week6/scripts/render_hackathon.py \
+  --data dannye-prezentacii.json \
+  --output PREZENTACIYA-HAKATON.html
+```
+
+Скрипт меняет только блок `WEEK6_DATA`, сохраняет утверждённую вёрстку и
+экранирует `<` внутри данных. HTML берёт данные только из готового Markdown и
+работает без сети.
 
 Девять экранов фиксированы:
 
@@ -721,8 +750,9 @@ Markdown является источником правды. В HTML нельз�
 8. Что дальше: три шага плана и возможности.
 9. Моя оценка: две шкалы и ценное своими словами.
 
-Не вставляй данные через `innerHTML`. Шаблон уже использует безопасные DOM-операции
-и `textContent`. Не добавляй CDN, внешние шрифты, изображения или скрипты.
+Не заменяй этот шаблон собственной темой и не копируй из демонстрационного файла
+«Гранит-Сервис» ни одного значения. Не добавляй CDN, внешние шрифты, изображения
+или скрипты.
 
 ## 9. Финальная проверка и выдача
 

@@ -77,6 +77,8 @@ class Bundle(unittest.TestCase):
         with zipfile.ZipFile(archive) as z:
             names=set(z.namelist()); self.assertIsNone(z.testzip())
             self.assertFalse(any('SLEDUYUSHCHAYA-KOMANDA' in name for name in names))
+            self.assertIn('materialy-nedeli-6/week6/scripts/render_hackathon.py',names)
+            self.assertIn('materialy-nedeli-6/week6/assets/shablon-hakatona.html',names)
             for item in json.loads(z.read('materialy-nedeli-6/MANIFEST.json')):
                 self.assertEqual(hashlib.sha256(z.read(item['path'])).hexdigest(),item['sha256'])
             for name in names:
