@@ -37,4 +37,6 @@ for(const skill of ['naladit-komandu','pokazat-dela','otchet']){
  const content=read(skill+'/SKILL.md');
  for(const ref of content.matchAll(/references\/[a-z0-9-]+\.md/g)) assert.ok(fs.existsSync(path.join(root,skill,ref[0])),ref[0]);
 }
+const runRules=read('naladit-komandu/references/progony.md').trim();
+assert.ok(read('chatgpt/naladit-komandu.txt').includes(runRules),'chat copy must contain the full run rules');
 console.log('PASS: offline renderer; 7 copy targets; prompt parity; 4 chat copies; 2 templates; references');
