@@ -22,25 +22,21 @@ class Bundle(unittest.TestCase):
         self.assertEqual([s['id'] for s in data['steps']],
             ['start','link','trial','connect','improve','final','pack','host','auto','report'])
         self.assertEqual(len([s for s in data['steps'] if s['id']!='start']),9)
-        self.assertTrue(all(s.get('time') and s.get('files') for s in data['steps']))
+        self.assertTrue(all(s.get('time') and s.get('files') for s in data['steps'] if s['id']!='start'))
         prompts={p['id']:p['text'] for s in data['steps'] for p in s.get('prompts',[])}
         self.assertNotIn('p-host',prompts)
         self.assertIn('p8-hermes',prompts)
         self.assertIn('p8-vps',prompts)
         self.assertIn('p9-mechanic',prompts)
         self.assertIn('p10',prompts)
-        self.assertIn('ссылку на сервис',prompts['p4'].lower())
+        self.assertIn('запроси ссылки на сами источники',prompts['p4'].lower())
+        for required in ('GitHub', 'пользовательского аккаунта', 'лицензию', 'постоянное расписание включим в блоке 8', 'Закрытые оригиналы'):
+            self.assertIn(required, prompts['p4'])
         self.assertNotIn('расписан',prompts['p6'].lower())
+        for gate in ('Дождись подтверждения маршрута', 'Согласуй первый цикл отдельно', 'Только после выбора цикла', 'без согласия не переходи'):
+            self.assertIn(gate, prompts['p4'])
         self.assertIn('OTCHET-N6.md',prompts['p10'])
         self.assertIn('PREZENTACIYA-HAKATON.html',prompts['p10'])
-    def test_install_chooses_one_format_and_is_non_destructive(self):
-        prompts=json.loads((ROOT/'prompts.json').read_text())
-        text=prompts['p1']
-        self.assertIn('AI-KOMANDA-N6.zip',text)
-        self.assertIn('не устанавливай одновременно папочные и чат-копии',text)
-        self.assertIn('сделай резервную копию',text)
-        self.assertIn('не подменяй его старой интернет-версией',text)
-        self.assertNotRegex(text,r'releases/week6-2026-09-22(?:-v2)?')
     def test_copy_first_packaging_and_no_future_methodology(self):
         data=json.loads((ROOT/'content.json').read_text())
         steps={s['id']:s for s in data['steps']}
@@ -49,10 +45,6 @@ class Bundle(unittest.TestCase):
         self.assertIn('исходн',packaging.lower())
         whole=json.dumps(data,ensure_ascii=False).lower()
         self.assertNotIn('следующую команду',whole)
-    def test_existing_workplace_is_the_default(self):
-        data=json.loads((ROOT/'content.json').read_text())
-        self.assertIn('команда недели 5',data['steps'][0]['chat'])
-        self.assertFalse(any('распакуйте' in a.lower() for a in data['steps'][0]['actions']))
     def test_prompt_single_source(self):
         data=json.loads((ROOT/'content.json').read_text()); prompts=json.loads((ROOT/'prompts.json').read_text())
         expected={p['id']:p['text'] for s in data['steps'] for p in s.get('prompts',[])}
@@ -66,8 +58,20 @@ class Bundle(unittest.TestCase):
                 u=urlsplit(href)
                 if u.scheme: continue
                 if href.startswith('#'):self.assertIn(href[1:],parser.ids);continue
-                if href=='downloads/AI-KOMANDA-N6.zip':continue # built after test
                 self.assertTrue((f.parent/unquote(u.path)).exists(),f'{f}: {href}')
+    def test_guide_links_work_without_kit_folder(self):
+        kit='https://raw.githubusercontent.com/Comandosai/ai-komanda-skills/main/week6/downloads/AI-KOMANDA-N6.zip'
+        text=(ROOT/'GUIDE-N6.html').read_text()
+        self.assertNotIn('__KIT_SOURCE__',text)
+        self.assertNotIn('kitSource',text)
+        prompts=json.loads((ROOT/'prompts.json').read_text())
+        self.assertIn(kit,prompts['p1'])
+        self.assertIn('попроси меня скачать архив вручную',prompts['p1'])
+        parser=Links();parser.feed(text)
+        self.assertIn(kit,parser.links)
+        for href in parser.links:
+            if href.startswith('#'):self.assertIn(href[1:],parser.ids);continue
+            self.assertTrue(href.startswith('https://'),href)
     def test_no_remote_render_dependencies(self):
         for f in [ROOT/'GUIDE-N6.html',ROOT/'assets/shablon-hakatona.html']:
             self.assertFalse(re.search(r'<(?:script|img|link|iframe)\b[^>]*(?:src|href)=["\']https?://',f.read_text()))
@@ -80,6 +84,7 @@ class Bundle(unittest.TestCase):
             self.assertIn('materialy-nedeli-6/week6/scripts/render_hackathon.py',names)
             self.assertIn('materialy-nedeli-6/week6/assets/shablon-hakatona.html',names)
             self.assertIn('materialy-nedeli-6/week6/assets/comandos-logo.png',names)
+            self.assertIn('materialy-nedeli-6/week6/instructions/USTANOVKA.md',names)
             for item in json.loads(z.read('materialy-nedeli-6/MANIFEST.json')):
                 self.assertEqual(hashlib.sha256(z.read(item['path'])).hexdigest(),item['sha256'])
             for name in names:

@@ -1,0 +1,77 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Подготовить существующий проект к неделе 6</title><style>
+:root{color-scheme:dark;--bg:#0d0e0f;--card:#181a1b;--line:#363a3b;--lime:#c8ff00;--text:#f0f0f0;--muted:#b9bfc0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:17px/1.65 Arial,Helvetica,sans-serif}
+a{color:var(--lime);text-underline-offset:4px}a:hover{color:#e1ff78}button{font:inherit;cursor:pointer;background:var(--lime);color:#10120a;border:0;border-radius:6px;padding:10px 18px}button:focus-visible,a:focus-visible{outline:3px solid #fff;outline-offset:4px}
+header{border-bottom:1px solid var(--line);padding:16px max(20px,calc((100vw - 1000px)/2));font-weight:bold;letter-spacing:.08em}
+main{max-width:1000px;margin:auto;padding:48px 24px 100px}h1{font-size:clamp(38px,7vw,76px);line-height:1.04;letter-spacing:-.04em;margin:14px 0 24px;max-width:850px}h2{font-size:clamp(26px,4vw,40px);line-height:1.2;letter-spacing:-.02em}h3{font-size:21px;margin-top:28px}p{max-width:850px}.eyebrow{color:var(--lime);font-size:13px;letter-spacing:.12em;text-transform:uppercase}.intro{font-size:22px;color:var(--muted)}nav{display:flex;flex-wrap:wrap;gap:9px;margin:32px 0}nav a{padding:8px 12px;border:1px solid var(--line);border-radius:5px;text-decoration:none;font-size:14px}
+section{border-top:1px solid var(--line);margin-top:46px;padding-top:24px;scroll-margin-top:24px}.chat{color:var(--lime);font-weight:bold}.meta{display:inline-block;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:14px}.files{background:#121415;border:1px solid var(--line);border-radius:8px;padding:14px 20px}.files h3{margin:0 0 6px;font-size:16px}.files ul{margin:0}li{padding:5px 0}ol{padding-left:26px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#090b0c;border:1px solid var(--line);padding:20px;border-radius:8px;font:15px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}code{overflow-wrap:anywhere;font-size:.92em}.prompt{margin:25px 0}.prompt button{font-size:14px}.result{border-left:4px solid var(--lime);padding:4px 0 4px 20px;margin:28px 0}.note{color:var(--muted);font-size:15px}.links{display:flex;flex-wrap:wrap;gap:18px;margin:20px 0}.status{background:#252518;border:1px solid #646334;border-radius:8px;padding:16px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}img{max-width:100%}.table-wrap{overflow-x:auto}footer{margin-top:50px;color:var(--muted);font-size:14px}blockquote{border-left:3px solid var(--lime);margin-left:0;padding-left:18px}
+@media(max-width:520px){main{padding:28px 18px 70px}body{font-size:16px}pre{padding:14px;font-size:14px}h1{font-size:42px}}
+@media print{body{background:white;color:black;font-size:11pt}header,nav,button{display:none}main{max-width:none;padding:0}section{break-inside:auto}pre,.status{background:#f5f5f5;color:black}a,.chat,.eyebrow,.note{color:#333}h1{font-size:32pt}h2{font-size:22pt}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style></head><body><header>COMANDOS AI / ПРАКТИКУМ</header><main><h1>Подготовить существующий проект к неделе 6</h1>
+<p>Участник уже подключил рабочую папку к приложению. Выполни установку сам в ней.</p>
+<p>Название проекта произвольное. Рабочее место заново не разворачивай; вопросы о</p>
+<p>способности читать папку не нужны.</p>
+<h2>От чего продолжаем</h2>
+<p>Неделя 2 дала контекст, входы, результаты, карту процесса, рабочие навыки и</p>
+<p>проверяющих. Недели 3–4 — паспорта ролей, дела, журнал и договор передачи.</p>
+<p>Неделя 5 — согласованный участок и режим запуска, дашборд, два пробных дела,</p>
+<p>первую зачётную пятёрку, разбор механика, повтор тех же входов и итоговый отчёт</p>
+<p>с пожеланиями по подключениям и запуску.</p>
+<p>Это ориентиры для чтения, а не требование пересдать прошлые недели. Участники</p>
+<p>дошли до разного состояния. Прочитай существующие инструкции проекта,</p>
+<p><code>KARTA-KOMANDY.md</code> или карту процесса, <code>agenty/</code>, <code>kontekst/</code>, журнал,</p>
+<p>последние результаты и отчёт недели 5. По сохранённым путям найди навыки и</p>
+<p>дашборд. Одинаковые по смыслу папки не дублируй и не переименовывай.</p>
+<h2>Установить дополнения</h2>
+<p>1. Источник — комплект из первого промпта. ZIP распакуй во временное место;</p>
+<p>   если дана распакованная папка, используй её. Сверь файлы с <code>MANIFEST.json</code>,</p>
+<p>   если он есть. При реальной ошибке загрузки назови её и попроси этот ZIP.</p>
+<p>2. Найди действующий каталог навыков по инструкциям проекта и паспортам ролей.</p>
+<p>   Это может быть <code>skills/</code>, <code>navyki/</code> или каталог среды. Симлинк вроде</p>
+<p>   <code>.agents/skills → skills</code> — тот же каталог, а не вторая установка.</p>
+<p>3. Добавь <code>svyazat-komandu</code>; обнови <code>mehanik</code> и <code>otchet</code>. Если любого из трёх нет,</p>
+<p>   установи полностью. Сравнивай содержимое: существование папки не означает</p>
+<p>   наличие версии недели 6. Копируй все вложенные <code>references</code>, <code>assets</code>, <code>scripts</code>.</p>
+<p>4. До обновления сохрани пересекающиеся файлы в <code>arhiv/do-nedeli-6-&lt;дата&gt;/</code></p>
+<p>   вне активного каталога навыков. Совпадающие файлы оставь. Добавь справочники</p>
+<p>   и обнови входной <code>SKILL.md</code>, чтобы он действительно направлял к неделе 6.</p>
+<p>   Сохрани режимы прошлых недель и индивидуальные правила. Если содержательные</p>
+<p>   правила нельзя совместить, покажи именно этот конфликт владельцу. Обычная</p>
+<p>   установка не требует пофайлового согласования.</p>
+<p>5. Сохрани исходный комплект в <code>materialy-nedeli-6/</code> внутри проекта: <code>week6/</code>,</p>
+<p>   три исходные папки навыков и <code>MANIFEST.json</code>, если он есть. Это дистрибутив для</p>
+<p>   повторной установки, не второй активный каталог навыков. Активные версии</p>
+<p>   остаются только в каталоге из пункта 2. В <code>materialy-nedeli-6/week6/</code> лежат</p>
+<p>   инструкции, скрипты, утверждённый шаблон и логотип. Сохрани структуру комплекта,</p>
+<p>   чтобы его гайд продолжал работать после установки. При повторе сравни файлы.</p>
+<p>   Демонстрационные результаты внутри — только примеры.</p>
+<p>6. Собственные бизнес-навыки, проверяющих, роли, дела и журнал оставь на месте.</p>
+<p>   <code>rabochee-mesto</code>, <code>razbor-processa</code>, <code>sozdat-navyk</code>, <code>nanyat-sotrudnika</code>,</p>
+<p>   <code>naladit-komandu</code> и <code>pokazat-dela</code> заново ставить для этой недели не требуется.</p>
+<h2>Сохранить вход для следующих чатов</h2>
+<p>Создай или дополни <code>NEDELYA-6.md</code> в корне проекта. Все пути в нём относительны</p>
+<p>корню проекта. Запиши:</p>
+<ul>
+<li>найденную карту, паспорта, договор передачи, журнал, дашборд и отчёт недели 5;</li>
+<li>выбранный ранее процесс, режим и пожелания из отчёта недели 5;</li>
+<li>точные пути к трём установленным <code>SKILL.md</code>;</li>
+<li>каталог <code>materialy-nedeli-6/week6/</code> и пути к инструкциям,</li>
+</ul>
+<p>  <code>assets/shablon-hakatona.html</code>, <code>assets/comandos-logo.png</code>,</p>
+<p>  <code>scripts/render_hackathon.py</code>, <code>scripts/build_status.py</code> внутри него;</p>
+<ul>
+<li>состояние: материалы установлены, связка ещё не настроена.</li>
+</ul>
+<p>Каждый следующий блок дополняет эту запись результатами и следующей командой.</p>
+<p>Промпты явно читают <code>NEDELYA-6.md</code>, затем <code>SKILL.md</code> по его пути. Автоматическое</p>
+<p>обнаружение навыка в меню приложения для работы не требуется. Глобальные</p>
+<p>настройки приложений менять не надо.</p>
+<h2>Проверить установку</h2>
+<p>Повторно открой конечные файлы. У <code>svyazat-komandu</code> должны читаться</p>
+<p><code>references/nastrojka.md</code>, <code>zapusk.md</code>, <code>uchet.md</code>; у <code>mehanik</code> и <code>otchet</code> —</p>
+<p><code>references/nedelya-6.md</code>, доступный из входного <code>SKILL.md</code>. Открой шаблон, логотип</p>
+<p>и скрипт отчёта из каталога материалов. Проверь каждую ссылку в <code>NEDELYA-6.md</code>.</p>
+<p>В ответе покажи три строки «добавлен / обновлён / уже актуален» с путями и коротко</p>
+<p>перескажи, на каком состоянии недели 5 продолжаем. Следующее действие участника —</p>
+<p>промпт связки из блока 1 в том же чате. Саму связку при установке не запускай.</p><footer><a href="../GUIDE-N6.html">Вернуться к гайду</a><p>Неделя 6 · комплект от 22.09.2026. Инструкции не заменяют проверку возможностей вашей среды.</p></footer></main><script>async function copyPrompt(id,button){const el=document.getElementById(id);try{await Promise.race([navigator.clipboard.writeText(el.textContent),new Promise((_,reject)=>setTimeout(()=>reject(new Error('clipboard timeout')),800))]);button.textContent='Скопировано';}catch(e){const range=document.createRange();range.selectNodeContents(el);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);button.textContent='Текст выделен: Ctrl+C / ⌘C';}setTimeout(()=>button.textContent='Скопировать промпт',3500);} </script></body></html>

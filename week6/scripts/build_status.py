@@ -9,7 +9,10 @@ import re
 import tempfile
 from urllib.parse import quote
 
-SAFE = re.compile(r'^[A-Za-z0-9_-]+$')
+def safe_component(value):
+    return (isinstance(value, str) and bool(value.strip()) and value not in ('.', '..')
+            and not any(c in value for c in '/\\')
+            and not any(ord(c) < 32 for c in value))
 
 def checked_file(root, value, attempt_dir=None):
     if not isinstance(value,str) or not value or '\\' in value: return False
@@ -27,7 +30,7 @@ def summarize(root, data):
         raise ValueError('Нужен реестр schema_version=1 с attempts[]')
     attempts=data['attempts']
     if any(not isinstance(a,dict) for a in attempts): raise ValueError('Попытка должна быть объектом')
-    ids=Counter(str(a.get('id')) for a in attempts)
+    ids=Counter((str(a.get('case_id')),str(a.get('id'))) for a in attempts)
     used=Counter()
     for a in attempts:
         for field in ('result_files','check_files'):
@@ -38,12 +41,16 @@ def summarize(root, data):
     for a in attempts:
         reasons=[]
         aid=a.get('id'); case=a.get('case_id')
-        identity=isinstance(aid,str) and bool(SAFE.fullmatch(aid)) and isinstance(case,str) and bool(SAFE.fullmatch(case))
+        identity=safe_component(aid) and safe_component(case)
         if not identity: reasons.append('Некорректное имя дела или попытки')
-        if ids[str(aid)]!=1: reasons.append('Номер попытки повторяется')
+        if ids[(str(case),str(aid))]!=1: reasons.append('Номер попытки повторяется')
         result=a.get('result_files',[]); checks=a.get('check_files',[])
-        folder=root/'dela'/str(case)/str(aid)
-        files_ok=identity and bool(result) and bool(checks) and isinstance(result,list) and isinstance(checks,list)
+        relative=a.get('attempt_dir',f'dela/{case}/{aid}')
+        valid_dir=isinstance(relative,str) and bool(relative) and '\\' not in relative and not Path(relative).is_absolute() and '..' not in Path(relative).parts
+        folder=root/relative if valid_dir else root/'__invalid_attempt__'
+        try: folder.resolve().relative_to(root.resolve())
+        except ValueError: valid_dir=False
+        files_ok=identity and valid_dir and bool(result) and bool(checks) and isinstance(result,list) and isinstance(checks,list)
         if files_ok:
             files_ok=all(checked_file(root,f,folder) for f in result+checks)
             resolved=[str((root/f).resolve()) for f in result+checks if isinstance(f,str)]

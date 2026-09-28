@@ -38,6 +38,9 @@ class ExportTeamTests(unittest.TestCase):
         (self.source / ".env").write_text("SERVICE_TOKEN=real-secret-value\n", encoding="utf-8")
         (self.source / ".env.example").write_text("SERVICE_TOKEN=CHANGE_ME\n", encoding="utf-8")
         (self.source / "logs" / "client.log").write_text("private history\n", encoding="utf-8")
+        for folder in ("vhod", "vyhod", "originaly", "arhiv", "dashboard", ".board"):
+            (self.source / folder).mkdir()
+            (self.source / folder / "customer.txt").write_text("private client data\n", encoding="utf-8")
         (self.source / ".git" / "config").write_text("history\n", encoding="utf-8")
         (self.source / ".bkit" / "state" / "memory.json").write_text("{}\n", encoding="utf-8")
         (self.source / ".planning" / "HANDOFF.json").write_text("{}\n", encoding="utf-8")
@@ -58,6 +61,9 @@ class ExportTeamTests(unittest.TestCase):
         self.assertTrue((export_dir / ".env.example").exists())
         self.assertFalse((export_dir / "logs" / "client.log").exists())
         self.assertTrue((export_dir / "logs" / "README.md").exists())
+        for folder in ("vhod", "vyhod", "originaly", "arhiv", "dashboard", ".board"):
+            self.assertFalse((export_dir / folder / "customer.txt").exists())
+        self.assertTrue((export_dir / "ПРИНЯТЬ-КОМАНДУ.md").exists())
         dispatcher = (export_dir / "agenty" / "dispetcher.md").read_text(encoding="utf-8")
         self.assertIn("${HOME}/Projects/team", dispatcher)
         self.assertNotIn("/Users/alex", dispatcher)

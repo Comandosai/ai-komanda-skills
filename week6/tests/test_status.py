@@ -27,6 +27,17 @@ class StatusTests(unittest.TestCase):
         self.a['check_files']=self.a['result_files']; self.assertEqual(self.summary()[0]['complete'],0)
     def test_duplicate_id_rejected(self):
         self.assertEqual(self.summary([self.a,copy.deepcopy(self.a)])[0]['complete'],0)
+    def test_existing_unicode_layout_and_case_scoped_attempt_ids(self):
+        folder=self.root/'дела/Заказ 2/попытки/a1'; folder.mkdir(parents=True)
+        for name in ('result.md','check.md'): (folder/name).write_text('evidence')
+        other=copy.deepcopy(self.a)
+        rel=folder.relative_to(self.root).as_posix()
+        other.update(case_id='Заказ 2',attempt_dir=rel,
+                     result_files=[rel+'/result.md'],check_files=[rel+'/check.md'])
+        self.assertEqual(self.summary([self.a,other])[0]['complete'],2)
+    def test_attempt_folder_cannot_escape_project(self):
+        self.a['attempt_dir']='../outside'
+        self.assertEqual(self.summary()[0]['complete'],0)
     def test_escape_and_symlink(self):
         self.assertFalse(status.checked_file(self.root,'../anything'))
         (self.root/'link').symlink_to('/etc/hosts'); self.assertFalse(status.checked_file(self.root,'link'))

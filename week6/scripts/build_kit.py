@@ -16,10 +16,11 @@ section{border-top:1px solid var(--line);margin-top:46px;padding-top:24px;scroll
 @media print{body{background:white;color:black;font-size:11pt}header,nav,button{display:none}main{max-width:none;padding:0}section{break-inside:auto}pre,.status{background:#f5f5f5;color:black}a,.chat,.eyebrow,.note{color:#333}h1{font-size:32pt}h2{font-size:22pt}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 """
+KIT_URL = 'https://raw.githubusercontent.com/Comandosai/ai-komanda-skills/main/week6/downloads/AI-KOMANDA-N6.zip'
 JS = """async function copyPrompt(id,button){const el=document.getElementById(id);try{await Promise.race([navigator.clipboard.writeText(el.textContent),new Promise((_,reject)=>setTimeout(()=>reject(new Error('clipboard timeout')),800))]);button.textContent='Скопировано';}catch(e){const range=document.createRange();range.selectNodeContents(el);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);button.textContent='Текст выделен: Ctrl+C / ⌘C';}setTimeout(()=>button.textContent='Скопировать промпт',3500);} """
 
-def page(title, body, back='GUIDE-N6.html'):
-    return '<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+html.escape(title)+'</title><style>'+CSS+'</style></head><body><header>COMANDOS AI / ПРАКТИКУМ</header><main>'+body+'<footer><a href="'+back+'">Вернуться к гайду</a><p>Неделя 6 · комплект от 22.09.2026. Инструкции не заменяют проверку возможностей вашей среды.</p></footer></main><script>'+JS+'</script></body></html>'
+def page(title, body, back='GUIDE-N6.html', back_label='Вернуться к гайду'):
+    return '<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+html.escape(title)+'</title><style>'+CSS+'</style></head><body><header>COMANDOS AI / ПРАКТИКУМ</header><main>'+body+'<footer><a href="'+back+'">'+back_label+'</a><p>Неделя 6 · комплект от 22.09.2026. Инструкции не заменяют проверку возможностей вашей среды.</p></footer></main><script>'+JS+'</script></body></html>'
 
 def inline(s):
     s=html.escape(s)
@@ -57,26 +58,37 @@ def build():
     data=json.loads((ROOT/'content.json').read_text())
     esc=html.escape
     out=['<p class="eyebrow">Продолжение недели 5</p><h1>'+esc(data['title'])+'</h1><p class="intro">'+esc(data['subtitle'])+'</p>',
-         '<p>Все шаги на одной странице. Основной путь выполняют все; VPS и Hermes выбирайте, если нужен перенос. Видео добавим после записи.</p>',
-         '<details><summary>Если помощник не может скачать инструкции</summary><p><a href="downloads/AI-KOMANDA-N6.zip" download>Скачать материалы вручную</a>. Это запасной вариант, не новое рабочее место. Для обычного чата приложите chatgpt/svyazat-komandu.txt из архива и запрошенные файлы вашего проекта. Для механика и отчёта позже используйте соответствующие файлы из chatgpt. Ключи не загружайте.</p></details>',
+         '<p>Все промпты идут по порядку в твоём существующем проекте. Новый чат означает новый разговор внутри той же подключённой папки.</p>',
+         '<p class="note">Комплект устанавливает помощник первым промптом. <a href="'+KIT_URL+'">Скачать ZIP</a> вручную нужно только при ошибке загрузки.</p>',
          '<nav aria-label="Шаги">'+''.join('<a href="#'+s['id']+'">'+esc(s['title'])+'</a>' for s in data['steps'])+'</nav>']
     prompts={}
     for s in data['steps']:
         out.append('<section id="'+s['id']+'"><h2>'+esc(s['title'])+'</h2><p class="chat">'+esc(s['chat'])+'</p>'+(('<p class="meta">Время: '+esc(s['time'])+'</p>') if s.get('time') else '')+'<p>'+esc(s['why'])+'</p><ol>'+''.join('<li>'+esc(a)+'</li>' for a in s['actions'])+'</ol>')
+        if s['id']=='start':
+            out.append('</section>')
+            continue
         for p in s.get('prompts',[]):
             prompts[p['id']]=p['text']
             out.append('<div class="prompt"><h3>'+esc(p['label'])+'</h3><pre id="'+p['id']+'">'+esc(p['text'])+'</pre><button onclick="copyPrompt(\''+p['id']+'\',this)">Скопировать промпт</button></div>')
-        out.append('<div class="result"><strong>Проверьте результат</strong><p>'+esc(s['result'])+'</p></div>')
+        out.append('<div class="result"><strong>Что получилось</strong><p>'+esc(s['result'])+'</p></div>')
         if s.get('files'): out.append('<div class="files"><h3>Что появится после блока</h3><ul>'+''.join('<li>'+esc(item)+'</li>' for item in s['files'])+'</ul></div>')
         if s['stop']: out.append('<details class="note"><summary>Если возникли сложности</summary><p>'+esc(s['stop'])+'</p></details>')
         out.append('<div class="links">'+''.join('<a href="'+esc(url)+'">'+esc(label)+'</a>' for label,url in s.get('links',[]))+'</div></section>')
-    (ROOT/'GUIDE-N6.html').write_text(page(data['title'],'\n'.join(out)))
+    masking=markdown((ROOT/'instructions/MASKIROVKA.md').read_text())
+    masking=re.sub(r'<(/?)h2>', r'<\1h3>', masking)
+    masking=re.sub(r'<(/?)h1>', r'<\1h2>', masking)
+    masking=masking.replace('<pre>', '<pre id="mask-setup">', 1).replace('</pre>', '</pre><button onclick="copyPrompt(\'mask-setup\',this)">Скопировать промпт</button>', 1)
+    out.append('<section id="maskirovka"><p class="eyebrow">Дополнительно · после основного гайда</p>'+masking+'</section>')
+    (ROOT/'GUIDE-N6.html').write_text(page(data['title'],'\n'.join(out),'#start','Вернуться к началу'))
     (ROOT/'prompts.json').write_text(json.dumps(prompts,ensure_ascii=False,indent=2)+'\n')
     for folder in [ROOT,ROOT/'instructions',ROOT/'recording']:
         for f in folder.glob('*.md'):
             if f.name=='README.md': continue
             title=next((l[2:] for l in f.read_text().splitlines() if l.startswith('# ')),f.stem)
-            f.with_suffix('.html').write_text(page(title,markdown(f.read_text()),'../GUIDE-N6.html' if folder!=ROOT else 'GUIDE-N6.html'))
+            body=markdown(f.read_text())
+            if f.name=='MASKIROVKA.md':
+                body=body.replace('<pre>', '<pre id="mask-setup">', 1).replace('</pre>', '</pre><button onclick="copyPrompt(\'mask-setup\',this)">Скопировать промпт</button>', 1)
+            f.with_suffix('.html').write_text(page(title,body,'../GUIDE-N6.html' if folder!=ROOT else 'GUIDE-N6.html'))
     print('Built GUIDE-N6.html, prompts.json and supporting HTML pages')
 
 if __name__=='__main__': build()

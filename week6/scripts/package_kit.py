@@ -34,7 +34,7 @@ def main():
                 rel=p.relative_to(ROOT); blob=p.read_bytes()
                 # No recursive link to the archive itself inside the extracted package.
                 if rel==Path('week6/GUIDE-N6.html'):
-                    s=blob.decode(); s=re.sub(r'<a href="downloads/AI-KOMANDA-N6.zip"[^>]*>.*?</a>','<span>Комплект уже распакован</span>',s); blob=s.encode()
+                    s=blob.decode(); s=re.sub(r'<p class="note">Комплект устанавливает.*?</p>','<p class="note">Комплект уже распакован. Первый промпт установит дополнения из этой папки в твой рабочий проект.</p>',s); blob=s.encode()
                 if re.search(rb'-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----|sk-[A-Za-z0-9]{24,}|ghp_[A-Za-z0-9]{30,}',blob):
                     raise ValueError('Подозрение на секрет: '+str(rel))
                 name='materialy-nedeli-6/'+rel.as_posix(); z.writestr(name,blob)
