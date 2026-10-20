@@ -1,0 +1,236 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Н1. Выбери участок</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,700;1,800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#0d0e0f;--card:#181a1b;--card2:#1e2022;--line:#2c2f31;
+--text:#f0f0f0;--muted:rgba(240,240,240,.45);--muted2:rgba(240,240,240,.7);
+--lime:#c8ff00;--lime-dim:rgba(200,255,0,.09);--green:#22c55e;--amber:#f0b429}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;font-size:17px;line-height:1.7;font-weight:300;-webkit-font-smoothing:antialiased}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.012) 0 1px,transparent 1px 3px)}
+main{max-width:880px;margin:0 auto;padding-inline:22px;padding-block:30px 80px}
+h1,h2,h3{font-family:"Barlow Condensed",Arial,sans-serif;font-style:italic;font-weight:800;text-transform:uppercase;margin:0;letter-spacing:.01em}
+.top{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--lime);animation:p 2s infinite}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.25}}
+h1{font-size:52px;line-height:.97;margin:14px 0 0}
+@media(max-width:560px){h1{font-size:38px}}
+.lead{color:var(--muted2);margin:14px 0 0;max-width:62ch}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:28px}
+@media(max-width:560px){.stats{grid-template-columns:1fr}}
+.stats>div{background:var(--card);padding:15px 17px}
+.stats span{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.stats b{font-family:"Barlow Condensed",Arial,sans-serif;font-style:italic;font-weight:800;font-size:30px;color:var(--lime);display:block;margin-top:5px;line-height:1}
+.stats i{font-style:normal;font-size:13.5px;color:var(--muted2);display:block;margin-top:2px}
+.win{margin-top:26px;border:1px solid var(--lime);background:var(--lime-dim);padding:18px 20px}
+.win .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime)}
+.win .v{font-size:21px;font-weight:400;margin-top:6px}
+nav{display:flex;flex-wrap:wrap;gap:9px;margin-top:34px}
+nav a,nav span{font-size:13px;letter-spacing:.04em;padding:8px 14px;border:1px solid var(--line);color:var(--muted2);text-decoration:none}
+nav a{border-color:var(--lime);color:var(--lime)}
+.block{margin-top:52px;border-top:1px solid var(--line);padding-top:26px}
+.block .bn{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.block h2{font-size:32px;color:var(--lime);margin-top:8px;line-height:1.02}
+.block .time{font-size:13.5px;color:var(--muted);margin-top:6px}
+.block p{max-width:64ch}
+h3{font-size:19px;margin-top:30px;color:var(--text)}
+ol,ul{max-width:64ch;padding-left:22px}
+li{margin:9px 0}
+.note{margin-top:22px;padding:18px 20px;background:var(--card2);border-left:3px solid var(--lime)}
+.note b{font-weight:500;color:var(--lime)}
+.warnbox{margin-top:22px;padding:18px 20px;background:var(--card2);border-left:3px solid var(--amber)}
+.warnbox b{font-weight:500;color:var(--amber)}
+button{background:var(--lime);color:#111;border:0;padding:13px 24px;font:500 15px Inter,Arial,sans-serif;letter-spacing:.03em;cursor:pointer;margin-top:24px;text-transform:uppercase}
+button:hover{opacity:.87}
+button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--card);padding:22px;border:1px solid var(--line);font-family:"JetBrains Mono",monospace;font-size:14.5px;line-height:1.65;color:var(--text);margin-top:12px}
+details{margin-top:22px;border:1px solid var(--line);padding:0 18px}
+details[open]{padding-bottom:14px}
+summary{cursor:pointer;padding:15px 0;font-weight:500;font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:14px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--lime);font-size:22px;line-height:1}
+details[open] summary::after{content:"-"}
+details p,details ul{margin-top:0;font-size:15.5px;color:var(--muted2)}
+.chk{list-style:none;padding-left:0}
+.chk li{padding-left:26px;position:relative}
+.chk li::before{content:"";position:absolute;left:0;top:11px;width:11px;height:2px;background:var(--lime)}
+footer{margin-top:64px;border-top:1px solid var(--line);padding-top:20px;font-size:13.5px;color:var(--muted)}
+a{color:var(--lime)}
+</style><style>pre{max-height:34rem;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere} @media print{pre{max-height:none}}</style></head><body><main>
+
+<div class="top"><i class="pulse"></i><span>COMANDOS AI · НЕДЕЛЯ 1</span></div>
+<h1>Выбери участок,<br>с которого начнёшь</h1>
+<p class="lead">Ты наговариваешь помощнику свои повторяющиеся дела, он помогает убрать лишнее, отсеять то, что AI сейчас не взять, и оценить остальное. На выходе одно основное дело и одно запасное, с которых ты начнёшь собирать своего первого цифрового сотрудника.</p>
+
+<div class="stats">
+  <div><span>Время</span><b>40–60</b><i>минут: 10 на установку, 30–40 на разговор</i></div>
+  <div><span>Промтов скопировать</span><b>2</b><i>дальше просто разговариваешь</i></div>
+  <div><span>Сдать в бот</span><b>1</b><i>файл itog-vybora-uchastka</i></div>
+</div>
+
+<div class="win">
+  <div class="k">Победа недели</div>
+  <div class="v">Я знаю, какое дело отдаю AI первым, почему именно его и сколько стоит время, которое оно у меня съедает.</div>
+</div>
+
+<nav>
+  <a href="#b1">1. Заведи рабочую папку</a>
+  <a href="#b2">2. Поставь навык</a>
+  <a href="#b3">3. Выбери участок</a>
+  <a href="#b4">4. Сдай неделю</a>
+</nav>
+
+<p><a href="https://github.com/Comandosai/ai-komanda-skills/raw/main/vybrat-uchastok.zip">Скачать навык ZIP</a> · <a href="https://github.com/Comandosai/ai-komanda-skills/tree/main/vybrat-uchastok">Навык на GitHub</a></p>
+<div class="note"><b>Где работаешь, так и запускаем.</b><br>Подойдёт любое агентное приложение, которое работает с папкой на компьютере: Claude (раздел Code), Codex, ChatGPT, Antigravity. Путь везде один: открываешь папку, ставишь навык, разговариваешь. Помощник сам создаёт файлы и сохраняет разговор.</div>
+
+<!-- ================= БЛОК 1 ================= -->
+<section class="block" id="b1">
+  <div class="bn">Блок 1</div>
+  <h2>Заведи рабочую папку</h2>
+  <div class="time">2 минуты · без промтов</div>
+
+  <p>Всё, что ты сделаешь за 8 недель практикума, будет жить в одной папке. Заведи её сейчас.</p>
+
+  <ol>
+    <li>Создай на рабочем столе пустую папку. Назови, например, <b>AI Команда</b>.</li>
+    <li>Открой эту папку в своём агентном приложении: в Claude в разделе Code выбери папку, в Codex и ChatGPT открой её как проект, в Antigravity открой как рабочую папку.</li>
+    <li>Начни новый чат в этой папке.</li>
+  </ol>
+</section>
+
+<!-- ================= БЛОК 2 ================= -->
+<section class="block" id="b2">
+  <div class="bn">Блок 2</div>
+  <h2>Поставь навык</h2>
+  <div class="time">5–10 минут · один промт</div>
+
+  <p>Навык это инструкция, по которой помощник ведёт разговор. Один промт: помощник сам скачивает навык выбора участка и ставит его.</p>
+
+  <button type="button" onclick="cp('p1',this)">Скопировать промт</button>
+<pre id="p1">Установи навык vybrat-uchastok по ссылке:
+https://github.com/Comandosai/ai-komanda-skills/tree/main/vybrat-uchastok
+
+Поставь папку vybrat-uchastok целиком, со всеми вложенными файлами.
+Другие навыки из репозитория не ставь.
+Ставь так, как принято у тебя. Разбираться, куда ставить навыки,
+твоя работа, не моя.
+Если такой навык уже стоит, замени его свежей версией.
+Не объявляй установку готовой, пока не прочитал все файлы навыка.</pre>
+
+  <p>Когда он ответит, <b>открой новый чат</b> в той же папке и спроси: «какие навыки у тебя сейчас есть». Он должен назвать <b>vybrat-uchastok</b>. Не назвал, значит навык не встал, дальше идти бессмысленно.</p>
+
+  <div class="note">
+    <b>Почему новый чат.</b><br>Ответ «установлено» в том же чате ничего не доказывает. Навыки подхватываются при старте чата, поэтому проверяем в новом.
+  </div>
+
+  <details>
+    <summary>Он говорит, что не может скачать по ссылке</summary>
+    <p>Скачай навык ZIP по ссылке вверху страницы, распакуй в свою рабочую папку и напиши в чат: «Установи навык vybrat-uchastok из папки, которая лежит рядом. Только его».</p>
+  </details>
+
+  <details>
+    <summary>Он остановился и спрашивает, куда ставить</summary>
+    <p>Напиши: «Ставь так, как принято у тебя. Разбираться, куда ставить навыки, твоя работа».</p>
+  </details>
+</section>
+
+<!-- ================= БЛОК 3 ================= -->
+<section class="block" id="b3">
+  <div class="bn">Блок 3</div>
+  <h2>Выбери участок</h2>
+  <div class="time">30–40 минут · одна фраза · дальше разговариваешь</div>
+
+  <p>Новый чат в той же папке. Напиши:</p>
+
+  <button type="button" onclick="cp('p2',this)">Скопировать фразу</button>
+<pre id="p2">Давай выберем участок</pre>
+
+  <p>Дальше помощник ведёт сам. Отвечай голосом, длинно и сбивчиво, он разберётся. После каждого ответа он коротко говорит, что понял. Не так понял, поправь.</p>
+
+  <h3>Как пойдёт разговор</h3>
+  <ol>
+    <li><b>Кто ты.</b> Чем занимаешься, где, какая роль. Собственник, сотрудник, интегратор или только запускаешь своё: он подстроится.</li>
+    <li><b>Что для тебя польза.</b> Пара вопросов про то, что для тебя сейчас важнее всего. Он сведёт это в одну фразу и спросит, верно ли.</li>
+    <li><b>Свалка дел.</b> Перечисли все дела, которые повторяются. Не фильтруй. Нужно 15–25, он поможет добрать.</li>
+    <li><b>Склейка.</b> Он соберёт шаги одного дела вместе и покажет список.</li>
+    <li><b>Убрать лишнее.</b> Что можно вообще не делать или сделать таблицей и шаблоном, без AI. Это уйдёт в отдельный список, займёшься сам.</li>
+    <li><b>Восьмёрка.</b> Он предложит 8 самых тяжёлых или важных дел. Утверди или поменяй.</li>
+    <li><b>Стоп-лист.</b> Он проверит восьмёрку и по неподходящим скажет: «Предлагаю вычеркнуть, потому что… Можно сузить так-то». Решаешь ты.</li>
+    <li><b>Оценка.</b> Пять вопросов по каждому оставшемуся делу, от 1 до 5, с примерами. Он посчитает рейтинг.</li>
+    <li><b>Часы и деньги.</b> Для трёх лучших: как часто и сколько минут, сколько это часов в месяц и сколько стоит. Спросит цену часа, можно примерно.</li>
+    <li><b>Выбор.</b> Покажет топ-3 и порекомендует. Ты выбираешь основное и запасное и говоришь, как поймёшь, что сделано хорошо.</li>
+  </ol>
+
+  <h3>Что потребуется от тебя</h3>
+  <ol>
+    <li>Честно назвать свои дела, включая скучные. Выигрывает почти всегда скучное: сверка, разбор почты, первичка, а не бот для клиентов.</li>
+    <li>Решать, когда он предлагает вычеркнуть, сузить или выбрать. Последнее слово за тобой.</li>
+    <li>Назвать примерную цену часа: своего, сотрудника или подрядчика.</li>
+  </ol>
+
+  <div class="warnbox">
+    <b>Тебе не надо знать, как работает AI.</b><br>
+    Он не спрашивает, справится ли AI. Он спрашивает про твою работу и твой бизнес: что съедает время, что важно, что повторяется. Остальное его забота.
+  </div>
+
+  <h3>Что появится у тебя после блока 3</h3>
+  <ul class="chk">
+    <li><b>vybor-uchastka/itog-vybora-uchastka.md</b>, итоговый файл: кто ты, что для тебя польза, основное и запасное дело, таблица всех дел, что можно упростить уже сейчас, досье бизнеса и полная переписка</li>
+    <li><b>vybor-uchastka/perepiska.md</b>, весь разговор дословно</li>
+    <li><b>vybor-uchastka/chernovik.md</b>, рабочие записи, по ним он продолжит, если прервёшься</li>
+  </ul>
+
+  <details>
+    <summary>Я прервался посередине</summary>
+    <p>Открой новый чат в той же папке и снова напиши «Давай выберем участок». Он найдёт черновик и продолжит с того места, где вы остановились.</p>
+  </details>
+
+  <details>
+    <summary>Он предлагает вычеркнуть дело, которое мне важно</summary>
+    <p>Скажи, что оставляешь, и почему. Он запишет твоё решение. Но послушай, что он предлагает вместо вычёркивания: часто дело можно сузить, например «AI готовит черновик, я проверяю и отправляю сам».</p>
+  </details>
+
+  <details>
+    <summary>Я не согласен с рейтингом</summary>
+    <p>Скажи, какую оценку хочешь поправить. Рейтинг пересчитается. Если и после этого хочешь другое дело, выбирай его: решение твоё, он только запишет причину.</p>
+  </details>
+
+  <details>
+    <summary>У меня нет своего бизнеса, я внедряю для клиентов</summary>
+    <p>Скажи об этом в начале. Он спросит, выбираем дело в твоей работе или у клиента. Если у клиента, дальше разговор пойдёт о бизнесе клиента, и данные нужны от него.</p>
+  </details>
+
+  <details>
+    <summary>Я не знаю, сколько стоит мой час</summary>
+    <p>Он поможет прикинуть: доход в месяц разделить примерно на 160 рабочих часов. Не хочешь говорить про деньги, скажи. Тогда будут только часы.</p>
+  </details>
+</section>
+
+<!-- ================= БЛОК 4 ================= -->
+<section class="block" id="b4">
+  <div class="bn">Блок 4</div>
+  <h2>Сдай неделю</h2>
+  <div class="time">2 минуты</div>
+
+  <p>Найди в рабочей папке <b>vybor-uchastka/itog-vybora-uchastka.md</b> и отправь этот файл в бот практикума.</p>
+
+  <div class="note">
+    <b>Зачем мы читаем этот файл.</b><br>По нему мы видим, что ты выбрал и почему, и разбираем спорные случаи на встрече. Переписка нужна, чтобы понять твой бизнес твоими словами, а не по краткому пересказу.
+  </div>
+</section>
+
+<script>
+function cp(id,btn){
+  var t=document.getElementById(id).innerText;
+  var done=function(){var o=btn.textContent;btn.textContent='СКОПИРОВАНО';setTimeout(function(){btn.textContent=o;},2000);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,fallback);}else{fallback();}
+  function fallback(){
+    var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';
+    document.body.appendChild(a);a.select();try{document.execCommand('copy');done();}catch(e){}
+    document.body.removeChild(a);
+  }
+}
+</script>
+</main></body></html>
